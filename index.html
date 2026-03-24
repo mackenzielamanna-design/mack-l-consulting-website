@@ -4,6 +4,17 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mack L Consulting | Operational Optimization for Restaurants</title>
+<meta name="description" content="We use your POS data to find where margin is slipping in your restaurant — and put a dollar figure on every opportunity. Data-driven operational optimization for independent restaurants in Connecticut.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Mack L Consulting | Restaurant Operational Optimization">
+<meta property="og:description" content="We find the money your restaurant is leaving on the table. Data-driven margin analysis starting at $1,500.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://mack-l-consulting.vercel.app">
+
+<!-- Favicon (inline SVG) -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%231a5276'/><text x='16' y='23' text-anchor='middle' fill='white' font-family='system-ui' font-size='20' font-weight='800'>M</text></svg>">
+
 <style>
   /* ── Reset & Base ──────────────────────────────── */
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -25,14 +36,22 @@
   nav .logo { font-size: 18px; font-weight: 700; color: #1a5276; }
   nav .logo span { font-weight: 400; color: #7f8c8d; }
   nav .nav-links { display: flex; gap: 32px; }
-  nav .nav-links a { font-size: 14px; color: #555; font-weight: 500; }
+  nav .nav-links a { font-size: 14px; color: #555; font-weight: 500; transition: color 0.2s; }
   nav .nav-links a:hover { color: #1a5276; }
-  nav .cta-btn {
+  nav .cta-btn-nav {
     background: #c0392b; color: white; padding: 10px 24px;
     border-radius: 6px; font-size: 14px; font-weight: 600;
     transition: background 0.2s;
   }
-  nav .cta-btn:hover { background: #a93226; }
+  nav .cta-btn-nav:hover { background: #a93226; }
+  .hamburger {
+    display: none; cursor: pointer; flex-direction: column;
+    gap: 5px; background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px; background: #2c3e50;
+    transition: transform 0.3s, opacity 0.3s;
+  }
 
   /* ── Hero ───────────────────────────────────────── */
   .hero {
@@ -65,6 +84,12 @@
   .stat { text-align: center; }
   .stat .stat-num { font-size: 36px; font-weight: 800; color: #c0392b; }
   .stat .stat-label { font-size: 13px; color: #7f8c8d; text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+  /* ── Credibility Strip ─────────────────────────── */
+  .credibility {
+    text-align: center; padding: 20px 48px; background: #fff;
+    border-bottom: 1px solid #ecf0f1; font-size: 13px; color: #95a5a6;
+  }
 
   /* ── Section base ──────────────────────────────── */
   section { padding: 80px 48px; max-width: 1000px; margin: 0 auto; }
@@ -105,8 +130,45 @@
     font-size: 20px; font-weight: 700; margin-bottom: 16px;
   }
   .step h3 { font-size: 18px; font-weight: 700; color: #1a5276; margin-bottom: 8px; }
-  .step .step-price { font-size: 14px; font-weight: 600; color: #c0392b; margin-bottom: 12px; }
   .step p { font-size: 14px; color: #555; }
+
+  /* ── Pricing ───────────────────────────────────── */
+  .pricing { background: #fff; padding: 80px 48px; }
+  .pricing .inner { max-width: 1000px; margin: 0 auto; }
+  .pricing h2 { font-size: 32px; font-weight: 700; color: #1a5276; margin-bottom: 16px; }
+  .pricing .section-sub { font-size: 17px; color: #555; margin-bottom: 48px; max-width: 650px; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 24px; }
+  .pricing-card {
+    background: #f8f9fa; border-radius: 12px; padding: 36px 32px;
+    border: 2px solid #ecf0f1; text-align: center;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pricing-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+  .pricing-card.featured {
+    border-color: #1a5276; background: white;
+    box-shadow: 0 4px 20px rgba(26,82,118,0.12);
+    position: relative;
+  }
+  .pricing-card.featured::before {
+    content: "Most Popular";
+    position: absolute; top: -14px; left: 50%; transform: translateX(-50%);
+    background: #1a5276; color: white; font-size: 11px; font-weight: 700;
+    padding: 4px 16px; border-radius: 20px; text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .pricing-card .tier-name {
+    font-size: 20px; font-weight: 700; color: #1a5276; margin-bottom: 4px;
+  }
+  .pricing-card .tier-range {
+    font-size: 13px; color: #7f8c8d; margin-bottom: 20px;
+  }
+  .pricing-card .price-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 10px 0; border-bottom: 1px solid #ecf0f1; font-size: 14px;
+  }
+  .pricing-card .price-row:last-child { border-bottom: none; }
+  .pricing-card .price-label { color: #555; }
+  .pricing-card .price-value { font-weight: 700; color: #1a5276; }
 
   /* ── What We Find ──────────────────────────────── */
   .findings { background: #fff; }
@@ -123,12 +185,22 @@
   .finding h3 { font-size: 16px; font-weight: 700; color: #1a5276; margin-bottom: 4px; }
   .finding p { font-size: 14px; color: #555; }
 
+  /* ── About ──────────────────────────────────────── */
+  .about { background: #f8f9fa; padding: 64px 48px; }
+  .about .inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .about h2 { font-size: 28px; font-weight: 700; color: #1a5276; margin-bottom: 16px; }
+  .about p { font-size: 16px; color: #555; line-height: 1.7; }
+
   /* ── ROI Section ───────────────────────────────── */
-  .roi { background: #f8f9fa; padding: 80px 48px; }
+  .roi { background: #fff; padding: 80px 48px; }
   .roi .inner { max-width: 1000px; margin: 0 auto; }
+  .roi h2 { font-size: 32px; font-weight: 700; color: #1a5276; margin-bottom: 16px; }
+  .roi .section-sub { font-size: 17px; color: #555; margin-bottom: 32px; max-width: 650px; }
   .roi-table {
-    width: 100%; border-collapse: collapse; margin-top: 32px;
-    background: white; border-radius: 8px; overflow: hidden;
+    width: 100%; border-collapse: collapse; margin-top: 16px;
+    background: #f8f9fa; border-radius: 8px; overflow: hidden;
     box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   }
   .roi-table thead th {
@@ -138,24 +210,54 @@
   }
   .roi-table tbody td {
     padding: 14px 20px; border-bottom: 1px solid #ecf0f1; font-size: 15px;
+    background: white;
   }
-  .roi-table tbody tr:hover { background: #f8f9fa; }
+  .roi-table tbody tr:hover td { background: #f8f9fa; }
   .roi-highlight { color: #c0392b; font-weight: 700; }
 
-  /* ── CTA Section ───────────────────────────────── */
+  /* ── Contact Form CTA ──────────────────────────── */
   .final-cta {
     background: linear-gradient(135deg, #1a5276 0%, #2c3e50 100%);
     color: white; padding: 80px 48px; text-align: center;
   }
   .final-cta h2 { color: white; font-size: 36px; margin-bottom: 16px; }
   .final-cta p { opacity: 0.9; font-size: 18px; margin-bottom: 36px; max-width: 550px; margin-left: auto; margin-right: auto; }
-  .final-cta .cta-btn {
-    display: inline-block; background: #c0392b; color: white;
-    padding: 16px 40px; border-radius: 8px; font-size: 17px;
-    font-weight: 700; transition: transform 0.2s, background 0.2s;
+  .contact-form {
+    max-width: 480px; margin: 0 auto; text-align: left;
   }
-  .final-cta .cta-btn:hover { background: #e74c3c; transform: translateY(-2px); }
-  .final-cta .cta-sub { font-size: 13px; opacity: 0.6; margin-top: 16px; }
+  .contact-form .form-row { margin-bottom: 16px; }
+  .contact-form label {
+    display: block; font-size: 13px; font-weight: 600;
+    color: rgba(255,255,255,0.7); margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 0.5px;
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%; padding: 12px 16px; border: 2px solid rgba(255,255,255,0.2);
+    border-radius: 6px; background: rgba(255,255,255,0.1);
+    color: white; font-size: 15px; font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: none; border-color: rgba(255,255,255,0.5);
+    background: rgba(255,255,255,0.15);
+  }
+  .contact-form select { cursor: pointer; }
+  .contact-form select option { color: #2c3e50; background: white; }
+  .contact-form textarea { resize: vertical; min-height: 80px; }
+  .contact-form button {
+    width: 100%; padding: 16px; background: #c0392b; color: white;
+    border: none; border-radius: 8px; font-size: 17px;
+    font-weight: 700; cursor: pointer; transition: background 0.2s, transform 0.2s;
+    margin-top: 8px;
+  }
+  .contact-form button:hover { background: #e74c3c; transform: translateY(-2px); }
+  .form-note { text-align: center; font-size: 13px; opacity: 0.5; margin-top: 16px; }
 
   /* ── Footer ────────────────────────────────────── */
   footer {
@@ -163,16 +265,38 @@
     color: #95a5a6; font-size: 13px; border-top: 1px solid #ecf0f1;
   }
 
+  /* ── Scroll Animations ─────────────────────────── */
+  .fade-in {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .fade-in.visible {
+    opacity: 1; transform: translateY(0);
+  }
+
   /* ── Responsive ────────────────────────────────── */
   @media (max-width: 768px) {
     nav { padding: 12px 20px; }
-    nav .nav-links { display: none; }
+    nav .nav-links {
+      display: none; flex-direction: column; position: absolute;
+      top: 56px; left: 0; right: 0; background: white;
+      padding: 20px; gap: 16px; border-bottom: 1px solid #ecf0f1;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    nav .nav-links.open { display: flex; }
+    nav .cta-btn-nav { display: none; }
+    .hamburger { display: flex; }
     .hero { padding: 120px 24px 80px; }
     .hero h1 { font-size: 32px; }
     .stats-bar { flex-direction: column; gap: 24px; padding: 32px 24px; }
-    section, .how-it-works, .roi, .final-cta { padding: 60px 24px; }
+    section, .how-it-works, .pricing, .roi, .final-cta, .about { padding: 60px 24px; }
     .problem-grid { grid-template-columns: 1fr; }
     .steps { flex-direction: column; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card.featured { margin-top: 16px; }
+    .finding { flex-direction: column; text-align: center; }
+    .roi-table { font-size: 13px; }
+    .roi-table thead th, .roi-table tbody td { padding: 10px 12px; }
   }
 </style>
 </head>
@@ -181,19 +305,24 @@
 <!-- Nav -->
 <nav>
   <div class="logo">Mack L <span>Consulting</span></div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="#how">How It Works</a>
+    <a href="#pricing">Pricing</a>
     <a href="#findings">What We Find</a>
     <a href="#roi">ROI</a>
+    <a href="#contact">Contact</a>
   </div>
-  <a href="mailto:mack@macklconsulting.com" class="cta-btn">Get Started</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="#contact" class="cta-btn-nav">Get Started</a>
 </nav>
 
 <!-- Hero -->
 <div class="hero">
   <h1>Your restaurant is making money. It could be keeping more of it.</h1>
   <p>We use your existing POS data to find where margin is slipping — and put a dollar figure on every opportunity.</p>
-  <a href="mailto:mack@macklconsulting.com" class="hero-cta">See What Your Data Shows</a>
+  <a href="#contact" class="hero-cta">See What Your Data Shows</a>
   <div class="hero-sub">Takes 2 minutes to export your Toast data. We do the rest.</div>
 </div>
 
@@ -213,8 +342,13 @@
   </div>
 </div>
 
+<!-- Credibility Strip -->
+<div class="credibility">
+  Analysis backed by industry benchmarks from National Restaurant Association, Toast, Restaurant365, and CrunchTime
+</div>
+
 <!-- Problem Section -->
-<section class="problems">
+<section class="problems fade-in">
   <h2>The money is there. It's just hard to see.</h2>
   <p class="section-sub">Most operators know margins could be better — but between running the floor, managing staff, and keeping customers happy, there's no time to dig into the data. That's where we come in.</p>
   <div class="problem-grid">
@@ -242,7 +376,7 @@
 </section>
 
 <!-- How It Works -->
-<div class="how-it-works" id="how">
+<div class="how-it-works fade-in" id="how">
   <div class="inner">
     <h2>How It Works</h2>
     <p class="section-sub">Three phases. Each one builds on the last. You see value from week one.</p>
@@ -250,27 +384,82 @@
       <div class="step">
         <div class="step-num">1</div>
         <h3>Diagnostic</h3>
-        <div class="step-price">$2,500 one-time</div>
         <p>You export your Toast data (2 minutes). We analyze it and deliver a full report showing exactly where money is going and how much is recoverable.</p>
       </div>
       <div class="step">
         <div class="step-num">2</div>
         <h3>Implementation</h3>
-        <div class="step-price">6-month engagement</div>
-        <p>We build real recipe costs from your invoices, set up vendor tracking, optimize pricing, and implement the changes that move the needle.</p>
+        <p>We build real recipe costs from your invoices, set up vendor tracking, optimize pricing, and implement the changes that move the needle. 6-month engagement.</p>
       </div>
       <div class="step">
         <div class="step-num">3</div>
         <h3>Monitoring</h3>
-        <div class="step-price">Ongoing monthly</div>
         <p>Monthly data refresh catches drift as it happens — vendor price increases, portion creep, seasonal shifts — before small problems become big ones.</p>
       </div>
     </div>
   </div>
 </div>
 
+<!-- Pricing -->
+<div class="pricing fade-in" id="pricing">
+  <div class="inner">
+    <h2>Simple, Transparent Pricing</h2>
+    <p class="section-sub">Tiered to match your restaurant's size and complexity. The ROI math works at every level.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="tier-name">Essentials</div>
+        <div class="tier-range">$500K - $1M revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$1,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$1,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$750/mo</span>
+        </div>
+      </div>
+      <div class="pricing-card featured">
+        <div class="tier-name">Standard</div>
+        <div class="tier-range">$1M - $2M revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$2,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$2,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$1,250/mo</span>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="tier-name">Premium</div>
+        <div class="tier-range">$2M+ revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$3,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$3,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$1,800/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- What We Find -->
-<section class="findings" id="findings">
+<section class="findings fade-in" id="findings">
   <h2>What We Typically Find</h2>
   <p class="section-sub">Every restaurant is different. But these patterns show up consistently across independent operators.</p>
   <div class="finding-list">
@@ -305,8 +494,16 @@
   </div>
 </section>
 
+<!-- About -->
+<div class="about fade-in">
+  <div class="inner">
+    <h2>Built for Independent Operators</h2>
+    <p>Mack L Consulting is a Connecticut-based operational optimization firm focused exclusively on independent restaurants. We combine POS data analysis, recipe costing, vendor tracking, and labor modeling to give you the financial clarity that larger chains take for granted — without the overhead. Every recommendation comes with a dollar figure attached.</p>
+  </div>
+</div>
+
 <!-- ROI -->
-<div class="roi" id="roi">
+<div class="roi fade-in" id="roi">
   <div class="inner">
     <h2>The Math Is Simple</h2>
     <p class="section-sub">Based on industry data, here's what the engagement typically looks like at different restaurant sizes.</p>
@@ -352,19 +549,79 @@
   </div>
 </div>
 
-<!-- Final CTA -->
-<div class="final-cta">
+<!-- Contact Form CTA -->
+<div class="final-cta" id="contact">
   <h2>Want to see what your numbers look like?</h2>
   <p>We start with a simple Toast export. Takes about 2 minutes. From there, we build the picture together.</p>
-  <a href="mailto:mack@macklconsulting.com" class="cta-btn">Let's Talk</a>
-  <div class="cta-sub">No commitment. No pressure. Just data.</div>
+  <form class="contact-form" action="https://formspree.io/f/xpwzgqvl" method="POST">
+    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div>
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="John Smith" required>
+      </div>
+      <div>
+        <label for="restaurant">Restaurant Name</label>
+        <input type="text" id="restaurant" name="restaurant" placeholder="The Copper Pot" required>
+      </div>
+    </div>
+    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+      <div>
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="john@restaurant.com" required>
+      </div>
+      <div>
+        <label for="revenue">Estimated Annual Revenue</label>
+        <select id="revenue" name="revenue" required>
+          <option value="" disabled selected>Select range</option>
+          <option value="Under $500K">Under $500K</option>
+          <option value="$500K - $1M">$500K - $1M</option>
+          <option value="$1M - $2M">$1M - $2M</option>
+          <option value="$2M+">$2M+</option>
+          <option value="Not sure">Not sure</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-row">
+      <label for="message">Anything else? (optional)</label>
+      <textarea id="message" name="message" placeholder="Tell us about your restaurant or what you're looking to improve..."></textarea>
+    </div>
+    <button type="submit">Let's Talk</button>
+    <div class="form-note">No commitment. No pressure. Just data.</div>
+  </form>
 </div>
 
 <!-- Footer -->
 <footer>
   Mack L Consulting &mdash; Operational Optimization for Independent Restaurants<br>
-  Connecticut &middot; <a href="mailto:mack@macklconsulting.com">mack@macklconsulting.com</a>
+  Connecticut &middot; <a href="mailto:mack@macklconsulting.com" style="color: #7f8c8d;">mack@macklconsulting.com</a>
 </footer>
+
+<!-- Scripts -->
+<script>
+  // Hamburger toggle
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  // Close nav on link click (mobile)
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  // Scroll fade-in
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
 
 </body>
 </html>
