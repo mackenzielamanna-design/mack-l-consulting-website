@@ -1,7 +1,7 @@
 /* Tweaks panel — aesthetic + accent + density */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "aesthetic": "editorial",
+  "aesthetic": "ink",
   "heroStyle": "split",
   "accent": "ember"
 }/*EDITMODE-END*/;
