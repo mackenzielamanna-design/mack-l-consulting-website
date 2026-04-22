@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mack in Black | Getting Restaurants Back in the Black</title>
+<meta name="description" content="We use your POS data to find where margin is slipping — and put a dollar figure on every opportunity. Data-driven operational optimization for independent restaurants.">
+
+<!-- Open Graph -->
+<meta property="og:title" content="Mack in Black | Restaurant Operational Optimization">
+<meta property="og:description" content="We find the money your restaurant is leaving on the table. Data-driven margin analysis for independent operators.">
+<meta property="og:type" content="website">
+
+<!-- Favicon -->
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='%23111'/><text x='16' y='23' text-anchor='middle' fill='%23e74c3c' font-family='system-ui' font-size='18' font-weight='800'>MB</text></svg>">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  /* ── Reset & Base ──────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: #e0e0e0; line-height: 1.6; background: #0a0a0a;
+  }
+  a { color: #e74c3c; text-decoration: none; }
+
+  /* ── Nav ────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; width: 100%;
+    background: rgba(10,10,10,0.95); backdrop-filter: blur(12px);
+    z-index: 100; border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 16px 48px;
+  }
+  nav .logo {
+    font-size: 20px; font-weight: 800; color: #fff;
+    letter-spacing: -0.5px;
+  }
+  nav .logo span { color: #e74c3c; }
+  nav .nav-links { display: flex; gap: 32px; }
+  nav .nav-links a {
+    font-size: 13px; color: rgba(255,255,255,0.5); font-weight: 500;
+    text-transform: uppercase; letter-spacing: 1px; transition: color 0.2s;
+  }
+  nav .nav-links a:hover { color: #fff; }
+  nav .cta-btn-nav {
+    background: #e74c3c; color: white; padding: 10px 24px;
+    border-radius: 6px; font-size: 13px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.5px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  nav .cta-btn-nav:hover { background: #c0392b; transform: translateY(-1px); }
+  .hamburger {
+    display: none; cursor: pointer; flex-direction: column;
+    gap: 5px; background: none; border: none; padding: 4px;
+  }
+  .hamburger span {
+    width: 24px; height: 2px; background: #fff;
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  /* ── Hero ───────────────────────────────────────── */
+  .hero {
+    background: radial-gradient(ellipse at 50% 0%, rgba(231,76,60,0.08) 0%, transparent 60%),
+                linear-gradient(180deg, #0a0a0a 0%, #111 100%);
+    color: white; padding: 180px 48px 120px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: repeating-linear-gradient(
+      0deg, transparent, transparent 49px,
+      rgba(255,255,255,0.02) 49px, rgba(255,255,255,0.02) 50px
+    );
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    font-size: 12px; text-transform: uppercase; letter-spacing: 4px;
+    color: #e74c3c; font-weight: 700; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-size: 56px; font-weight: 900; max-width: 750px;
+    margin: 0 auto 24px; line-height: 1.08; letter-spacing: -2px;
+    position: relative;
+  }
+  .hero h1 em {
+    font-style: normal;
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero p {
+    font-size: 19px; color: rgba(255,255,255,0.6); max-width: 560px;
+    margin: 0 auto 44px; font-weight: 400; line-height: 1.7;
+  }
+  .hero .hero-cta {
+    display: inline-block; background: #e74c3c; color: white;
+    padding: 18px 44px; border-radius: 8px; font-size: 16px;
+    font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .hero .hero-cta:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 40px rgba(231,76,60,0.3);
+  }
+  .hero .hero-sub {
+    font-size: 13px; color: rgba(255,255,255,0.3); margin-top: 20px;
+  }
+
+  /* ── Stats Bar ─────────────────────────────────── */
+  .stats-bar {
+    display: flex; justify-content: center; gap: 80px;
+    padding: 56px 48px; background: #111;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .stat { text-align: center; }
+  .stat .stat-num { font-size: 40px; font-weight: 900; color: #e74c3c; letter-spacing: -1px; }
+  .stat .stat-label {
+    font-size: 12px; color: rgba(255,255,255,0.4);
+    text-transform: uppercase; letter-spacing: 1.5px; margin-top: 6px;
+  }
+
+  /* ── Section base ──────────────────────────────── */
+  section { padding: 100px 48px; max-width: 1000px; margin: 0 auto; }
+  section h2 {
+    font-size: 36px; font-weight: 800; color: #fff;
+    margin-bottom: 16px; letter-spacing: -1px;
+  }
+  section .section-sub {
+    font-size: 17px; color: rgba(255,255,255,0.5);
+    margin-bottom: 56px; max-width: 600px;
+  }
+
+  /* ── Problem Section ───────────────────────────── */
+  .problems { background: #0a0a0a; }
+  .problem-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+  }
+  .problem-card {
+    background: rgba(255,255,255,0.03); border-radius: 12px;
+    padding: 32px; border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .problem-card:hover {
+    border-color: rgba(231,76,60,0.3);
+    background: rgba(231,76,60,0.03);
+  }
+  .problem-card .problem-stat {
+    font-size: 28px; font-weight: 900; color: #e74c3c; margin-bottom: 8px;
+  }
+  .problem-card h3 {
+    font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px;
+  }
+  .problem-card p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+  /* ── How It Works ──────────────────────────────── */
+  .how-it-works { background: #111; padding: 100px 48px; }
+  .how-it-works .inner { max-width: 1000px; margin: 0 auto; }
+  .how-it-works h2 { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 16px; }
+  .how-it-works .section-sub { font-size: 17px; color: rgba(255,255,255,0.5); margin-bottom: 56px; max-width: 600px; }
+  .steps { display: flex; gap: 24px; }
+  .step {
+    flex: 1; background: rgba(255,255,255,0.03); border-radius: 12px;
+    padding: 36px 28px; text-align: center;
+    border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s;
+  }
+  .step:hover { border-color: rgba(231,76,60,0.2); }
+  .step .step-num {
+    width: 52px; height: 52px; background: #e74c3c;
+    color: white; border-radius: 50%; display: inline-flex;
+    align-items: center; justify-content: center;
+    font-size: 22px; font-weight: 800; margin-bottom: 20px;
+  }
+  .step h3 { font-size: 18px; font-weight: 700; color: #fff; margin-bottom: 10px; }
+  .step p { font-size: 14px; color: rgba(255,255,255,0.45); line-height: 1.6; }
+
+  /* ── Pricing ───────────────────────────────────── */
+  .pricing { background: #0a0a0a; padding: 100px 48px; }
+  .pricing .inner { max-width: 1000px; margin: 0 auto; }
+  .pricing h2 { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 16px; }
+  .pricing .section-sub { font-size: 17px; color: rgba(255,255,255,0.5); margin-bottom: 56px; max-width: 600px; }
+  .pricing-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; }
+  .pricing-card {
+    background: rgba(255,255,255,0.03); border-radius: 12px;
+    padding: 36px 32px; border: 1px solid rgba(255,255,255,0.06);
+    text-align: center; transition: transform 0.2s, border-color 0.3s;
+  }
+  .pricing-card:hover { transform: translateY(-4px); border-color: rgba(255,255,255,0.12); }
+  .pricing-card.featured {
+    border-color: #e74c3c; position: relative;
+    background: rgba(231,76,60,0.04);
+  }
+  /* No label needed — red border handles visual emphasis */
+  .pricing-card .tier-name {
+    font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 4px;
+  }
+  .pricing-card .tier-range {
+    font-size: 13px; color: rgba(255,255,255,0.35); margin-bottom: 24px;
+  }
+  .pricing-card .price-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 14px;
+  }
+  .pricing-card .price-row:last-child { border-bottom: none; }
+  .pricing-card .price-label { color: rgba(255,255,255,0.45); }
+  .pricing-card .price-value { font-weight: 700; color: #fff; }
+
+  /* ── What We Find ──────────────────────────────── */
+  .findings { background: #111; }
+  .finding-list { display: flex; flex-direction: column; gap: 12px; }
+  .finding {
+    display: flex; align-items: center; gap: 24px;
+    padding: 24px 28px; background: rgba(255,255,255,0.03);
+    border-radius: 12px; border: 1px solid rgba(255,255,255,0.06);
+    transition: border-color 0.3s;
+  }
+  .finding:hover { border-color: rgba(231,76,60,0.2); }
+  .finding .finding-pct {
+    font-size: 28px; font-weight: 900; color: #e74c3c;
+    min-width: 110px; text-align: center; white-space: nowrap;
+  }
+  .finding h3 { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 4px; }
+  .finding p { font-size: 14px; color: rgba(255,255,255,0.45); }
+
+  /* ── About ──────────────────────────────────────── */
+  .about {
+    background: #0a0a0a; padding: 80px 48px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+  .about .inner {
+    max-width: 700px; margin: 0 auto; text-align: center;
+  }
+  .about h2 { font-size: 28px; font-weight: 800; color: #fff; margin-bottom: 16px; }
+  .about p { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.8; }
+
+  /* ── ROI Section ───────────────────────────────── */
+  .roi { background: #111; padding: 100px 48px; }
+  .roi .inner { max-width: 1000px; margin: 0 auto; }
+  .roi h2 { font-size: 36px; font-weight: 800; color: #fff; letter-spacing: -1px; margin-bottom: 16px; }
+  .roi .section-sub { font-size: 17px; color: rgba(255,255,255,0.6); margin-bottom: 40px; max-width: 600px; }
+  .roi-table {
+    width: 100%; border-collapse: collapse;
+    background: rgba(255,255,255,0.03); border-radius: 12px;
+    overflow: hidden; border: 1px solid rgba(255,255,255,0.06);
+  }
+  .roi-table thead th {
+    background: rgba(231,76,60,0.1); color: #e74c3c;
+    padding: 16px 24px; text-align: left; font-size: 12px;
+    text-transform: uppercase; letter-spacing: 1.5px; font-weight: 700;
+  }
+  .roi-table tbody td {
+    padding: 16px 24px; border-bottom: 1px solid rgba(255,255,255,0.06);
+    font-size: 15px; color: rgba(255,255,255,0.75);
+  }
+  .roi-table tbody tr:hover td { background: rgba(255,255,255,0.02); }
+  .roi-highlight { color: #e74c3c !important; font-weight: 700; }
+  .roi-note {
+    margin-top: 24px; font-size: 13px; color: rgba(255,255,255,0.3);
+    text-align: center;
+  }
+
+  /* ── Contact Form CTA ──────────────────────────── */
+  .final-cta {
+    background: radial-gradient(ellipse at 50% 100%, rgba(231,76,60,0.1) 0%, transparent 60%),
+                #0a0a0a;
+    color: white; padding: 100px 48px; text-align: center;
+  }
+  .final-cta h2 { color: white; font-size: 40px; margin-bottom: 16px; font-weight: 900; letter-spacing: -1px; }
+  .final-cta p {
+    color: rgba(255,255,255,0.5); font-size: 18px;
+    margin-bottom: 44px; max-width: 500px;
+    margin-left: auto; margin-right: auto;
+  }
+  .contact-form { max-width: 480px; margin: 0 auto; text-align: left; }
+  .contact-form .form-row { margin-bottom: 16px; }
+  .contact-form label {
+    display: block; font-size: 11px; font-weight: 700;
+    color: rgba(255,255,255,0.4); margin-bottom: 6px;
+    text-transform: uppercase; letter-spacing: 1.5px;
+  }
+  .contact-form input,
+  .contact-form select,
+  .contact-form textarea {
+    width: 100%; padding: 14px 16px;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 8px; background: rgba(255,255,255,0.05);
+    color: white; font-size: 15px; font-family: inherit;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-form input::placeholder,
+  .contact-form textarea::placeholder { color: rgba(255,255,255,0.2); }
+  .contact-form input:focus,
+  .contact-form select:focus,
+  .contact-form textarea:focus {
+    outline: none; border-color: #e74c3c;
+    background: rgba(231,76,60,0.05);
+  }
+  .contact-form select { cursor: pointer; }
+  .contact-form select option { color: #0a0a0a; background: white; }
+  .contact-form textarea { resize: vertical; min-height: 80px; }
+  .contact-form button {
+    width: 100%; padding: 16px; background: #e74c3c; color: white;
+    border: none; border-radius: 8px; font-size: 16px;
+    font-weight: 700; cursor: pointer; text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    margin-top: 8px;
+  }
+  .contact-form button:hover {
+    background: #c0392b; transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(231,76,60,0.3);
+  }
+  .form-note {
+    text-align: center; font-size: 13px;
+    color: rgba(255,255,255,0.25); margin-top: 16px;
+  }
+
+  /* ── Footer ────────────────────────────────────── */
+  footer {
+    text-align: center; padding: 32px 48px;
+    color: rgba(255,255,255,0.2); font-size: 13px;
+    border-top: 1px solid rgba(255,255,255,0.04);
+    background: #0a0a0a;
+  }
+  footer a { color: rgba(255,255,255,0.3); }
+  footer a:hover { color: #e74c3c; }
+
+  /* ── Scroll Animations ─────────────────────────── */
+  .fade-in {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── Responsive ────────────────────────────────── */
+  @media (max-width: 768px) {
+    nav { padding: 12px 20px; }
+    nav .nav-links {
+      display: none; flex-direction: column; position: absolute;
+      top: 56px; left: 0; right: 0; background: #0a0a0a;
+      padding: 20px; gap: 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    nav .nav-links.open { display: flex; }
+    nav .cta-btn-nav { display: none; }
+    .hamburger { display: flex; }
+    .hero { padding: 140px 24px 80px; }
+    .hero h1 { font-size: 36px; letter-spacing: -1px; }
+    .hero p { font-size: 16px; }
+    .stats-bar { flex-direction: column; gap: 28px; padding: 40px 24px; }
+    section, .how-it-works, .pricing, .roi, .final-cta, .about { padding: 64px 24px; }
+    .problem-grid { grid-template-columns: 1fr; }
+    .steps { flex-direction: column; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .pricing-card.featured { margin-top: 16px; }
+    .finding { flex-direction: column; text-align: center; }
+    .roi-table { font-size: 13px; }
+    .roi-table thead th, .roi-table tbody td { padding: 12px 14px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+  <div class="logo">MACK IN <span>BLACK</span></div>
+  <div class="nav-links" id="navLinks">
+    <a href="#how">Process</a>
+    <a href="#pricing">Pricing</a>
+    <a href="#findings">Results</a>
+    <a href="#roi">ROI</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <a href="#contact" class="cta-btn-nav">Get Started</a>
+</nav>
+
+<!-- Hero -->
+<div class="hero">
+  <div class="hero-eyebrow">Restaurant Operational Optimization</div>
+  <h1>We put restaurants <em>back in the black.</em></h1>
+  <p>Your POS data already knows where the money is going. We pull it out, put a dollar figure on it, and show you exactly what to fix first.</p>
+  <a href="#contact" class="hero-cta">See What Your Data Shows</a>
+  <div class="hero-sub">Takes 2 minutes to export your Toast data. We handle everything else.</div>
+</div>
+
+<!-- Stats Bar -->
+<div class="stats-bar">
+  <div class="stat">
+    <div class="stat-num">2–6%</div>
+    <div class="stat-label">of revenue typically recoverable</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">3–10x</div>
+    <div class="stat-label">typical return on engagement</div>
+  </div>
+  <div class="stat">
+    <div class="stat-num">&lt; 1 week</div>
+    <div class="stat-label">to first actionable findings</div>
+  </div>
+</div>
+
+<!-- Problem Section -->
+<section class="problems fade-in">
+  <h2>The money is there. It's just hard to see.</h2>
+  <p class="section-sub">Between running the floor, managing staff, and keeping guests happy — there's no time to dig into the data. That's where we come in.</p>
+  <div class="problem-grid">
+    <div class="problem-card">
+      <div class="problem-stat">3–10%</div>
+      <h3>Food Cost Variance</h3>
+      <p>The gap between what food should cost and what it actually costs. Over-portioning, waste, and vendor price creep add up quietly.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-stat">15–30%</div>
+      <h3>Delivery App Fees</h3>
+      <p>Every DoorDash and UberEats order gives away a quarter of the sale. Most operators don't know their true exposure.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-stat">$15–45K</div>
+      <h3>Labor Misalignment</h3>
+      <p>Staffing that doesn't flex with demand means overpaying on slow days and underserving the rush.</p>
+    </div>
+    <div class="problem-card">
+      <div class="problem-stat">Silent</div>
+      <h3>Vendor Price Creep</h3>
+      <p>Ingredient costs go up a few percent at a time. No one sends you a notice. Over 12 months it compounds.</p>
+    </div>
+  </div>
+</section>
+
+<!-- How It Works -->
+<div class="how-it-works fade-in" id="how">
+  <div class="inner">
+    <h2>How It Works</h2>
+    <p class="section-sub">Three phases. Each one builds on the last. You see value from week one.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Diagnostic</h3>
+        <p>Export your Toast data (2 minutes). We deliver a full report showing exactly where money is going and how much is recoverable.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>Implementation</h3>
+        <p>We build real recipe costs from your invoices, set up vendor tracking, optimize pricing, and implement changes. 6-month engagement.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>Monitoring</h3>
+        <p>Monthly data refresh catches drift as it happens — vendor increases, portion creep, seasonal shifts — before they become real problems.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Pricing -->
+<div class="pricing fade-in" id="pricing">
+  <div class="inner">
+    <h2>Transparent Pricing</h2>
+    <p class="section-sub">Scaled to your restaurant's size. The ROI math works at every level.</p>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <div class="tier-name">$500K – $1M</div>
+        <div class="tier-range">annual revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$1,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$1,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$750/mo</span>
+        </div>
+      </div>
+      <div class="pricing-card featured">
+        <div class="tier-name">$1M – $2M</div>
+        <div class="tier-range">annual revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$2,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$2,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$1,250/mo</span>
+        </div>
+      </div>
+      <div class="pricing-card">
+        <div class="tier-name">$2M+</div>
+        <div class="tier-range">annual revenue</div>
+        <div class="price-row">
+          <span class="price-label">Diagnostic</span>
+          <span class="price-value">$3,500</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Implementation (6 mo)</span>
+          <span class="price-value">$3,500/mo</span>
+        </div>
+        <div class="price-row">
+          <span class="price-label">Ongoing Monitoring</span>
+          <span class="price-value">$1,800/mo</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- What We Find -->
+<section class="findings fade-in" id="findings">
+  <h2>What We Typically Find</h2>
+  <p class="section-sub">Every restaurant is different. These patterns show up consistently across independent operators.</p>
+  <div class="finding-list">
+    <div class="finding">
+      <div class="finding-pct">2–6%</div>
+      <div>
+        <h3>Food Cost Above Target</h3>
+        <p>Most independents run 2-6 points above the 30% benchmark. On a $1M restaurant, each point is $10,000/year.</p>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="finding-pct">3–10%</div>
+      <div>
+        <h3>Theoretical vs. Actual Gap</h3>
+        <p>The difference between what food should cost and what you actually spent. Waste, portioning, and shrinkage live here.</p>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="finding-pct">1–3%</div>
+      <div>
+        <h3>Labor Efficiency Gains</h3>
+        <p>Scheduling aligned to revenue by daypart. Small shifts on slow days compound across the year.</p>
+      </div>
+    </div>
+    <div class="finding">
+      <div class="finding-pct">$5–15K</div>
+      <div>
+        <h3>Vendor Negotiation Leverage</h3>
+        <p>Prices creep up 3-8% annually. With data in hand, you can push back — or find a better option.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About -->
+<div class="about fade-in">
+  <div class="inner">
+    <h2>Built for Independent Operators</h2>
+    <p>Mack in Black is a Connecticut-based operational optimization firm focused exclusively on independent restaurants. We combine POS data analysis, recipe costing, vendor tracking, and labor modeling to give you the financial clarity that larger chains take for granted — without the overhead. Every recommendation comes with a dollar figure attached.</p>
+  </div>
+</div>
+
+<!-- ROI -->
+<div class="roi fade-in" id="roi">
+  <div class="inner">
+    <h2>The Math Speaks for Itself</h2>
+    <p class="section-sub">Industry data shows 2-6% of revenue is typically recoverable through operational optimization.</p>
+    <table class="roi-table">
+      <thead>
+        <tr>
+          <th>Annual Revenue</th>
+          <th>Conservative (2%)</th>
+          <th>Typical (4%)</th>
+          <th>Strong (6%)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>$750K</td>
+          <td>$15,000</td>
+          <td class="roi-highlight">$30,000</td>
+          <td>$45,000</td>
+        </tr>
+        <tr>
+          <td>$1M</td>
+          <td>$20,000</td>
+          <td class="roi-highlight">$40,000</td>
+          <td>$60,000</td>
+        </tr>
+        <tr>
+          <td>$1.5M</td>
+          <td>$30,000</td>
+          <td class="roi-highlight">$60,000</td>
+          <td>$90,000</td>
+        </tr>
+        <tr>
+          <td>$2M</td>
+          <td>$40,000</td>
+          <td class="roi-highlight">$80,000</td>
+          <td>$120,000</td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="roi-note">
+      Based on published benchmarks from the National Restaurant Association, Restaurant365, CrunchTime, and Toast.
+    </p>
+  </div>
+</div>
+
+<!-- Contact Form CTA -->
+<div class="final-cta" id="contact">
+  <h2>Ready to see your numbers?</h2>
+  <p>We start with a simple Toast export. Takes 2 minutes. From there, we build the picture together.</p>
+  <a href="mailto:mackenzielamanna@gmail.com?subject=Interested%20in%20Mack%20in%20Black&body=Hi%20Mack%2C%0A%0AI%27d%20like%20to%20learn%20more%20about%20your%20restaurant%20optimization%20services.%0A%0ARestaurant%20Name%3A%20%0AEstimated%20Annual%20Revenue%3A%20%0A%0AThanks!" class="hero-cta" style="display: inline-block; margin-bottom: 16px;">Let's Talk</a>
+  <div class="form-note">No commitment. No pressure. Just data.</div>
+</div>
+
+<!-- Footer -->
+<footer>
+  Mack in Black &mdash; Getting Restaurants Back in the Black<br>
+  Connecticut &middot; <a href="mailto:mackenzielamanna@gmail.com">mackenzielamanna@gmail.com</a>
+</footer>
+
+<!-- Scripts -->
+<script>
+  // Hamburger toggle
+  document.getElementById('hamburger').addEventListener('click', function() {
+    document.getElementById('navLinks').classList.toggle('open');
+  });
+  document.querySelectorAll('.nav-links a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      document.getElementById('navLinks').classList.remove('open');
+    });
+  });
+
+  // Scroll fade-in
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(function(el) {
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
