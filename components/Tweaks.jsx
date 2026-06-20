@@ -1,8 +1,7 @@
 /* Tweaks panel — aesthetic + accent + density */
 
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
-  "aesthetic": "ink",
-  "heroStyle": "split",
+  "aesthetic": "ledger",
   "accent": "ember"
 }/*EDITMODE-END*/;
 
@@ -12,23 +11,22 @@ const AESTHETICS = [
   { key: 'ledger', label: 'Ledger' },
 ];
 
-const HERO_STYLES = [
-  { key: 'split', label: 'Split + calc' },
-  { key: 'centered', label: 'Centered' },
-  { key: 'sample', label: 'Sample card' },
-];
-
 const ACCENTS = [
   { key: 'ember', label: 'Ember' },
   { key: 'moss', label: 'Moss' },
   { key: 'ink', label: 'Ink-only' },
 ];
 
-function Tweaks({ aesthetic, setAesthetic, heroStyle, setHeroStyle, accent, setAccent }) {
+function Tweaks({ aesthetic, setAesthetic, accent, setAccent }) {
   const [active, setActive] = React.useState(false);
   const [open, setOpen] = React.useState(false);
 
   React.useEffect(() => {
+    // Standalone access for the owner: append ?dev to the URL to open the panel.
+    // Normal visitors never see it (no ?dev, no edit-mode host message).
+    if (new URLSearchParams(window.location.search).has('dev')) {
+      setActive(true);
+    }
     const onMsg = (e) => {
       if (e.data?.type === '__activate_edit_mode') { setActive(true); setOpen(true); }
       if (e.data?.type === '__deactivate_edit_mode') { setActive(false); setOpen(false); }
@@ -40,7 +38,6 @@ function Tweaks({ aesthetic, setAesthetic, heroStyle, setHeroStyle, accent, setA
 
   const update = (key, value) => {
     if (key === 'aesthetic') setAesthetic(value);
-    if (key === 'heroStyle') setHeroStyle(value);
     if (key === 'accent') setAccent(value);
     window.parent.postMessage({ type: '__edit_mode_set_keys', edits: { [key]: value } }, '*');
   };
@@ -64,18 +61,6 @@ function Tweaks({ aesthetic, setAesthetic, heroStyle, setHeroStyle, accent, setA
                   className={`tweaks-option ${aesthetic === a.key ? 'active' : ''}`}
                   onClick={() => update('aesthetic', a.key)}
                 >{a.label}</button>
-              ))}
-            </div>
-          </div>
-          <div className="tweaks-row">
-            <label className="tweaks-label">Hero layout</label>
-            <div className="tweaks-options">
-              {HERO_STYLES.map(h => (
-                <button
-                  key={h.key}
-                  className={`tweaks-option ${heroStyle === h.key ? 'active' : ''}`}
-                  onClick={() => update('heroStyle', h.key)}
-                >{h.label}</button>
               ))}
             </div>
           </div>

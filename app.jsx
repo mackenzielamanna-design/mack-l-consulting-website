@@ -22,7 +22,6 @@ function Nav() {
 
 function App() {
   const [aesthetic, setAesthetic] = React.useState(window.TWEAK_DEFAULTS.aesthetic);
-  const [heroStyle, setHeroStyle] = React.useState(window.TWEAK_DEFAULTS.heroStyle);
   const [accent, setAccent] = React.useState(window.TWEAK_DEFAULTS.accent);
 
   React.useEffect(() => {
@@ -57,7 +56,6 @@ function App() {
       <Footer />
       <Tweaks
         aesthetic={aesthetic} setAesthetic={setAesthetic}
-        heroStyle={heroStyle} setHeroStyle={setHeroStyle}
         accent={accent} setAccent={setAccent}
       />
     </div>

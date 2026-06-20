@@ -1,30 +1,33 @@
 /* Where the money goes — animated P&L breakdown with drill-in */
 
+// Numbers reconciled to the canonical CP P&L (Primitives.jsx) and the
+// rendered diagnostic. Recoverable shown as the finding range; labor and
+// occupancy are in line and carry no recovery claim.
 const MF_CATS = [
-  { key: 'food', label: 'Food cost', pct: 35.9, amt: 682100, recoverable: 112100, target: 30.0,
+  { key: 'food', label: 'Food cost', pct: 35.9, amt: 694500, recoverable: 114500, target: 30.0,
     headline: 'Food cost is 35.9% — 5.9 points above target',
-    body: 'On $1.9M revenue, each percentage point of food cost is $19K / year. The gap comes from a mix of recipe-level margin bleeders, portion drift, vendor price creep, and untracked waste.',
-    stats: [{ k: 'Target', v: '30.0%', g: false }, { k: 'Recoverable', v: '$112K', g: true }] },
-  { key: 'labor', label: 'Labor', pct: 32.0, amt: 608000, recoverable: 23000, target: 30.0,
-    headline: 'Labor is 2 points above where it could be',
-    body: 'Weekend drives 58% of sales but staffing is flat. Trimming slow-day hours and reinvesting in peak shifts recovers margin without hurting service.',
-    stats: [{ k: 'Target', v: '30.0%', g: false }, { k: 'Recoverable', v: '$23K', g: true }] },
-  { key: 'delivery', label: 'Third-party delivery', pct: 6.1, amt: 116000, recoverable: 34800, target: 3.5,
+    body: 'On $1.9M revenue, each percentage point of food cost is $19K / year. This gap is ONE number — recipe-level margin bleeders, portion drift, vendor price creep, and untracked waste are the drivers inside it, not separate line items stacked on top.',
+    stats: [{ k: 'Target', v: '30.0%', g: false }, { k: 'Recoverable', v: '$57–114K', g: true }] },
+  { key: 'labor', label: 'Labor (incl. owner)', pct: 25.0, amt: 482900, recoverable: 0, target: 30.0,
+    headline: 'Labor is in line — once owner hours are counted',
+    body: 'At 25% all-in — including owner time valued at market — labor sits under the 30% benchmark. No recovery claim here; Copper Pot’s opportunity is on the food and channel side.',
+    stats: [{ k: 'All-in', v: '25.0%', g: false }, { k: 'Recoverable', v: '—', g: false }] },
+  { key: 'delivery', label: 'Third-party delivery', pct: 6.0, amt: 116000, recoverable: 46400, target: 3.5,
     headline: 'Delivery apps take ~25% of every order',
-    body: '24% of revenue flows through DoorDash / UberEats / GrubHub. Shifting 30% of that volume to direct ordering keeps the margin on every recovered sale.',
-    stats: [{ k: 'Fee rate', v: '~25%', g: false }, { k: 'Recoverable', v: '$35K', g: true }] },
-  { key: 'occupancy', label: 'Rent + occupancy', pct: 8.5, amt: 161500, recoverable: 0, target: 8.5,
+    body: '24% of revenue flows through DoorDash / UberEats / GrubHub. Shifting 20–40% of that volume to direct ordering keeps the margin on every recovered sale.',
+    stats: [{ k: 'Fee rate', v: '~25%', g: false }, { k: 'Recoverable', v: '$23–46K', g: true }] },
+  { key: 'occupancy', label: 'Rent + occupancy', pct: 10.0, amt: 193300, recoverable: 0, target: 10.0,
     headline: 'Rent is fixed — but it sets the math',
-    body: 'Occupancy costs are the one line that almost never moves. Everything else has to flex around it. Which is why the variable costs above deserve the scrutiny.',
-    stats: [{ k: 'Monthly', v: '$13.5K', g: false }, { k: 'Recoverable', v: '—', g: false }] },
-  { key: 'other', label: 'Other operating', pct: 9.5, amt: 180500, recoverable: 13000, target: 8.0,
-    headline: 'Utilities, supplies, marketing, repairs',
-    body: 'The miscellaneous line. Individually small, collectively meaningful. Most of the savings here come from vendor consolidation and untangling auto-renewing subscriptions.',
-    stats: [{ k: 'Target', v: '8.0%', g: false }, { k: 'Recoverable', v: '$13K', g: true }] },
-  { key: 'profit', label: 'Net profit', pct: 8.0, amt: 152000, recoverable: null, target: 12.0,
+    body: 'Occupancy is the one line that almost never moves. Everything else flexes around it — which is why the variable costs above get the scrutiny.',
+    stats: [{ k: 'Monthly', v: '$16.1K', g: false }, { k: 'Recoverable', v: '—', g: false }] },
+  { key: 'other', label: 'Packaging + other', pct: 4.5, amt: 87000, recoverable: 0, target: 4.5,
+    headline: 'Packaging, utilities, supplies, repairs',
+    body: 'The miscellaneous lines — individually small. Genuine savings come from vendor consolidation and untangling auto-renewing subscriptions, but it is not where Copper Pot’s recoverable dollars sit.',
+    stats: [{ k: 'Of revenue', v: '4.5%', g: false }, { k: 'Recoverable', v: '—', g: false }] },
+  { key: 'profit', label: 'Net profit', pct: 18.6, amt: 359700, recoverable: null, target: 22.0,
     headline: 'What\u2019s left — and what it could be',
-    body: 'At 8% net, The Copper Pot is in line with independent-restaurant norms. Close the recoverable gaps and net profit moves toward 15% — roughly doubling take-home.',
-    stats: [{ k: 'Current', v: '8.0%', g: false }, { k: 'Potential', v: '~15%', g: true }] },
+    body: 'At 18.6% the books look healthy, but that figure rides on owner hours valued at market and estimated overhead. The recoverable food and delivery gaps are real margin sitting just out of reach — closing them is what moves take-home.',
+    stats: [{ k: 'Current', v: '18.6%', g: false }, { k: 'Recoverable gaps', v: CP.oppStr, g: true }] },
 ];
 
 function MoneyFlow() {

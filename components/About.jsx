@@ -5,7 +5,16 @@ function About() {
     <section id="about">
       <div className="container about-grid">
         <div className="about-signature">
-          <div className="as-avatar">m</div>
+          {/* Drop a real photo at website/headshot.jpg to replace the monogram. */}
+          <div className="as-avatar">
+            <img
+              src="headshot.jpg"
+              alt="Mackenzie Lamanna"
+              className="as-photo"
+              onError={(e) => { e.currentTarget.style.display = 'none'; e.currentTarget.nextSibling.style.display = 'flex'; }}
+            />
+            <span className="as-monogram" style={{ display: 'none' }}>m</span>
+          </div>
           <div className="as-name">Mackenzie Lamanna</div>
           <div className="as-title">Applied Data Scientist · Operational Optimization</div>
           <div className="as-meta">
@@ -25,6 +34,11 @@ function About() {
               <div className="m-k">Engagements</div>
               <div className="m-v">6 months, then monthly</div>
             </div>
+          </div>
+          <div className="mb-seal" aria-label="Founding partner program: 3 spots left">
+            <div className="ms-sm">Founding</div>
+            <div className="ms-big">3</div>
+            <div className="ms-sm">spots left</div>
           </div>
         </div>
 

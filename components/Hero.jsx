@@ -5,12 +5,7 @@ function Hero() {
   const [rate, setRate] = React.useState(4);
 
   const recoverable = Math.round(revenue * rate / 100);
-  const engagementCost =
-    revenue < 1_000_000 ? 10500 :
-    revenue < 2_000_000 ? 17500 : 24500;
-  const tierName =
-    revenue < 1_000_000 ? '$500K – $1M tier' :
-    revenue < 2_000_000 ? '$1M – $2M tier' : '$2M+ tier';
+  const engagementCost = CP.fee.total; // flat $10,800 — 6 months at $1,800/mo
   const net = recoverable - engagementCost;
   const multiple = (recoverable / engagementCost).toFixed(1);
 
@@ -89,8 +84,8 @@ function Hero() {
 
           <div className="roi-result">
             <div className="roi-result-row">
-              <span className="k">{tierName}</span>
-              <span className="v">{fmt$full(engagementCost)} / yr 1</span>
+              <span className="k">6-month engagement</span>
+              <span className="v">{fmt$full(engagementCost)} total</span>
             </div>
             <div className="roi-result-row">
               <span className="k">Net after fees · {multiple}× ROI</span>
