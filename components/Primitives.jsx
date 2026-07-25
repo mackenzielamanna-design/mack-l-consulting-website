@@ -39,7 +39,7 @@ const CP = {
     voids:     { low: 5_800,  high: 11_600,  conf: 'High' },
   },
   // The standard engagement
-  fee: { monthly: 1_800, months: 6, total: 10_800 },
+  fee: { monthly: 1_800, months: 6, total: 10_800, diag: 2_500 },
 };
 
 Object.assign(window, { fmt$range, CP });

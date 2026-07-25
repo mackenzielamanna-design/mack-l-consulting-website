@@ -95,7 +95,23 @@ function Pricing() {
             </div>
 
             <div style={{
-              marginTop: 20, fontFamily: 'var(--mono)', fontSize: 11.5,
+              marginTop: 20, paddingTop: 16, borderTop: '1px dashed var(--rule)',
+              display: 'flex', justifyContent: 'space-between', alignItems: 'baseline',
+              gap: 16, flexWrap: 'wrap',
+            }}>
+              <div>
+                <strong>Just want the diagnostic?</strong>{' '}
+                <span style={{ color: 'var(--ink-mute)' }}>
+                  The same month-one report on its own — no contract, single location. Yours to keep either way.
+                </span>
+              </div>
+              <div style={{ fontFamily: 'var(--mono)', whiteSpace: 'nowrap' }}>
+                {fmt$full(CP.fee.diag)} <span style={{ color: 'var(--ink-mute)' }}>one-time</span>
+              </div>
+            </div>
+
+            <div style={{
+              marginTop: 16, fontFamily: 'var(--mono)', fontSize: 11.5,
               color: 'var(--ink-mute)', letterSpacing: '0.03em',
               paddingTop: 16, borderTop: '1px dashed var(--rule)',
             }}>
