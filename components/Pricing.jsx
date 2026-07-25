@@ -1,4 +1,4 @@
-/* Pricing — flat founding-partner engagement + live ROI */
+/* Pricing — flat engagement + live ROI */
 
 const REV_BANDS = [
   { key: 's', name: '$500K — $1M',  sub: 'Small independents', avgRev: 750_000 },
@@ -29,8 +29,8 @@ function Pricing() {
           <div className="pricing-detail" style={{ gridColumn: '1 / -1' }}>
             <div className="pd-head">
               <div className="pd-head-left">
-                <h3>Founding Partner engagement</h3>
-                <p>One of three founding spots. Founding-level pricing locked for the full engagement, in exchange for being first through the framework.</p>
+                <h3>The engagement</h3>
+                <p>One flat price for the full six months — diagnostic, implementation, and monitoring. Limited to three active clients at a time, so every engagement gets real attention.</p>
               </div>
               <div className="pd-summary">
                 <div className="ps-k">{CP.fee.months}-month total</div>
