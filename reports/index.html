@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Operational Diagnostic — Mack in Black</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f6f4ec; --bg-alt: #ece8dc; --card: #fffefb;
+    --ink: #16140f; --ink-soft: #423d34; --ink-mute: #615c50;
+    --rule: #16140f; --rule-soft: #d5cfbf;
+    --ember: #b5241c; --ember-soft: #f3dcd8;
+    --moss: #1d6b3f; --moss-soft: #dbe7dd;
+    --amber: #9a6b1c;
+    --sans: 'Archivo', system-ui, sans-serif;
+    --mono: 'JetBrains Mono', ui-monospace, Menlo, monospace;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: var(--sans); color: var(--ink); background: var(--bg);
+    line-height: 1.5; -webkit-font-smoothing: antialiased;
+    background-image:
+      linear-gradient(rgba(22,20,15,0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(22,20,15,0.05) 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+  .wrap { max-width: 1060px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Ledger strip header ── */
+  .strip {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .08em;
+    text-transform: uppercase; display: flex; flex-wrap: wrap; gap: 8px 24px;
+    justify-content: space-between; padding: 12px 0;
+    border-bottom: 2px solid var(--rule);
+  }
+  .strip .brand { font-weight: 700; }
+  .strip .brand em { color: var(--ember); font-style: normal; }
+  .masthead { padding: 36px 0 24px;
+    display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; }
+  .masthead h1 { font-weight: 900; font-size: clamp(32px, 4.6vw, 52px); letter-spacing: -0.02em; line-height: 1.02; }
+  .masthead h1 span { color: var(--ink-mute); font-weight: 700; display: block; font-size: .4em; letter-spacing: .12em; text-transform: uppercase; font-family: var(--mono); margin-bottom: 10px; }
+  .stamp {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--ember); border: 2px solid var(--ember); padding: 8px 14px; font-weight: 700;
+    transform: rotate(-2deg); background: var(--card);
+  }
+
+  /* ── Tabs ── */
+  .tabs { display: flex; flex-wrap: wrap; gap: 0; border: 2px solid var(--rule);
+    background: var(--card); box-shadow: 6px 6px 0 rgba(22,20,15,0.12); position: sticky; top: 12px; z-index: 5; }
+  .tab {
+    font-family: var(--mono); font-size: 11.5px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; padding: 12px 18px; cursor: pointer; background: none; border: none;
+    color: var(--ink-mute); border-right: 1px solid var(--rule-soft); flex: 1 0 auto;
+  }
+  .tab:last-child { border-right: none; }
+  .tab:hover { color: var(--ink); background: var(--bg-alt); }
+  .tab.active { color: var(--bg); background: var(--ink); }
+  .tab.active .tick { color: var(--ember); }
+  .tab .tick { margin-right: 6px; color: var(--rule-soft); }
+
+  /* ── Sections ── */
+  .pane { display: none; }
+  .pane.active { display: block; }
+  section { margin-top: 36px; }
+  .kicker {
+    font-family: var(--mono); font-size: 12px; font-weight: 700; letter-spacing: .1em;
+    text-transform: uppercase; display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;
+  }
+  .kicker .num { color: var(--ember); }
+  .kicker::after { content: ''; flex: 1; border-bottom: 1px solid var(--rule); }
+
+  .card { background: var(--card); border: 2px solid var(--rule); box-shadow: 6px 6px 0 rgba(22,20,15,0.12); }
+
+  /* ── Opportunity banner ── */
+  .opp { display: flex; flex-wrap: wrap; }
+  .opp-main { flex: 2 1 380px; padding: 28px 32px; border-right: 2px solid var(--rule); }
+  .opp-main .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ember); font-weight: 700; }
+  .opp-main .big { font-weight: 900; font-size: clamp(30px, 4.4vw, 48px); letter-spacing: -0.02em; margin-top: 6px; }
+  .opp-main .sub { color: var(--ink-mute); font-size: 14px; margin-top: 8px; max-width: 46ch; }
+  .opp-side { flex: 1 1 220px; display: grid; grid-template-rows: repeat(3, 1fr); }
+  .opp-side > div { padding: 12px 20px; display: flex; justify-content: space-between; align-items: baseline; gap: 10px; }
+  .opp-side > div + div { border-top: 1px solid var(--rule-soft); }
+  .opp-side .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-mute); }
+  .opp-side .v { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+
+  /* ── Scorecard tiles ── */
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); border: 2px solid var(--rule); background: var(--rule); gap: 2px; box-shadow: 6px 6px 0 rgba(22,20,15,0.12); }
+  .tile { background: var(--card); padding: 16px 18px; }
+  .tile .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-mute); }
+  .tile .v { font-weight: 900; font-size: 30px; letter-spacing: -0.02em; margin-top: 4px; }
+  .tile .v small { font-size: .55em; font-weight: 700; color: var(--ink-mute); }
+  .tile .t { font-family: var(--mono); font-size: 11px; margin-top: 4px; color: var(--ink-mute); }
+  .tile.bad .v { color: var(--ember); }
+  .tile.good .v { color: var(--moss); }
+  .flag { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 1px 7px; border: 1.5px solid currentColor; margin-left: 6px; vertical-align: middle; }
+  .bad .flag { color: var(--ember); } .good .flag { color: var(--moss); }
+
+  /* ── Findings ── */
+  .finding { padding: 22px 26px; }
+  .finding + .finding { border-top: 2px solid var(--rule); }
+  .f-head { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  .f-num { font-family: var(--mono); font-weight: 700; color: var(--ember); font-size: 13px; }
+  .f-label { font-weight: 800; font-size: 19px; letter-spacing: -0.01em; flex: 1; }
+  .f-range { font-family: var(--mono); font-weight: 700; font-size: 15px; white-space: nowrap; }
+  .f-range span { color: var(--ink-mute); font-weight: 400; font-size: 12px; }
+  .conf { font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border: 1.5px solid; }
+  .conf.High   { color: var(--moss); border-color: var(--moss); background: var(--moss-soft); }
+  .conf.Medium { color: var(--amber); border-color: var(--amber); background: #f2e8d4; }
+  .conf.Low    { color: var(--ink-mute); border-color: var(--ink-mute); background: var(--bg-alt); }
+  .f-bar { height: 12px; border: 1.5px solid var(--rule); margin: 12px 0 10px; position: relative; background: var(--card); }
+  .f-bar .lo { position: absolute; inset: 0 auto 0 0; background: var(--ember); }
+  .f-bar .hi { position: absolute; inset: 0 auto 0 0; background: repeating-linear-gradient(45deg, var(--ember-soft), var(--ember-soft) 4px, transparent 4px, transparent 8px); }
+  .f-detail { color: var(--ink-soft); font-size: 14px; max-width: 74ch; }
+  .f-meta { font-family: var(--mono); font-size: 11.5px; color: var(--ink-mute); margin-top: 8px; }
+  .f-meta b { color: var(--ink); font-weight: 700; }
+  .f-drivers { font-size: 12.5px; color: var(--ink-mute); margin-top: 8px; border-left: 3px solid var(--rule-soft); padding-left: 10px; }
+
+  /* Overview compact findings */
+  .mini { padding: 14px 22px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; cursor: pointer; }
+  .mini + .mini { border-top: 1px solid var(--rule-soft); }
+  .mini:hover { background: var(--bg-alt); }
+  .mini .f-label { font-size: 15.5px; font-weight: 700; }
+  .mini .go { font-family: var(--mono); font-size: 11px; color: var(--ember); font-weight: 700; }
+
+  /* ── Bars ── */
+  .charts { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  @media (max-width: 800px) { .charts { grid-template-columns: 1fr; } }
+  .chart { padding: 20px 22px; }
+  .chart h3 { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; margin-bottom: 16px; }
+  .bars { display: flex; align-items: flex-end; gap: 8px; height: 150px; }
+  .bar { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; height: 100%; text-align: center; }
+  .bar .fill { background: var(--ink); border: 1.5px solid var(--rule); border-bottom: none; min-height: 3px; }
+  .bar.peak .fill { background: var(--ember); }
+  .bar .lab { font-family: var(--mono); font-size: 10px; color: var(--ink-mute); margin-top: 6px; border-top: 2px solid var(--rule); padding-top: 5px; }
+  .bar .val { font-family: var(--mono); font-size: 9.5px; color: var(--ink-mute); margin-bottom: 3px; }
+
+  /* Horizontal share rows (categories, waste) */
+  .hrow { display: grid; grid-template-columns: minmax(120px, 200px) 1fr auto; gap: 12px; align-items: center; padding: 7px 0; font-size: 13.5px; }
+  .hrow + .hrow { border-top: 1px dashed var(--rule-soft); }
+  .hrow .hbar { height: 14px; border: 1.5px solid var(--rule); position: relative; background: var(--card); }
+  .hrow .hbar div { position: absolute; inset: 0 auto 0 0; background: var(--ink); }
+  .hrow.accent .hbar div { background: var(--ember); }
+  .hrow .hval { font-family: var(--mono); font-size: 12.5px; font-weight: 700; white-space: nowrap; }
+
+  /* ── Tables ── */
+  table.led { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+  .led th { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-mute); text-align: right; padding: 10px 14px; border-bottom: 2px solid var(--rule); }
+  .led th:first-child { text-align: left; }
+  .led td { padding: 8px 14px; border-bottom: 1px solid var(--rule-soft); font-family: var(--mono); font-size: 12.5px; text-align: right; white-space: nowrap; }
+  .led td:first-child { font-family: var(--sans); font-size: 13.5px; text-align: left; white-space: normal; }
+  .led tr:last-child td { border-bottom: none; }
+  .led tr.total td { border-top: 2px solid var(--rule); border-bottom: none; font-weight: 700; font-size: 14px; }
+  .pct { color: var(--ink-mute); font-size: 11.5px; }
+  .neg { color: var(--ember); }
+  .pos { color: var(--moss); }
+  .scrollx { overflow-x: auto; }
+  .note { color: var(--ink-mute); font-size: 13px; margin-bottom: 14px; max-width: 74ch; }
+
+  footer { margin-top: 56px; border-top: 2px solid var(--rule); padding-top: 16px;
+    font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: .04em;
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
+  #err { font-family: var(--mono); color: var(--ember); padding: 60px 0; display: none; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="strip">
+    <span class="brand">mack <em>in</em> black<span style="color:var(--ember)">.</span> — operational diagnostic</span>
+    <span id="s-window"></span>
+    <span id="s-generated"></span>
+  </div>
+
+  <div class="masthead">
+    <h1><span>Prepared for</span><span id="m-name" style="all:unset"></span></h1>
+    <div class="stamp">Confidential · Client copy</div>
+  </div>
+
+  <div id="err">Could not load report data.</div>
+  <div id="app" style="display:none">
+
+  <nav class="tabs" id="tabs"></nav>
+
+  <!-- ═══ OVERVIEW ═══ -->
+  <div class="pane" data-pane="overview">
+    <section>
+      <div class="kicker"><span class="num">01</span> The opportunity</div>
+      <div class="card opp">
+        <div class="opp-main">
+          <div class="lbl">Identified annual opportunity</div>
+          <div class="big" id="opp-range"></div>
+          <div class="sub">Ranked, non-overlapping findings. Low end is the defensible near-term recovery; high end is the full gap. Nothing is double-counted.</div>
+        </div>
+        <div class="opp-side" id="opp-side"></div>
+      </div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">02</span> Scorecard vs industry benchmarks</div>
+      <div class="tiles" id="tiles"></div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">03</span> Findings at a glance</div>
+      <div class="card" id="minis"></div>
+    </section>
+  </div>
+
+  <!-- ═══ FINDINGS ═══ -->
+  <div class="pane" data-pane="findings">
+    <section>
+      <div class="kicker"><span class="num">F</span> Findings, ranked by impact</div>
+      <div class="card" id="findings"></div>
+    </section>
+  </div>
+
+  <!-- ═══ MENU ═══ -->
+  <div class="pane" data-pane="menu">
+    <section>
+      <div class="kicker"><span class="num">M</span> Menu concentration</div>
+      <div class="tiles" id="menu-tiles"></div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">M</span> Top 10 sellers</div>
+      <div class="card scrollx"><table class="led" id="menu-top"></table></div>
+    </section>
+    <section id="menu-margin-sec">
+      <div class="kicker"><span class="num">M</span> Margin engine — winners &amp; underwater items</div>
+      <p class="note">Winners earn the most total contribution margin. Underwater items are popular but cost more than 35% of their price to make — reprice or re-engineer these first.</p>
+      <div class="charts">
+        <div class="card scrollx"><table class="led" id="menu-winners"></table></div>
+        <div class="card scrollx"><table class="led" id="menu-uw"></table></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══ VENDORS ═══ -->
+  <div class="pane" data-pane="vendors">
+    <section>
+      <div class="kicker"><span class="num">V</span> Where the food dollar goes</div>
+      <div class="card chart"><h3 id="vend-h"></h3><div id="vend-cats"></div></div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">V</span> Spend by vendor</div>
+      <div class="card scrollx"><table class="led" id="vend-table"></table></div>
+    </section>
+    <section id="creep-sec">
+      <div class="kicker"><span class="num">V</span> Price creep — items that quietly went up</div>
+      <p class="note">First invoice price vs latest, from line-item invoices. Bring this table to your vendor rep.</p>
+      <div class="card scrollx"><table class="led" id="creep-table"></table></div>
+    </section>
+    <section id="waste-sec">
+      <div class="kicker"><span class="num">V</span> Waste &amp; spoilage</div>
+      <p class="note" id="waste-note"></p>
+      <div class="charts">
+        <div class="card chart"><h3>Top wasted items (recorded cost)</h3><div id="waste-items"></div></div>
+        <div class="card chart"><h3>By reason</h3><div id="waste-reasons"></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══ RHYTHM ═══ -->
+  <div class="pane" data-pane="rhythm">
+    <section>
+      <div class="kicker"><span class="num">R</span> Where the week happens</div>
+      <div class="charts">
+        <div class="card chart"><h3>Net sales by day of week</h3><div class="bars" id="dow"></div></div>
+        <div class="card chart"><h3>Net sales by daypart</h3><div class="bars" id="daypart"></div></div>
+      </div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">R</span> The year in months</div>
+      <div class="charts">
+        <div class="card chart"><h3>Monthly net sales</h3><div class="bars" id="monthly"></div></div>
+        <div class="card chart"><h3>Average check by month</h3><div class="bars" id="checks"></div></div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ═══ P&L ═══ -->
+  <div class="pane" data-pane="pnl">
+    <section>
+      <div class="kicker"><span class="num">P</span> Estimated annual P&amp;L</div>
+      <p class="note" id="pnl-note"></p>
+      <div class="card scrollx"><table class="led" id="pnl"></table></div>
+    </section>
+  </div>
+
+  <footer>
+    <span>Every figure derives from one calculation engine — POS, payroll, and vendor data in; findings out.</span>
+    <span>Confidence: HIGH = source data · MEDIUM = assumption-driven · LOW = partial data</span>
+  </footer>
+  </div>
+</div>
+
+<script>
+const $ = (id) => document.getElementById(id);
+const usd  = (n) => '$' + Math.round(n).toLocaleString('en-US');
+const usdK = (n) => n >= 1000 ? '$' + Math.round(n / 1000) + 'K' : usd(n);
+const esc  = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
+
+const client = new URLSearchParams(location.search).get('client') || 'TheCopperPot';
+
+fetch(`data/${client}.json`).then(r => { if (!r.ok) throw 0; return r.json(); }).then(render)
+  .catch(() => { $('err').style.display = 'block'; });
+
+/* Tabs — hash-routed so a link can point at a specific pane */
+const TABS = [
+  ['overview', 'Overview'], ['findings', 'Findings'], ['menu', 'Menu'],
+  ['vendors', 'Vendors'], ['rhythm', 'Rhythm'], ['pnl', 'P&L'],
+];
+function showPane(key) {
+  document.querySelectorAll('.pane').forEach(p => p.classList.toggle('active', p.dataset.pane === key));
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.pane === key));
+  history.replaceState(null, '', '#' + key);
+}
+function buildTabs(hidden) {
+  $('tabs').innerHTML = TABS.filter(([k]) => !hidden.includes(k)).map(([k, label], i) =>
+    `<button class="tab" data-pane="${k}"><span class="tick">${String(i + 1).padStart(2, '0')}</span>${label}</button>`).join('');
+  document.querySelectorAll('.tab').forEach(t => t.onclick = () => showPane(t.dataset.pane));
+  const start = location.hash.slice(1);
+  showPane(TABS.some(([k]) => k === start && !hidden.includes(k)) ? start : 'overview');
+}
+
+function bars(el, rows, key, labKey, labFmt, valFmt) {
+  const max = Math.max(...rows.map(r => r[key]));
+  const peak = rows.findIndex(r => r[key] === max);
+  $(el).innerHTML = rows.map((r, i) => `
+    <div class="bar ${i === peak ? 'peak' : ''}">
+      <div class="val">${(valFmt || usdK)(r[key])}</div>
+      <div class="fill" style="height:${(r[key] / max * 100).toFixed(1)}%"></div>
+      <div class="lab">${labFmt ? labFmt(r[labKey]) : esc(r[labKey])}</div>
+    </div>`).join('');
+}
+function hrows(el, rows, labelKey, valKey, shareKey, accentFirst) {
+  const max = Math.max(...rows.map(r => r[valKey]));
+  $(el).innerHTML = rows.map((r, i) => `
+    <div class="hrow ${accentFirst && i === 0 ? 'accent' : ''}">
+      <span>${esc(r[labelKey])}</span>
+      <div class="hbar"><div style="width:${(r[valKey] / max * 100).toFixed(1)}%"></div></div>
+      <span class="hval">${usdK(r[valKey])}${shareKey ? ` <span class="pct">${r[shareKey]}%</span>` : ''}</span>
+    </div>`).join('');
+}
+
+function render(d) {
+  $('app').style.display = 'block';
+  document.title = `${d.meta.name} — Operational Diagnostic`;
+  $('m-name').textContent = d.meta.name;
+  $('s-window').textContent = `Data window: ${d.meta.window} (${d.meta.n_months} mo)`;
+  $('s-generated').textContent = `Generated ${d.meta.generated}`;
+
+  // R NULL serializes as {} — test for actual content, not truthiness
+  const hasMenu = d.menu && d.menu.top_items;
+  const hasWaste = d.waste && d.waste.top_items;
+  buildTabs([hasMenu ? null : 'menu'].filter(Boolean));
+
+  /* ── Overview ── */
+  const t = d.topline;
+  $('opp-range').textContent = `${usd(t.opp_low)} – ${usd(t.opp_high)}`;
+  $('opp-side').innerHTML = [
+    ['Annualized revenue', usd(t.annual_rev)],
+    ['Average check', '$' + t.avg_check.toFixed(2)],
+    ['Orders in window', t.total_orders.toLocaleString('en-US')],
+  ].map(([k, v]) => `<div><span class="k">${k}</span><span class="v">${v}</span></div>`).join('');
+
+  $('tiles').innerHTML = d.metrics.map(m => {
+    const has = m.target !== null && m.target !== undefined;
+    const over = has && m.value > m.target;
+    const cls = !has ? '' : over ? 'bad' : 'good';
+    const flag = !has ? '' : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">on target</span>`;
+    return `<div class="tile ${cls}">
+      <div class="k">${m.label}</div>
+      <div class="v">${m.value}<small>%</small>${flag}</div>
+      <div class="t">target ${has ? m.target + '%' : '—'} · ${m.range}</div>
+    </div>`;
+  }).join('');
+
+  $('minis').innerHTML = d.findings.map((f, i) => `
+    <div class="mini" onclick="showPane('findings')">
+      <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="f-label">${esc(f.label)}</span>
+      <span class="conf ${f.confidence}">${f.confidence}</span>
+      <span class="f-range">${usdK(f.low)}–${usdK(f.high)} <span>/yr</span></span>
+      <span class="go">detail →</span>
+    </div>`).join('');
+
+  /* ── Findings ── */
+  const maxHigh = Math.max(...d.findings.map(f => f.high));
+  $('findings').innerHTML = d.findings.map((f, i) => `
+    <div class="finding">
+      <div class="f-head">
+        <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
+        <span class="f-label">${esc(f.label)}</span>
+        <span class="conf ${f.confidence}">${f.confidence}</span>
+        <span class="f-range">${usdK(f.low)}–${usdK(f.high)} <span>/yr</span></span>
+      </div>
+      <div class="f-bar">
+        <div class="hi" style="width:${(f.high / maxHigh * 100).toFixed(1)}%"></div>
+        <div class="lo" style="width:${(f.low / maxHigh * 100).toFixed(1)}%"></div>
+      </div>
+      <div class="f-detail">${esc(f.detail)}</div>
+      ${f.drivers ? `<div class="f-drivers">${esc(f.drivers)}</div>` : ''}
+      <div class="f-meta"><b>Do this:</b> ${esc(f.rec)} &nbsp;·&nbsp; basis: ${esc(f.basis)}</div>
+    </div>`).join('');
+
+  /* ── Menu ── */
+  if (hasMenu) {
+    const m = d.menu;
+    const tiles = [
+      [`${m.items_80}`, 'items make 80% of sales', ''],
+      [`${m.top10_share}%`, 'of sales from top 10 items', ''],
+      [`${m.total_items}`, 'items on the printed menu', ''],
+    ];
+    if (m.weighted_fc_pct) tiles.push([`${m.weighted_fc_pct}%`, 'recipe-weighted food cost', m.weighted_fc_pct > 30 ? 'bad' : 'good']);
+    $('menu-tiles').innerHTML = tiles.map(([v, k, cls]) => `
+      <div class="tile ${cls}"><div class="v">${v}</div><div class="t">${k}</div></div>`).join('');
+
+    $('menu-top').innerHTML = `<tr><th>Item</th><th>Category</th><th>Qty</th><th>Net sales</th><th>Share</th></tr>` +
+      m.top_items.map(r => `<tr><td>${esc(r.item)}</td><td>${esc(r.category)}</td><td>${r.qty.toLocaleString()}</td><td>${usd(r.net_sales)}</td><td>${r.share}%</td></tr>`).join('');
+
+    if (m.winners) {
+      $('menu-winners').innerHTML = `<tr><th>Winner</th><th>Qty</th><th>CM each</th><th>CM total</th></tr>` +
+        m.winners.map(r => `<tr><td>${esc(r.item)}</td><td>${r.qty.toLocaleString()}</td><td class="pos">$${r.cm_each.toFixed(2)}</td><td class="pos">${usd(r.cm_total)}</td></tr>`).join('');
+      $('menu-uw').innerHTML = `<tr><th>Underwater</th><th>Qty</th><th>Price</th><th>Cost</th><th>Food %</th></tr>` +
+        m.underwater.map(r => `<tr><td>${esc(r.item)}</td><td>${r.qty.toLocaleString()}</td><td>$${r.price.toFixed(2)}</td><td>$${r.food_cost.toFixed(2)}</td><td class="neg">${r.fc_pct}%</td></tr>`).join('');
+    } else {
+      $('menu-margin-sec').style.display = 'none';
+    }
+  }
+
+  /* ── Vendors ── */
+  const v = d.vendors;
+  $('vend-h').textContent = `${usdK(v.total)} identified spend over ${v.months} months (${v.detail || 'summary'}) · ${usdK(v.annual_food)}/yr annualized`;
+  hrows('vend-cats', v.categories, 'category', 'spend', 'share', true);
+  $('vend-table').innerHTML = `<tr><th>Vendor</th><th>Category</th><th>Spend</th></tr>` +
+    v.vendors.map(r => `<tr><td>${esc(r.vendor)}</td><td>${esc(r.category)}</td><td>${usd(r.spend)}</td></tr>`).join('');
+  if (v.creep && v.creep.length) {
+    $('creep-table').innerHTML = `<tr><th>Item</th><th>First</th><th>Latest</th><th>Change</th><th>Annual impact</th></tr>` +
+      v.creep.map(r => `<tr><td>${esc(r.item)}</td><td>$${r.first_price.toFixed(2)}</td><td>$${r.last_price.toFixed(2)}</td><td class="neg">+${r.pct_change}%</td><td class="neg">${usd(r.annual_impact)}</td></tr>`).join('');
+  } else {
+    $('creep-sec').style.display = 'none';
+  }
+  if (hasWaste) {
+    $('waste-note').textContent = `${usd(d.waste.weekly)}/week in recorded waste — ${usd(d.waste.annual)}/yr annualized. Self-reported log, so treat as a floor.`;
+    hrows('waste-items', d.waste.top_items, 'item', 'cost', null, true);
+    hrows('waste-reasons', d.waste.reasons, 'reason', 'cost', null, true);
+  } else {
+    $('waste-sec').style.display = 'none';
+  }
+
+  /* ── Rhythm ── */
+  bars('dow', d.dow, 'net_sales', 'day');
+  bars('daypart', d.daypart, 'net_sales', 'part');
+  bars('monthly', d.monthly, 'net_sales', 'month', m => m.split(' ')[0]);
+  bars('checks', d.monthly, 'avg_check', 'month', m => m.split(' ')[0], n => '$' + n.toFixed(0));
+
+  /* ── P&L ── */
+  const p = d.pnl, rev = p.revenue;
+  const pct = (n) => `<span class="pct">${(n / rev * 100).toFixed(1)}%</span>`;
+  const row = (label, n, sign) => `<tr><td>${label}</td><td class="${sign || ''}">${sign === 'neg' ? '(' + usd(n) + ')' : usd(n)}</td><td>${pct(n)}</td></tr>`;
+  $('pnl-note').textContent = `Occupancy and other overhead are estimated at benchmark rates. "Real profit" prices the owner's ${p.owner_weekly_hours} hrs/week at market rate — the number that matters if the owner ever steps back.`;
+  $('pnl').innerHTML = `
+    <tr><th>Line</th><th>Annual</th><th>% of rev</th></tr>
+    ${row('Revenue (annualized)', p.revenue)}
+    ${row('Food', p.food, 'neg')}
+    ${row('Labor (paid staff)', p.labor, 'neg')}
+    ${row('3rd-party commissions', p.commission, 'neg')}
+    ${row('Packaging', p.packaging, 'neg')}
+    ${row('Occupancy (est.)', p.occupancy, 'neg')}
+    ${row('Other (est.)', p.other, 'neg')}
+    <tr class="total"><td>Profit on paper (owner unpaid)</td><td>${usd(p.profit_on_paper)}</td><td>${pct(p.profit_on_paper)}</td></tr>
+    ${row('Owner hours at market rate', p.owner, 'neg')}
+    <tr class="total"><td>Real profit</td><td class="${p.profit_real >= 0 ? 'pos' : 'neg'}">${usd(p.profit_real)}</td><td>${pct(p.profit_real)}</td></tr>`;
+}
+</script>
+</body>
+</html>

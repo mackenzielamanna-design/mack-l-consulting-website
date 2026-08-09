@@ -1,0 +1,594 @@
+{
+  "meta": {
+    "name": "The Copper Pot",
+    "window": "Apr 2025 – Mar 2026",
+    "n_months": 11.5,
+    "generated": "July 29, 2026"
+  },
+  "topline": {
+    "annual_rev": 1933428,
+    "runrate_delta_pct": -6,
+    "avg_check": 35.19,
+    "total_orders": 52649,
+    "opp_low": 100738,
+    "opp_high": 201476
+  },
+  "metrics": [
+    {
+      "key": "food",
+      "label": "Food cost",
+      "value": 35.9,
+      "target": 30,
+      "range": "28–32%",
+      "method": "recipe-weighted"
+    },
+    {
+      "key": "labor",
+      "label": "Labor (paid staff)",
+      "value": 21.7,
+      "target": 30,
+      "range": "28–32%",
+      "method": "payroll vs POS"
+    },
+    {
+      "key": "prime",
+      "label": "Prime cost (all-in)",
+      "value": 60.9,
+      "target": 65,
+      "range": "60–65%",
+      "method": "food + labor incl. owner"
+    },
+    {
+      "key": "voids",
+      "label": "Void rate",
+      "value": 1.6,
+      "target": 1,
+      "range": "0.5–1%",
+      "method": "POS void summary"
+    },
+    {
+      "key": "disc",
+      "label": "Discounts",
+      "value": 2.4,
+      "target": 2,
+      "range": "1–2%",
+      "method": "POS, % of gross"
+    },
+    {
+      "key": "tp",
+      "label": "3rd-party delivery",
+      "value": 24,
+      "target": null,
+      "range": "≈25% commission",
+      "method": "% of revenue via apps"
+    }
+  ],
+  "findings": [
+    {
+      "label": "Food cost above target",
+      "detail": "Recipe-weighted food cost is 35.9% vs the 30% target (industry range 28-32%). Low end assumes half the gap closes in year one.",
+      "category": "Food cost",
+      "confidence": "High",
+      "basis": "Recipe costs joined to item-level POS sales",
+      "low": 57236,
+      "high": 114472,
+      "rec": "Reprice or re-engineer Classic Burger first, then audit portions on top sellers.",
+      "drivers": "Drivers already inside this number, not additional: 24 vendor items up >3% ($10,064/yr); recorded waste ($15,369/yr); 9 high-volume items costing >35% (worst: Classic Burger)."
+    },
+    {
+      "label": "Third-party delivery fees",
+      "detail": "24% of revenue through apps at ~25% commission. Range assumes 20-40% of app volume can shift to direct ordering.",
+      "category": "Channel mix",
+      "confidence": "Medium",
+      "basis": "POS channel data; shift rate is an assumption",
+      "low": 23201,
+      "high": 46402,
+      "rec": "Shift delivery volume to direct ordering — promote it at pickup and on packaging.",
+      "drivers": {}
+    },
+    {
+      "label": "Discounting at 2.4% of gross",
+      "detail": "Above the 1-2% typical range. Range assumes 30-60% of discount spend is recoverable without hurting traffic.",
+      "category": "Revenue leak",
+      "confidence": "Medium",
+      "basis": "POS discount data; recovery share is an assumption",
+      "low": 14501,
+      "high": 29001,
+      "rec": "Audit discount programs. Cut the ones that aren't driving repeat visits.",
+      "drivers": {}
+    },
+    {
+      "label": "Void rate at 1.6% (target: <1%)",
+      "detail": "Excess voids — likely POS errors or training gaps.",
+      "category": "Revenue leak",
+      "confidence": "High",
+      "basis": "POS void summary",
+      "low": 5800,
+      "high": 11601,
+      "rec": "Pull void detail by employee/shift to find the pattern.",
+      "drivers": {}
+    }
+  ],
+  "pnl": {
+    "revenue": 1933428,
+    "food": 694501,
+    "labor": 419930,
+    "owner": 62960,
+    "commission": 116006,
+    "packaging": 29001,
+    "occupancy": 193343,
+    "other": 58003,
+    "profit_on_paper": 422645,
+    "profit_real": 359685,
+    "owner_weekly_hours": 61
+  },
+  "dow": [
+    {
+      "day": "Mon",
+      "net_sales": 201110,
+      "orders": 5766
+    },
+    {
+      "day": "Tue",
+      "net_sales": 216354,
+      "orders": 6140
+    },
+    {
+      "day": "Wed",
+      "net_sales": 235172,
+      "orders": 6663
+    },
+    {
+      "day": "Thu",
+      "net_sales": 254294,
+      "orders": 7293
+    },
+    {
+      "day": "Fri",
+      "net_sales": 318596,
+      "orders": 9072
+    },
+    {
+      "day": "Sat",
+      "net_sales": 347977,
+      "orders": 9838
+    },
+    {
+      "day": "Sun",
+      "net_sales": 279366,
+      "orders": 7877
+    }
+  ],
+  "monthly": [
+    {
+      "month": "Apr 25",
+      "net_sales": 151354,
+      "avg_check": 35.75
+    },
+    {
+      "month": "May 25",
+      "net_sales": 171655,
+      "avg_check": 35.12
+    },
+    {
+      "month": "Jun 25",
+      "net_sales": 167974,
+      "avg_check": 34.97
+    },
+    {
+      "month": "Jul 25",
+      "net_sales": 183982,
+      "avg_check": 34.92
+    },
+    {
+      "month": "Aug 25",
+      "net_sales": 180675,
+      "avg_check": 35.1
+    },
+    {
+      "month": "Sep 25",
+      "net_sales": 164325,
+      "avg_check": 34.96
+    },
+    {
+      "month": "Oct 25",
+      "net_sales": 154765,
+      "avg_check": 35.52
+    },
+    {
+      "month": "Nov 25",
+      "net_sales": 144060,
+      "avg_check": 34.57
+    },
+    {
+      "month": "Dec 25",
+      "net_sales": 170327,
+      "avg_check": 35.76
+    },
+    {
+      "month": "Jan 26",
+      "net_sales": 144366,
+      "avg_check": 34.59
+    },
+    {
+      "month": "Feb 26",
+      "net_sales": 139857,
+      "avg_check": 36.18
+    },
+    {
+      "month": "Mar 26",
+      "net_sales": 79529,
+      "avg_check": 34.87
+    }
+  ],
+  "daypart": [
+    {
+      "part": "Brunch",
+      "net_sales": 74115,
+      "orders": 2105
+    },
+    {
+      "part": "Lunch",
+      "net_sales": 704090,
+      "orders": 20006
+    },
+    {
+      "part": "Dinner",
+      "net_sales": 1074663,
+      "orders": 30536
+    },
+    {
+      "part": "Total",
+      "net_sales": 1852868,
+      "orders": 52647
+    }
+  ],
+  "menu": {
+    "items_80": 26,
+    "total_items": 47,
+    "total_items_sold": 47,
+    "top10_share": 45.6,
+    "top_items": [
+      {
+        "item": "Classic Burger",
+        "category": "Entrees",
+        "qty": 3800,
+        "net_sales": 56229,
+        "share": 7.9
+      },
+      {
+        "item": "Copper Pot Burger",
+        "category": "Entrees",
+        "qty": 2400,
+        "net_sales": 39583,
+        "share": 5.6
+      },
+      {
+        "item": "Grilled Chicken Sandwich",
+        "category": "Entrees",
+        "qty": 2600,
+        "net_sales": 38385,
+        "share": 5.4
+      },
+      {
+        "item": "French Fries",
+        "category": "Sides",
+        "qty": 5200,
+        "net_sales": 30741,
+        "share": 4.3
+      },
+      {
+        "item": "House Margarita",
+        "category": "Cocktails",
+        "qty": 2200,
+        "net_sales": 29864,
+        "share": 4.2
+      },
+      {
+        "item": "Craft IPA 16oz",
+        "category": "Beer",
+        "qty": 3400,
+        "net_sales": 28384,
+        "share": 4
+      },
+      {
+        "item": "Chicken Parmesan",
+        "category": "Entrees",
+        "qty": 1500,
+        "net_sales": 28085,
+        "share": 4
+      },
+      {
+        "item": "Wings (12 pc)",
+        "category": "Starters",
+        "qty": 1400,
+        "net_sales": 26178,
+        "share": 3.7
+      },
+      {
+        "item": "Old Fashioned",
+        "category": "Cocktails",
+        "qty": 1600,
+        "net_sales": 23408,
+        "share": 3.3
+      },
+      {
+        "item": "Fish & Chips",
+        "category": "Entrees",
+        "qty": 1300,
+        "net_sales": 22828,
+        "share": 3.2
+      }
+    ],
+    "weighted_fc_pct": 35.9,
+    "winners": [
+      {
+        "item": "Classic Burger",
+        "qty": 3800,
+        "fc_pct": 39.7,
+        "cm_each": 9.04,
+        "cm_total": 34352
+      },
+      {
+        "item": "Grilled Chicken Sandwich",
+        "qty": 2600,
+        "fc_pct": 34.7,
+        "cm_each": 9.79,
+        "cm_total": 25454
+      },
+      {
+        "item": "French Fries",
+        "qty": 5200,
+        "fc_pct": 23.4,
+        "cm_each": 4.59,
+        "cm_total": 23868
+      },
+      {
+        "item": "House Margarita",
+        "qty": 2200,
+        "fc_pct": 22.9,
+        "cm_each": 10.79,
+        "cm_total": 23738
+      },
+      {
+        "item": "Copper Pot Burger",
+        "qty": 2400,
+        "fc_pct": 41.8,
+        "cm_each": 9.89,
+        "cm_total": 23736
+      }
+    ],
+    "underwater": [
+      {
+        "item": "Wings (12 pc)",
+        "qty": 1400,
+        "price": 18.99,
+        "food_cost": 9.1,
+        "fc_pct": 47.9
+      },
+      {
+        "item": "Pan-Seared Salmon",
+        "qty": 900,
+        "price": 24.99,
+        "food_cost": 11.8,
+        "fc_pct": 47.2
+      },
+      {
+        "item": "Wings (6 pc)",
+        "qty": 1900,
+        "price": 10.99,
+        "food_cost": 4.8,
+        "fc_pct": 43.7
+      },
+      {
+        "item": "Copper Pot Burger",
+        "qty": 2400,
+        "price": 16.99,
+        "food_cost": 7.1,
+        "fc_pct": 41.8
+      },
+      {
+        "item": "Fish & Chips",
+        "qty": 1300,
+        "price": 17.99,
+        "food_cost": 7.4,
+        "fc_pct": 41.1
+      },
+      {
+        "item": "Classic Burger",
+        "qty": 3800,
+        "price": 14.99,
+        "food_cost": 5.95,
+        "fc_pct": 39.7
+      },
+      {
+        "item": "Cobb Salad",
+        "qty": 800,
+        "price": 14.99,
+        "food_cost": 5.8,
+        "fc_pct": 38.7
+      },
+      {
+        "item": "Crispy Calamari",
+        "qty": 1200,
+        "price": 13.99,
+        "food_cost": 5.4,
+        "fc_pct": 38.6
+      },
+      {
+        "item": "Chicken Parmesan",
+        "qty": 1500,
+        "price": 18.99,
+        "food_cost": 6.8,
+        "fc_pct": 35.8
+      }
+    ]
+  },
+  "vendors": {
+    "months": 11.5,
+    "total": 118351,
+    "annual_food": 123497,
+    "detail": "Line-item",
+    "categories": [
+      {
+        "category": "Broadline distributor",
+        "spend": 69740,
+        "share": 58.9
+      },
+      {
+        "category": "Beer, wine & spirits",
+        "spend": 29733,
+        "share": 25.1
+      },
+      {
+        "category": "Local produce supplier",
+        "spend": 18878,
+        "share": 16
+      }
+    ],
+    "vendors": [
+      {
+        "vendor": "Sysco",
+        "category": "Broadline distributor",
+        "spend": 60648
+      },
+      {
+        "vendor": "Capital Beverage",
+        "category": "Beer, wine & spirits",
+        "spend": 29733
+      },
+      {
+        "vendor": "Local Produce Co",
+        "category": "Local produce supplier",
+        "spend": 18878
+      },
+      {
+        "vendor": "US Foods",
+        "category": "Broadline distributor",
+        "spend": 9092
+      }
+    ],
+    "creep": [
+      {
+        "item": "Ground Beef 80/20",
+        "first_price": 78.44,
+        "last_price": 85.67,
+        "pct_change": 9.2,
+        "annual_impact": 1518
+      },
+      {
+        "item": "Chicken Breast 6oz",
+        "first_price": 57.91,
+        "last_price": 62.3,
+        "pct_change": 7.6,
+        "annual_impact": 1138
+      },
+      {
+        "item": "Craft IPA Keg",
+        "first_price": 185.16,
+        "last_price": 201.43,
+        "pct_change": 8.8,
+        "annual_impact": 1008
+      },
+      {
+        "item": "Salmon Fillet 8oz",
+        "first_price": 108.09,
+        "last_price": 117.96,
+        "pct_change": 9.1,
+        "annual_impact": 885
+      },
+      {
+        "item": "Tomatoes",
+        "first_price": 2.07,
+        "last_price": 2.34,
+        "pct_change": 13,
+        "annual_impact": 615
+      },
+      {
+        "item": "House Lager Keg",
+        "first_price": 144.92,
+        "last_price": 156.15,
+        "pct_change": 7.7,
+        "annual_impact": 562
+      },
+      {
+        "item": "Shrimp 21-25 2lb",
+        "first_price": 21.96,
+        "last_price": 25.93,
+        "pct_change": 18.1,
+        "annual_impact": 439
+      },
+      {
+        "item": "Frozen Fries 5lb",
+        "first_price": 8.31,
+        "last_price": 9.12,
+        "pct_change": 9.7,
+        "annual_impact": 407
+      }
+    ]
+  },
+  "waste": {
+    "annual": 15369,
+    "weekly": 296,
+    "top_items": [
+      {
+        "item": "French Fries",
+        "cost": 1131
+      },
+      {
+        "item": "Tomatoes",
+        "cost": 937
+      },
+      {
+        "item": "Salmon Fillet 8oz",
+        "cost": 857
+      },
+      {
+        "item": "Mixed Greens",
+        "cost": 690
+      },
+      {
+        "item": "Brioche Buns 48ct",
+        "cost": 625
+      },
+      {
+        "item": "Ground Beef 80/20",
+        "cost": 608
+      },
+      {
+        "item": "Chicken Breast 6oz",
+        "cost": 601
+      },
+      {
+        "item": "Calamari Tubes",
+        "cost": 599
+      }
+    ],
+    "reasons": [
+      {
+        "reason": "spoiled",
+        "cost": 2161
+      },
+      {
+        "reason": "overproduced",
+        "cost": 1739
+      },
+      {
+        "reason": "expired",
+        "cost": 1456
+      },
+      {
+        "reason": "stale",
+        "cost": 625
+      },
+      {
+        "reason": "misfire/return",
+        "cost": 601
+      },
+      {
+        "reason": "wilted",
+        "cost": 362
+      }
+    ]
+  }
+}

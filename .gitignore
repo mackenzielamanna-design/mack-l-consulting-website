@@ -1,1 +1,6 @@
 .vercel
+
+# Client report data — real clients are NEVER committed/deployed.
+# Only the Copper Pot demo (mock data) ships.
+reports/data/*.json
+!reports/data/TheCopperPot.json
