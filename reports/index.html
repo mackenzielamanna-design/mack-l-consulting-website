@@ -215,7 +215,7 @@
   <!-- ═══ OVERVIEW ═══ -->
   <div class="pane" data-pane="overview">
     <section>
-      <div class="kicker"><span class="num">01</span> The opportunity <span class="src"><b>data:</b> all sources below, combined</span></div>
+      <div class="kicker"><span class="num">01</span> The opportunity <span class="src"><b>data:</b> all sources, combined</span></div>
       <div class="card opp">
         <div class="opp-main">
           <div class="lbl">Identified annual opportunity</div>
@@ -367,7 +367,7 @@ function hrows(el, rows, labelKey, valKey, shareKey, accentFirst) {
     <div class="hrow ${accentFirst && i === 0 ? 'accent' : ''}">
       <span>${esc(r[labelKey])}</span>
       <div class="hbar"><div style="width:${(r[valKey] / max * 100).toFixed(1)}%"></div></div>
-      <span class="hval">${usdK(r[valKey])}${shareKey ? ` <span class="pct">${r[shareKey]}%</span>` : ''}</span>
+      <span class="hval">${r[valKey] < 10000 ? usd(r[valKey]) : usdK(r[valKey])}${shareKey ? ` <span class="pct">${r[shareKey]}%</span>` : ''}</span>
     </div>`).join('');
 }
 
