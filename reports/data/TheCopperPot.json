@@ -3,7 +3,8 @@
     "name": "The Copper Pot",
     "window": "Apr 2025 – Mar 2026",
     "n_months": 11.5,
-    "generated": "July 29, 2026"
+    "generated": "August 18, 2026",
+    "partial_last_month": true
   },
   "topline": {
     "annual_rev": 1933428,
@@ -59,7 +60,7 @@
       "label": "3rd-party delivery",
       "value": 24,
       "target": null,
-      "range": "≈25% commission",
+      "range": "~25% commission",
       "method": "% of revenue via apps"
     }
   ],
@@ -83,7 +84,7 @@
       "basis": "POS channel data; shift rate is an assumption",
       "low": 23201,
       "high": 46402,
-      "rec": "Shift delivery volume to direct ordering — promote it at pickup and on packaging.",
+      "rec": "Shift delivery volume to direct ordering. Promote it at pickup and on packaging.",
       "drivers": {}
     },
     {
@@ -99,7 +100,7 @@
     },
     {
       "label": "Void rate at 1.6% (target: <1%)",
-      "detail": "Excess voids — likely POS errors or training gaps.",
+      "detail": "Excess voids, likely POS errors or training gaps.",
       "category": "Revenue leak",
       "confidence": "High",
       "basis": "POS void summary",

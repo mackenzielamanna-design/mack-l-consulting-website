@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>Operational Diagnostic — Mack in Black</title>
+<title>Operational Diagnostic · Mack in Black</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -71,7 +71,10 @@
     text-transform: uppercase; display: flex; align-items: baseline; gap: 12px; margin-bottom: 16px;
   }
   .kicker .num { color: var(--ember); }
-  .kicker::after { content: ''; flex: 1; border-bottom: 1px solid var(--rule); }
+  .kicker::after { content: ''; flex: 1; border-bottom: 1px solid var(--rule); order: 1; }
+  .kicker .src { order: 2; font-weight: 400; text-transform: none; letter-spacing: .02em; font-size: 11px; color: var(--ink-mute); white-space: nowrap; }
+  .kicker .src b { font-weight: 700; color: var(--ink-soft); }
+  @media (max-width: 640px) { .kicker { flex-wrap: wrap; } .kicker .src { flex-basis: 100%; order: 3; margin-top: 4px; white-space: normal; } }
 
   .card { background: var(--card); border: 2px solid var(--rule); box-shadow: 6px 6px 0 rgba(22,20,15,0.12); }
 
@@ -164,12 +167,37 @@
     font-family: var(--mono); font-size: 11px; color: var(--ink-mute); letter-spacing: .04em;
     display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px; }
   #err { font-family: var(--mono); color: var(--ember); padding: 60px 0; display: none; }
+
+  /* ── Mobile ── */
+  @media (max-width: 640px) {
+    .wrap { padding: 0 14px 60px; }
+    .tabs { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; top: 8px; }
+    .tabs::-webkit-scrollbar { display: none; }
+    .tab { flex: 0 0 auto; padding: 11px 14px; font-size: 11px; }
+    #s-generated { display: none; }
+    .masthead { padding: 26px 0 18px; }
+    .stamp { font-size: 10px; padding: 6px 10px; }
+    .opp-main { padding: 20px 18px; border-right: none; border-bottom: 2px solid var(--rule); }
+    .opp-side > div { padding: 10px 18px; }
+    .tile { padding: 12px 14px; }
+    .tile .v { font-size: 26px; }
+    .finding { padding: 16px 16px; }
+    .mini { padding: 12px 16px; }
+    .led th, .led td { padding: 7px 10px; }
+    .led td:first-child { min-width: 120px; }
+    .chart { padding: 16px 14px; }
+    .bars { gap: 4px; height: 130px; }
+    .bar .val { font-size: 8.5px; }
+    .bar .lab { font-size: 9px; }
+    .hrow { grid-template-columns: minmax(90px, 130px) 1fr auto; font-size: 12.5px; }
+    footer { flex-direction: column; }
+  }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="strip">
-    <span class="brand">mack <em>in</em> black<span style="color:var(--ember)">.</span> — operational diagnostic</span>
+    <span class="brand">mack <em>in</em> black<span style="color:var(--ember)">.</span> · operational diagnostic</span>
     <span id="s-window"></span>
     <span id="s-generated"></span>
   </div>
@@ -187,7 +215,7 @@
   <!-- ═══ OVERVIEW ═══ -->
   <div class="pane" data-pane="overview">
     <section>
-      <div class="kicker"><span class="num">01</span> The opportunity</div>
+      <div class="kicker"><span class="num">01</span> The opportunity <span class="src"><b>data:</b> all sources below, combined</span></div>
       <div class="card opp">
         <div class="opp-main">
           <div class="lbl">Identified annual opportunity</div>
@@ -198,11 +226,11 @@
       </div>
     </section>
     <section>
-      <div class="kicker"><span class="num">02</span> Scorecard vs industry benchmarks</div>
+      <div class="kicker"><span class="num">02</span> Scorecard vs industry benchmarks <span class="src"><b>data:</b> POS · payroll · vendor invoices · recipe costs</span></div>
       <div class="tiles" id="tiles"></div>
     </section>
     <section>
-      <div class="kicker"><span class="num">03</span> Findings at a glance</div>
+      <div class="kicker"><span class="num">03</span> Findings at a glance <span class="src"><b>data:</b> each finding lists its own basis</span></div>
       <div class="card" id="minis"></div>
     </section>
   </div>
@@ -210,7 +238,7 @@
   <!-- ═══ FINDINGS ═══ -->
   <div class="pane" data-pane="findings">
     <section>
-      <div class="kicker"><span class="num">F</span> Findings, ranked by impact</div>
+      <div class="kicker"><span class="num">01</span> Findings, ranked by impact <span class="src"><b>data:</b> basis shown per finding</span></div>
       <div class="card" id="findings"></div>
     </section>
   </div>
@@ -218,16 +246,16 @@
   <!-- ═══ MENU ═══ -->
   <div class="pane" data-pane="menu">
     <section>
-      <div class="kicker"><span class="num">M</span> Menu concentration</div>
+      <div class="kicker"><span class="num">01</span> Menu concentration <span class="src"><b>data:</b> Toast product mix · printed menu</span></div>
       <div class="tiles" id="menu-tiles"></div>
     </section>
     <section>
-      <div class="kicker"><span class="num">M</span> Top 10 sellers</div>
+      <div class="kicker"><span class="num">02</span> Top 10 sellers <span class="src"><b>data:</b> Toast product mix</span></div>
       <div class="card scrollx"><table class="led" id="menu-top"></table></div>
     </section>
     <section id="menu-margin-sec">
-      <div class="kicker"><span class="num">M</span> Margin engine — winners &amp; underwater items</div>
-      <p class="note">Winners earn the most total contribution margin. Underwater items are popular but cost more than 35% of their price to make — reprice or re-engineer these first.</p>
+      <div class="kicker"><span class="num">03</span> Margin engine: winners &amp; underwater items <span class="src"><b>data:</b> recipe costs joined to product mix</span></div>
+      <p class="note">Winners earn the most total contribution margin. Underwater items are popular but cost more than 35% of their price to make. Reprice or re-engineer these first.</p>
       <div class="charts">
         <div class="card scrollx"><table class="led" id="menu-winners"></table></div>
         <div class="card scrollx"><table class="led" id="menu-uw"></table></div>
@@ -238,20 +266,20 @@
   <!-- ═══ VENDORS ═══ -->
   <div class="pane" data-pane="vendors">
     <section>
-      <div class="kicker"><span class="num">V</span> Where the food dollar goes</div>
+      <div class="kicker"><span class="num">01</span> Vendor spend by category <span class="src"><b>data:</b> vendor invoices</span></div>
       <div class="card chart"><h3 id="vend-h"></h3><div id="vend-cats"></div></div>
     </section>
     <section>
-      <div class="kicker"><span class="num">V</span> Spend by vendor</div>
+      <div class="kicker"><span class="num">02</span> Spend by vendor <span class="src"><b>data:</b> vendor invoices</span></div>
       <div class="card scrollx"><table class="led" id="vend-table"></table></div>
     </section>
     <section id="creep-sec">
-      <div class="kicker"><span class="num">V</span> Price creep — items that quietly went up</div>
+      <div class="kicker"><span class="num">03</span> Price creep: items that quietly went up <span class="src"><b>data:</b> line-item invoices, 4+ purchases per item</span></div>
       <p class="note">First invoice price vs latest, from line-item invoices. Bring this table to your vendor rep.</p>
       <div class="card scrollx"><table class="led" id="creep-table"></table></div>
     </section>
     <section id="waste-sec">
-      <div class="kicker"><span class="num">V</span> Waste &amp; spoilage</div>
+      <div class="kicker"><span class="num">04</span> Waste &amp; spoilage <span class="src"><b>data:</b> kitchen waste log</span></div>
       <p class="note" id="waste-note"></p>
       <div class="charts">
         <div class="card chart"><h3>Top wasted items (recorded cost)</h3><div id="waste-items"></div></div>
@@ -263,14 +291,14 @@
   <!-- ═══ RHYTHM ═══ -->
   <div class="pane" data-pane="rhythm">
     <section>
-      <div class="kicker"><span class="num">R</span> Where the week happens</div>
+      <div class="kicker"><span class="num">01</span> Where the week happens <span class="src"><b>data:</b> Toast sales summary</span></div>
       <div class="charts">
         <div class="card chart"><h3>Net sales by day of week</h3><div class="bars" id="dow"></div></div>
         <div class="card chart"><h3>Net sales by daypart</h3><div class="bars" id="daypart"></div></div>
       </div>
     </section>
     <section>
-      <div class="kicker"><span class="num">R</span> The year in months</div>
+      <div class="kicker"><span class="num">02</span> The year in months <span class="src"><b>data:</b> Toast sales summary</span></div>
       <div class="charts">
         <div class="card chart"><h3>Monthly net sales</h3><div class="bars" id="monthly"></div></div>
         <div class="card chart"><h3>Average check by month</h3><div class="bars" id="checks"></div></div>
@@ -281,14 +309,14 @@
   <!-- ═══ P&L ═══ -->
   <div class="pane" data-pane="pnl">
     <section>
-      <div class="kicker"><span class="num">P</span> Estimated annual P&amp;L</div>
+      <div class="kicker"><span class="num">01</span> Estimated annual P&amp;L <span class="src"><b>data:</b> POS · payroll · vendor invoices · benchmark estimates for occupancy/other</span></div>
       <p class="note" id="pnl-note"></p>
       <div class="card scrollx"><table class="led" id="pnl"></table></div>
     </section>
   </div>
 
   <footer>
-    <span>Every figure derives from one calculation engine — POS, payroll, and vendor data in; findings out.</span>
+    <span>Every figure derives from one calculation engine. POS, payroll, and vendor data in; findings out.</span>
     <span>Confidence: HIGH = source data · MEDIUM = assumption-driven · LOW = partial data</span>
   </footer>
   </div>
@@ -297,7 +325,7 @@
 <script>
 const $ = (id) => document.getElementById(id);
 const usd  = (n) => '$' + Math.round(n).toLocaleString('en-US');
-const usdK = (n) => n >= 1000 ? '$' + Math.round(n / 1000) + 'K' : usd(n);
+const usdK = (n) => n >= 1e6 ? '$' + (n / 1e6).toFixed(2).replace(/0$/, '') + 'M' : n >= 1000 ? '$' + Math.round(n / 1000) + 'K' : usd(n);
 const esc  = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 const client = new URLSearchParams(location.search).get('client') || 'TheCopperPot';
@@ -345,7 +373,7 @@ function hrows(el, rows, labelKey, valKey, shareKey, accentFirst) {
 
 function render(d) {
   $('app').style.display = 'block';
-  document.title = `${d.meta.name} — Operational Diagnostic`;
+  document.title = `${d.meta.name} · Operational Diagnostic`;
   $('m-name').textContent = d.meta.name;
   $('s-window').textContent = `Data window: ${d.meta.window} (${d.meta.n_months} mo)`;
   $('s-generated').textContent = `Generated ${d.meta.generated}`;
@@ -368,11 +396,14 @@ function render(d) {
     const has = m.target !== null && m.target !== undefined;
     const over = has && m.value > m.target;
     const cls = !has ? '' : over ? 'bad' : 'good';
-    const flag = !has ? '' : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">on target</span>`;
+    const ceiling = m.key === 'prime';
+    const flag = !has ? '' : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
+    const tgt = !has ? 'no target' : ceiling ? `ceiling ${m.target}%` : `target ${m.target}%`;
     return `<div class="tile ${cls}">
       <div class="k">${m.label}</div>
       <div class="v">${m.value}<small>%</small>${flag}</div>
-      <div class="t">target ${has ? m.target + '%' : '—'} · ${m.range}</div>
+      <div class="t">${tgt} · ${m.range}</div>
+      <div class="t" style="opacity:.75">from ${esc(m.method)}</div>
     </div>`;
   }).join('');
 
@@ -400,8 +431,9 @@ function render(d) {
         <div class="lo" style="width:${(f.low / maxHigh * 100).toFixed(1)}%"></div>
       </div>
       <div class="f-detail">${esc(f.detail)}</div>
-      ${f.drivers ? `<div class="f-drivers">${esc(f.drivers)}</div>` : ''}
-      <div class="f-meta"><b>Do this:</b> ${esc(f.rec)} &nbsp;·&nbsp; basis: ${esc(f.basis)}</div>
+      ${typeof f.drivers === 'string' ? `<div class="f-drivers">${esc(f.drivers)}</div>` : ''}
+      <div class="f-meta"><b>Do this:</b> ${esc(f.rec)}</div>
+      <div class="f-meta"><b>Data:</b> ${esc(f.basis)}</div>
     </div>`).join('');
 
   /* ── Menu ── */
@@ -412,7 +444,7 @@ function render(d) {
       [`${m.top10_share}%`, 'of sales from top 10 items', ''],
       [`${m.total_items}`, 'items on the printed menu', ''],
     ];
-    if (m.weighted_fc_pct) tiles.push([`${m.weighted_fc_pct}%`, 'recipe-weighted food cost', m.weighted_fc_pct > 30 ? 'bad' : 'good']);
+    if (m.weighted_fc_pct) tiles.push([`${m.weighted_fc_pct}%`, 'recipe-weighted food cost (from recipe costs)', m.weighted_fc_pct > 30 ? 'bad' : 'good']);
     $('menu-tiles').innerHTML = tiles.map(([v, k, cls]) => `
       <div class="tile ${cls}"><div class="v">${v}</div><div class="t">${k}</div></div>`).join('');
 
@@ -431,7 +463,7 @@ function render(d) {
 
   /* ── Vendors ── */
   const v = d.vendors;
-  $('vend-h').textContent = `${usdK(v.total)} identified spend over ${v.months} months (${v.detail || 'summary'}) · ${usdK(v.annual_food)}/yr annualized`;
+  $('vend-h').textContent = `${usdK(v.total)} across ${v.vendors.length} vendors over ${v.months} months (${(v.detail || 'summary').toLowerCase()} data), share of identified spend`;
   hrows('vend-cats', v.categories, 'category', 'spend', 'share', true);
   $('vend-table').innerHTML = `<tr><th>Vendor</th><th>Category</th><th>Spend</th></tr>` +
     v.vendors.map(r => `<tr><td>${esc(r.vendor)}</td><td>${esc(r.category)}</td><td>${usd(r.spend)}</td></tr>`).join('');
@@ -442,7 +474,7 @@ function render(d) {
     $('creep-sec').style.display = 'none';
   }
   if (hasWaste) {
-    $('waste-note').textContent = `${usd(d.waste.weekly)}/week in recorded waste — ${usd(d.waste.annual)}/yr annualized. Self-reported log, so treat as a floor.`;
+    $('waste-note').textContent = `${usd(d.waste.weekly)}/week in recorded waste, ${usd(d.waste.annual)}/yr annualized. Self-reported log, so treat as a floor.`;
     hrows('waste-items', d.waste.top_items, 'item', 'cost', null, true);
     hrows('waste-reasons', d.waste.reasons, 'reason', 'cost', null, true);
   } else {
@@ -451,15 +483,16 @@ function render(d) {
 
   /* ── Rhythm ── */
   bars('dow', d.dow, 'net_sales', 'day');
-  bars('daypart', d.daypart, 'net_sales', 'part');
+  bars('daypart', d.daypart.filter(r => !/total/i.test(r.part)), 'net_sales', 'part');
   bars('monthly', d.monthly, 'net_sales', 'month', m => m.split(' ')[0]);
+  if (d.meta.partial_last_month) document.querySelector('#monthly').insertAdjacentHTML('afterend', `<div class="note" style="margin-top:10px;font-size:11.5px">* ${d.monthly[d.monthly.length-1].month.split(' ')[0]} is a partial month (data ends mid-month).</div>`);
   bars('checks', d.monthly, 'avg_check', 'month', m => m.split(' ')[0], n => '$' + n.toFixed(0));
 
   /* ── P&L ── */
   const p = d.pnl, rev = p.revenue;
   const pct = (n) => `<span class="pct">${(n / rev * 100).toFixed(1)}%</span>`;
   const row = (label, n, sign) => `<tr><td>${label}</td><td class="${sign || ''}">${sign === 'neg' ? '(' + usd(n) + ')' : usd(n)}</td><td>${pct(n)}</td></tr>`;
-  $('pnl-note').textContent = `Occupancy and other overhead are estimated at benchmark rates. "Real profit" prices the owner's ${p.owner_weekly_hours} hrs/week at market rate — the number that matters if the owner ever steps back.`;
+  $('pnl-note').textContent = `Occupancy and other overhead are estimated at benchmark rates. "Real profit" prices the owner's ${p.owner_weekly_hours} hrs/week at market rate. That's the number that matters if the owner ever steps back.`;
   $('pnl').innerHTML = `
     <tr><th>Line</th><th>Annual</th><th>% of rev</th></tr>
     ${row('Revenue (annualized)', p.revenue)}
