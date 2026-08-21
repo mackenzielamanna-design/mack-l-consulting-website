@@ -93,14 +93,16 @@
   /* ── Scorecard tiles ── */
   .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); border: 2px solid var(--rule); background: var(--rule); gap: 2px; box-shadow: 6px 6px 0 rgba(22,20,15,0.12); }
   .tile { background: var(--card); padding: 16px 18px; }
-  .tile .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-mute); }
+  .tile .k { font-family: var(--mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .07em; color: var(--ink-mute); min-height: 32px; }
   .tile .v { font-weight: 900; font-size: 30px; letter-spacing: -0.02em; margin-top: 4px; }
   .tile .v small { font-size: .55em; font-weight: 700; color: var(--ink-mute); }
   .tile .t { font-family: var(--mono); font-size: 11px; margin-top: 4px; color: var(--ink-mute); }
   .tile.bad .v { color: var(--ember); }
   .tile.good .v { color: var(--moss); }
-  .flag { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 1px 7px; border: 1.5px solid currentColor; margin-left: 6px; vertical-align: middle; }
+  .flag { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 1px 7px; border: 1.5px solid currentColor; }
+  .flag-row { margin: 4px 0 2px; min-height: 18px; }
   .bad .flag { color: var(--ember); } .good .flag { color: var(--moss); }
+  .flag.na { color: var(--ink-mute); border-style: dashed; }
 
   /* ── Findings ── */
   .finding { padding: 22px 26px; }
@@ -397,11 +399,12 @@ function render(d) {
     const over = has && m.value > m.target;
     const cls = !has ? '' : over ? 'bad' : 'good';
     const ceiling = m.key === 'prime';
-    const flag = !has ? '' : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
+    const flag = !has ? `<span class="flag na">tracked</span>` : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
     const tgt = !has ? 'no target' : ceiling ? `ceiling ${m.target}%` : `target ${m.target}%`;
     return `<div class="tile ${cls}">
       <div class="k">${m.label}</div>
-      <div class="v">${m.value}<small>%</small>${flag}</div>
+      <div class="v">${m.value}<small>%</small></div>
+      <div class="flag-row">${flag}</div>
       <div class="t">${tgt} · ${m.range}</div>
       <div class="t" style="opacity:.75">from ${esc(m.method)}</div>
     </div>`;
