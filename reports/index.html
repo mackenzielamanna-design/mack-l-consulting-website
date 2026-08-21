@@ -211,7 +211,10 @@
 
   <div class="masthead">
     <h1><span>Prepared for</span><span id="m-name" style="all:unset"></span></h1>
-    <div class="stamp">Confidential · Client copy</div>
+    <div style="display:flex; flex-direction:column; align-items:flex-end; gap:10px">
+      <div class="stamp">Confidential · Client copy</div>
+      <a id="pdf-link" href="sample_diagnostic.pdf" target="_blank" rel="noopener" style="font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink); text-decoration:none; border-bottom:2px solid var(--ember); padding-bottom:2px">Print version (PDF) ↓</a>
+    </div>
   </div>
 
   <div id="err">Could not load report data.</div>
@@ -380,6 +383,7 @@ function hrows(el, rows, labelKey, valKey, shareKey, accentFirst) {
 
 function render(d) {
   $('app').style.display = 'block';
+  if (client !== 'TheCopperPot') document.getElementById('pdf-link').style.display = 'none';
   document.title = `${d.meta.name} · Operational Diagnostic`;
   $('m-name').textContent = d.meta.name;
   $('s-window').textContent = `Data window: ${d.meta.window} (${d.meta.n_months} mo)`;
