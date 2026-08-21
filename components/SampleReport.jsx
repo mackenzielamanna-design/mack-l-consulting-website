@@ -250,6 +250,15 @@ function SampleReport() {
             )}
           </div>
 
+          <div style={{ textAlign: 'center', margin: '26px 0 6px' }}>
+            <a href="/reports/?client=TheCopperPot" target="_blank" rel="noopener" className="btn-ghost">
+              Open the live sample dashboard <ArrowRight />
+            </a>
+            <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--ink-mute)', marginTop: 8, letterSpacing: '0.03em' }}>
+              The interactive version every client receives — same demo data as this walkthrough
+            </div>
+          </div>
+
           <div className="report-nav">
             <button onClick={() => setActive(Math.max(0, active - 1))} disabled={active === 0}>
               <ArrowLeft /> Previous phase
