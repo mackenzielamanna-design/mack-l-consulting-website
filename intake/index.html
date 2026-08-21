@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Send your data · Mack in Black</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' fill='%23f6f4ec'/><rect x='1.5' y='1.5' width='29' height='29' fill='none' stroke='%2316140f' stroke-width='3'/><text x='16' y='24' text-anchor='middle' fill='%23b5241c' font-family='Arial Black,Arial' font-size='19' font-weight='900'>m</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#f6f4ec; --bg-alt:#ece8dc; --card:#fffefb;
+    --ink:#16140f; --ink-soft:#423d34; --ink-mute:#615c50;
+    --rule:#16140f; --rule-soft:#d5cfbf;
+    --ember:#b5241c; --ember-soft:#f3dcd8; --moss:#1d6b3f; --moss-soft:#dbe7dd;
+    --sans:'Archivo',system-ui,sans-serif; --mono:'JetBrains Mono',ui-monospace,Menlo,monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:var(--sans);color:var(--ink);background:var(--bg);line-height:1.5;
+    background-image:linear-gradient(rgba(22,20,15,.05) 1px,transparent 1px),linear-gradient(90deg,rgba(22,20,15,.05) 1px,transparent 1px);
+    background-size:32px 32px;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:720px;margin:0 auto;padding:0 24px 80px}
+  .strip{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-between;padding:12px 0;border-bottom:2px solid var(--rule)}
+  .strip .brand{font-weight:700}.strip .brand em{color:var(--ember);font-style:normal}
+  .masthead{padding:36px 0 8px}
+  .masthead h1{font-weight:900;font-size:clamp(30px,5vw,46px);letter-spacing:-.02em;line-height:1.04}
+  .masthead h1 span{display:block;color:var(--ink-mute);font-weight:700;font-size:.32em;letter-spacing:.14em;
+    text-transform:uppercase;font-family:var(--mono);margin-bottom:12px}
+  .lede{color:var(--ink-soft);margin:16px 0 28px;max-width:60ch}
+  .panel{border:2px solid var(--rule);background:var(--card);box-shadow:6px 6px 0 rgba(22,20,15,.12);padding:24px}
+  label{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+    font-weight:700;color:var(--ink-mute);margin:18px 0 6px}
+  label:first-of-type{margin-top:0}
+  input,textarea{width:100%;font-family:var(--sans);font-size:15px;color:var(--ink);background:var(--bg);
+    border:2px solid var(--rule);padding:10px 12px}
+  input:focus,textarea:focus{outline:3px solid var(--ember-soft);outline-offset:1px}
+  textarea{min-height:90px;resize:vertical}
+  .req{color:var(--ember)}
+  .drop{margin-top:6px;border:2px dashed var(--rule);background:var(--bg);padding:28px 16px;text-align:center;cursor:pointer}
+  .drop.over{background:var(--ember-soft)}
+  .drop p{font-family:var(--mono);font-size:12px;letter-spacing:.06em;color:var(--ink-mute)}
+  .drop strong{display:block;font-family:var(--sans);font-size:16px;color:var(--ink);margin-bottom:6px}
+  ul.files{list-style:none;margin-top:14px;font-family:var(--mono);font-size:12px}
+  ul.files li{display:flex;justify-content:space-between;gap:12px;border-bottom:1px solid var(--rule-soft);padding:7px 0}
+  ul.files button{border:0;background:none;color:var(--ember);font-family:var(--mono);font-size:12px;cursor:pointer}
+  button.send{margin-top:24px;width:100%;font-family:var(--mono);font-size:13px;font-weight:700;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--card);background:var(--ink);border:2px solid var(--rule);padding:15px;cursor:pointer}
+  button.send:disabled{opacity:.5;cursor:not-allowed}
+  .note{font-family:var(--mono);font-size:11px;color:var(--ink-mute);margin-top:14px;line-height:1.6}
+  .msg{margin-top:18px;border:2px solid var(--ember);background:var(--ember-soft);padding:12px;
+    font-family:var(--mono);font-size:12px;color:var(--ink)}
+  .stamp{display:inline-block;font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--moss);border:2px solid var(--moss);background:var(--moss-soft);padding:8px 14px;font-weight:700;transform:rotate(-2deg)}
+  .hide{display:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="strip">
+    <span class="brand">mack <em>in</em> black</span>
+    <span>Secure intake · files stay private</span>
+  </div>
+
+  <div class="masthead">
+    <h1><span>Operational diagnostic</span>Send your data</h1>
+  </div>
+  <p class="lede">Drop in the exports from the data request — Toast sales summary, product mix,
+  payroll, and vendor invoices. Anything you can't find, send what you have and note the gap below.
+  Nothing here is public: uploads go straight to private storage only I can open.</p>
+
+  <form class="panel" id="form">
+    <label for="restaurant">Restaurant <span class="req">*</span></label>
+    <input id="restaurant" name="restaurant" required maxlength="120" autocomplete="organization">
+
+    <label for="contact">Your name <span class="req">*</span></label>
+    <input id="contact" name="contact" required maxlength="120" autocomplete="name">
+
+    <label for="email">Email <span class="req">*</span></label>
+    <input id="email" name="email" type="email" required maxlength="200" autocomplete="email">
+
+    <label for="phone">Phone (optional)</label>
+    <input id="phone" name="phone" maxlength="40" autocomplete="tel">
+
+    <label for="notes">Anything I should know</label>
+    <textarea id="notes" name="notes" maxlength="2000" placeholder="Missing exports, date ranges, quirks in the data…"></textarea>
+
+    <label>Files <span class="req">*</span></label>
+    <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose files">
+      <strong>Drop files here or click to choose</strong>
+      <p>xlsx · csv · pdf · zip — up to 25 files, 50 MB each</p>
+    </div>
+    <input id="picker" type="file" multiple class="hide"
+      accept=".csv,.xlsx,.xls,.pdf,.zip,.txt,.png,.jpg,.jpeg">
+    <ul class="files" id="list"></ul>
+
+    <button class="send" id="send" type="submit">Send to Mack</button>
+    <div class="msg hide" id="msg"></div>
+    <p class="note">Files are stored privately in Supabase (US East) and are never shared.
+    You'll get a confirmation on screen the moment the upload finishes.</p>
+  </form>
+
+  <div class="panel hide" id="done">
+    <span class="stamp">Received</span>
+    <p style="margin-top:18px" id="doneText"></p>
+    <p class="note">I'll confirm by email within one business day, and follow up if anything's missing.
+    Questions in the meantime: <a href="mailto:mackenzielamanna@gmail.com" style="color:var(--ember)">mackenzielamanna@gmail.com</a>.</p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+/* Config ──────────────────────────────────────────────────────────────────
+   Supabase project: Mack in Black org → consulting project.
+   The anon key is publishable by design; safety comes from the RLS policy in
+   setup.sql (anon may INSERT into the intake bucket, and nothing else).
+   ponytail: NOTIFY_TOPIC is a public ntfy topic — anyone who reads this page's
+   source can push to it. Worst case is phone spam; if that happens, swap it for
+   an Edge Function + Resend email. */
+const SUPABASE_URL  = "https://acvcfumuaxbglpzzdhml.supabase.co";      // https://<ref>.supabase.co
+const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjdmNmdW11YXhiZ2xwenpkaG1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczMzg5MjYsImV4cCI6MjEwMjkxNDkyNn0.wZuIcpSa5DX7rpreCg_bimsD4-MIBj8K1NMjw2N1jhE";
+const NOTIFY_TOPIC  = "mib-intake-1386dd";                       // e.g. "mib-intake-7f3q" — blank disables push
+const BUCKET = "intake";
+const MAX_FILES = 25, MAX_BYTES = 50 * 1024 * 1024;
+
+const $ = id => document.getElementById(id);
+const files = [];
+const db = SUPABASE_URL.startsWith("http")
+  ? supabase.createClient(SUPABASE_URL, SUPABASE_ANON) : null;
+
+function fmt(b){ return b > 1048576 ? (b/1048576).toFixed(1) + " MB" : Math.max(1, Math.round(b/1024)) + " KB"; }
+function slug(s){ return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 40) || "client"; }
+function safeName(s){ return s.replace(/[^A-Za-z0-9._-]+/g, "_").slice(-120); }
+function fail(t){ $("msg").textContent = t; $("msg").classList.remove("hide"); }
+
+function render(){
+  $("list").innerHTML = "";
+  files.forEach((f, i) => {
+    const li = document.createElement("li");
+    const n = document.createElement("span"); n.textContent = f.name;
+    const r = document.createElement("span"); r.textContent = fmt(f.size) + "  ";
+    const x = document.createElement("button");
+    x.type = "button"; x.textContent = "remove";
+    x.onclick = () => { files.splice(i, 1); render(); };
+    r.appendChild(x); li.append(n, r); $("list").appendChild(li);
+  });
+}
+
+function add(list){
+  for (const f of list) {
+    if (files.length >= MAX_FILES) { fail("Up to " + MAX_FILES + " files at a time."); return; }
+    if (f.size > MAX_BYTES) { fail('"' + f.name + '" is over 50 MB — zip it or send it separately.'); continue; }
+    if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
+  }
+  render();
+}
+
+$("drop").onclick = () => $("picker").click();
+$("drop").onkeydown = e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); $("picker").click(); } };
+$("picker").onchange = e => { add(e.target.files); e.target.value = ""; };
+["dragenter", "dragover"].forEach(t => $("drop").addEventListener(t, e => { e.preventDefault(); $("drop").classList.add("over"); }));
+["dragleave", "drop"].forEach(t => $("drop").addEventListener(t, e => { e.preventDefault(); $("drop").classList.remove("over"); }));
+$("drop").addEventListener("drop", e => add(e.dataTransfer.files));
+
+$("form").addEventListener("submit", async e => {
+  e.preventDefault();
+  if (!db) { fail("Upload isn't switched on yet — email your files to mackenzielamanna@gmail.com and I'll take it from there."); return; }
+  if (!files.length) { fail("Add at least one file before sending."); return; }
+
+  const meta = {
+    restaurant: $("restaurant").value.trim(), contact: $("contact").value.trim(),
+    email: $("email").value.trim(), phone: $("phone").value.trim(),
+    notes: $("notes").value.trim(), submitted_at: new Date().toISOString(),
+    files: files.map(f => ({ name: f.name, bytes: f.size }))
+  };
+  const folder = slug(meta.restaurant) + "/" + meta.submitted_at.replace(/[:.]/g, "-");
+
+  $("send").disabled = true;
+  try {
+    let n = 0;
+    for (const f of files) {
+      $("send").textContent = "Uploading " + (++n) + " of " + files.length + "…";
+      const up = await db.storage.from(BUCKET).upload(folder + "/" + safeName(f.name), f);
+      if (up.error) throw up.error;
+    }
+    const manifest = await db.storage.from(BUCKET).upload(folder + "/_submission.json",
+      new Blob([JSON.stringify(meta, null, 2)], { type: "application/json" }));
+    if (manifest.error) throw manifest.error;
+
+    if (NOTIFY_TOPIC) {   // fire and forget — a failed push must never fail the client's upload
+      fetch("https://ntfy.sh/" + NOTIFY_TOPIC, { method: "POST",
+        body: meta.restaurant + " — " + files.length + " file(s) from " + meta.contact + " <" + meta.email + ">"
+      }).catch(() => {});
+    }
+
+    $("form").classList.add("hide");
+    $("doneText").textContent = files.length + " file" + (files.length > 1 ? "s" : "") +
+      " landed for " + meta.restaurant + ". Thanks — that's everything I need to start.";
+    $("done").classList.remove("hide");
+    window.scrollTo(0, 0);
+  } catch (err) {
+    fail("Upload failed: " + (err.message || err) + ". Email the files to mackenzielamanna@gmail.com and I'll pick it up from there.");
+    $("send").disabled = false;
+    $("send").textContent = "Send to Mack";
+  }
+});
+</script>
+</body>
+</html>
