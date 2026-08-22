@@ -25,6 +25,7 @@ function Footer() {
           <a href="#sample">Sample report</a>
           <a href="#pricing">Pricing</a>
           <a href="#contact">Contact</a>
+          <a href="/intake/">Send your data</a>
         </div>
         <div>© 2026 · Connecticut</div>
       </div>
