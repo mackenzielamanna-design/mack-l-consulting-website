@@ -4,3 +4,7 @@
 # Only the Copper Pot demo (mock data) ships.
 reports/data/*.json
 !reports/data/TheCopperPot.json
+
+# Encrypted client payloads ARE safe to deploy — AES-256-GCM, key derived from
+# the passcode Mack texts the client. Plaintext <Client>.json stays ignored above.
+!reports/data/*.enc.json

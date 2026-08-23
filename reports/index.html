@@ -202,6 +202,40 @@
 </style>
 </head>
 <body>
+<div id="gate" hidden>
+  <form id="gate-form" autocomplete="off">
+    <div class="g-brand">mack <em>in</em> black<span>.</span></div>
+    <h2>This report is locked</h2>
+    <p>Enter the passcode Mack sent you. It's case-insensitive; dashes optional.</p>
+    <input id="gate-input" inputmode="text" spellcheck="false" autocapitalize="characters"
+           placeholder="XXXX-XXXX-XXXX" aria-label="Passcode" required>
+    <button type="submit" id="gate-go">Unlock</button>
+    <div id="gate-msg"></div>
+  </form>
+</div>
+<style>
+  #gate { position:fixed; inset:0; z-index:99; background:var(--bg); display:flex;
+    align-items:center; justify-content:center; padding:24px }
+  #gate[hidden] { display:none }
+  #gate form { width:100%; max-width:420px; border:2px solid var(--rule); background:var(--card);
+    box-shadow:6px 6px 0 rgba(22,20,15,.12); padding:28px }
+  #gate .g-brand { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+    font-weight:700; margin-bottom:22px }
+  #gate .g-brand em { color:var(--ember); font-style:normal }
+  #gate .g-brand span { color:var(--ember) }
+  #gate h2 { font-size:26px; font-weight:900; letter-spacing:-.01em }
+  #gate p { color:var(--ink-mute); font-size:14px; margin:8px 0 20px }
+  #gate input { width:100%; font-family:var(--mono); font-size:19px; letter-spacing:.12em;
+    text-align:center; text-transform:uppercase; color:var(--ink); background:var(--bg);
+    border:2px solid var(--rule); padding:14px 12px }
+  #gate input:focus { outline:3px solid var(--ember-soft); outline-offset:1px }
+  #gate button { width:100%; margin-top:14px; font-family:var(--mono); font-size:12px; font-weight:700;
+    letter-spacing:.12em; text-transform:uppercase; color:var(--card); background:var(--ink);
+    border:2px solid var(--rule); padding:14px; cursor:pointer }
+  #gate button:disabled { opacity:.5; cursor:not-allowed }
+  #gate #gate-msg { font-family:var(--mono); font-size:11.5px; color:var(--ember); margin-top:14px;
+    min-height:1.2em; text-align:center }
+</style>
 <div class="wrap">
   <div class="strip">
     <span class="brand">mack <em>in</em> black<span style="color:var(--ember)">.</span> · operational diagnostic</span>
@@ -340,8 +374,63 @@ const esc  = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 const client = new URLSearchParams(location.search).get('client') || 'TheCopperPot';
 
-fetch(`data/${client}.json`).then(r => { if (!r.ok) throw 0; return r.json(); }).then(render)
-  .catch(() => { $('err').style.display = 'block'; });
+/* Locked reports ship as <Client>.enc.json — AES-256-GCM, key derived from the
+   passcode Mack texts the client. The plaintext JSON never leaves his machine.
+   See lock_report.js. Unlocked demos (Copper Pot) still load data/<Client>.json. */
+const b64 = (s) => Uint8Array.from(atob(s), (c) => c.charCodeAt(0));
+const normalize = (s) => s.trim().toUpperCase();
+
+async function decrypt(enc, passcode) {
+  const base = await crypto.subtle.importKey(
+    'raw', new TextEncoder().encode(normalize(passcode)), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt: b64(enc.salt), iterations: enc.iterations, hash: 'SHA-256' },
+    base, { name: 'AES-GCM', length: 256 }, false, ['decrypt']);
+  const plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv: b64(enc.iv) }, key, b64(enc.ct));
+  return JSON.parse(new TextDecoder().decode(plain));   // throws on a wrong passcode — GCM tag fails
+}
+
+async function unlock(enc, passcode) {
+  const data = await decrypt(enc, passcode);            // let the caller catch
+  sessionStorage.setItem('mib:' + client, normalize(passcode));
+  $('gate').hidden = true;
+  render(data);
+}
+
+function showGate(enc) {
+  $('gate').hidden = false;
+  $('gate-input').focus();
+  $('gate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    $('gate-go').disabled = true; $('gate-go').textContent = 'Unlocking…'; $('gate-msg').textContent = '';
+    try {
+      await unlock(enc, $('gate-input').value);
+    } catch {
+      $('gate-msg').textContent = "That passcode didn't work. Check the message Mack sent you.";
+      $('gate-input').select();
+    } finally {
+      $('gate-go').disabled = false; $('gate-go').textContent = 'Unlock';
+    }
+  });
+}
+
+(async () => {
+  const enc = await fetch(`data/${client}.enc.json`)
+    .then((r) => (r.ok ? r.json() : null)).catch(() => null);
+
+  if (!enc) {
+    fetch(`data/${client}.json`).then((r) => { if (!r.ok) throw 0; return r.json(); }).then(render)
+      .catch(() => { $('err').style.display = 'block'; });
+    return;
+  }
+
+  const saved = sessionStorage.getItem('mib:' + client);   // survives reloads, dies with the tab
+  if (saved) {
+    try { return await unlock(enc, saved); }
+    catch { sessionStorage.removeItem('mib:' + client); }
+  }
+  showGate(enc);
+})();
 
 /* Tabs — hash-routed so a link can point at a specific pane */
 const TABS = [
