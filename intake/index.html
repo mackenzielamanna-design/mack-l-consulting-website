@@ -115,12 +115,11 @@
    Supabase project: Mack in Black org → consulting project.
    The anon key is publishable by design; safety comes from the RLS policy in
    setup.sql (anon may INSERT into the intake bucket, and nothing else).
-   ponytail: NOTIFY_TOPIC is a public ntfy topic — anyone who reads this page's
-   source can push to it. Worst case is phone spam; if that happens, swap it for
-   an Edge Function + Resend email. */
+   ponytail: no upload notification — uploads are rare enough to check by hand.
+   When a real client is inbound, add a storage webhook → Edge Function → Resend
+   email. Supabase can't send mail on its own, so that needs an email vendor. */
 const SUPABASE_URL  = "https://acvcfumuaxbglpzzdhml.supabase.co";      // https://<ref>.supabase.co
 const SUPABASE_ANON = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFjdmNmdW11YXhiZ2xwenpkaG1sIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODczMzg5MjYsImV4cCI6MjEwMjkxNDkyNn0.wZuIcpSa5DX7rpreCg_bimsD4-MIBj8K1NMjw2N1jhE";
-const NOTIFY_TOPIC  = "mib-intake-1386dd";                       // e.g. "mib-intake-7f3q" — blank disables push
 const BUCKET = "intake";
 const MAX_FILES = 25, MAX_BYTES = 50 * 1024 * 1024;
 
@@ -187,12 +186,6 @@ $("form").addEventListener("submit", async e => {
     const manifest = await db.storage.from(BUCKET).upload(folder + "/_submission.json",
       new Blob([JSON.stringify(meta, null, 2)], { type: "application/json" }));
     if (manifest.error) throw manifest.error;
-
-    if (NOTIFY_TOPIC) {   // fire and forget — a failed push must never fail the client's upload
-      fetch("https://ntfy.sh/" + NOTIFY_TOPIC, { method: "POST",
-        body: meta.restaurant + " — " + files.length + " file(s) from " + meta.contact + " <" + meta.email + ">"
-      }).catch(() => {});
-    }
 
     $("form").classList.add("hide");
     $("doneText").textContent = files.length + " file" + (files.length > 1 ? "s" : "") +
