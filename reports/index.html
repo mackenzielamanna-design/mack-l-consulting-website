@@ -348,6 +348,10 @@
         <div class="card chart"><h3>Average check by month</h3><div class="bars" id="checks"></div></div>
       </div>
     </section>
+    <section id="weak-hours-sec" style="display:none">
+      <div class="kicker"><span class="num">03</span> Hours that don't pay for themselves <span class="src"><b>data:</b> POS sales by hour vs operating cost</span></div>
+      <p class="note" id="weak-hours-note"></p>
+    </section>
   </div>
 
   <!-- ═══ P&L ═══ -->
@@ -536,6 +540,12 @@ function render(d) {
       <div class="f-meta"><b>Do this:</b> ${esc(f.rec)}</div>
       <div class="f-meta"><b>Data:</b> ${esc(f.basis)}</div>
     </div>`).join('');
+
+  /* ── Hours that don't pay for themselves (scheduling signal, no dollar claim) ── */
+  if (d.weak_hours && d.weak_hours.note) {
+    $('weak-hours-note').textContent = d.weak_hours.note;
+    $('weak-hours-sec').style.display = '';
+  }
 
   /* ── Menu ── */
   if (hasMenu) {
