@@ -130,6 +130,58 @@
   .f-drivers { font-size: 12.5px; color: var(--ink-mute); margin-top: 8px; border-left: 3px solid var(--rule-soft); padding-left: 10px; }
 
   /* Overview compact findings */
+  /* Overview actions — the top findings, phrased as what to do */
+  .actions { display: flex; flex-direction: column; gap: 14px; }
+  .action { border: 2px solid var(--rule); background: var(--card);
+    box-shadow: 5px 5px 0 rgba(22,20,15,0.12); padding: 20px 22px;
+    display: grid; grid-template-columns: 34px 1fr auto; gap: 4px 16px; align-items: baseline; }
+  .action .a-num { font-family: var(--mono); font-size: 12px; font-weight: 700; color: var(--ember); }
+  .action .a-eyebrow { grid-column: 2 / -1; font-family: var(--mono); font-size: 10px;
+    font-weight: 700; letter-spacing: .11em; text-transform: uppercase; color: var(--ink-mute); }
+  .action .a-do { grid-column: 2; font-size: 19px; font-weight: 800; letter-spacing: -.012em;
+    line-height: 1.25; margin-top: 4px; }
+  .action .a-money { grid-column: 3; font-family: var(--mono); font-size: 15px; font-weight: 700;
+    white-space: nowrap; text-align: right; }
+  .action .a-money span { display: block; font-size: 9.5px; font-weight: 400;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
+  .action .a-why { grid-column: 2 / -1; margin-top: 7px; font-size: 14.5px;
+    color: var(--ink-soft); max-width: 62ch; }
+  .action .a-bar { grid-column: 2 / -1; position: relative; height: 7px;
+    background: var(--rule-soft); margin-top: 15px; }
+  .action .a-bar i { position: absolute; top: 0; bottom: 0; left: 0; }
+  .action .a-bar .hi { background: var(--ember-soft); }
+  .action .a-bar .lo { background: var(--ember); }
+  .action .a-meta { grid-column: 2 / -1; display: flex; flex-wrap: wrap; align-items: center;
+    gap: 10px; margin-top: 13px; }
+  .action .a-basis { font-family: var(--mono); font-size: 10px; letter-spacing: .05em;
+    color: var(--ink-mute); border: 1.5px solid var(--rule-soft); padding: 3px 8px; }
+  @media (max-width: 620px) {
+    .action { grid-template-columns: 26px 1fr; }
+    .action .a-do, .action .a-money { grid-column: 1 / -1; }
+    .action .a-money { text-align: left; margin-top: 6px; }
+  }
+
+  /* Secondary tier — real, but smaller or not a dollar claim */
+  .flagged { border: 2px dashed var(--rule-soft); padding: 18px 20px;
+    display: flex; flex-direction: column; gap: 14px; }
+  .flag-item { display: grid; grid-template-columns: 1fr auto; gap: 3px 16px; align-items: baseline; }
+  .flag-item b { font-size: 14.5px; }
+  .flag-item .amt { font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute); white-space: nowrap; }
+  .flag-item p { grid-column: 1 / -1; margin: 2px 0 0; font-size: 13.5px;
+    color: var(--ink-soft); max-width: 70ch; }
+
+  /* Route into the detail tabs */
+  .depth { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline;
+    justify-content: space-between; }
+  .depth p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 54ch; }
+  .depth .links { display: flex; flex-wrap: wrap; gap: 10px; }
+  .depth button, .depth a { font-family: var(--mono); font-size: 11px; font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--ink); background: var(--card);
+    border: 2px solid var(--rule); padding: 10px 14px; cursor: pointer; text-decoration: none; }
+  .depth button:hover, .depth a:hover, .depth button:focus-visible, .depth a:focus-visible {
+    background: var(--ink); color: var(--card); }
+  .depth button:focus-visible, .depth a:focus-visible { outline: 3px solid var(--ember); outline-offset: 2px; }
+
   .mini { padding: 14px 22px; display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; cursor: pointer; }
   .mini + .mini { border-top: 1px solid var(--rule-soft); }
   .mini:hover { background: var(--bg-alt); }
@@ -270,12 +322,23 @@
       </div>
     </section>
     <section>
-      <div class="kicker"><span class="num">02</span> Scorecard vs industry benchmarks <span class="src"><b>data:</b> POS · payroll · vendor invoices · recipe costs</span></div>
+      <div class="kicker"><span class="num">02</span> Start here <span class="src"><b>ranked by</b> what they are worth</span></div>
+      <div class="actions" id="actions"></div>
+    </section>
+    <section id="flagged-sec">
+      <div class="kicker"><span class="num">03</span> Also flagged <span class="src"><b>smaller,</b> or not yet a dollar figure</span></div>
+      <div class="flagged" id="flagged"></div>
+    </section>
+    <section>
+      <div class="kicker"><span class="num">04</span> Where you stand <span class="src"><b>data:</b> POS · payroll · vendor invoices · recipe costs</span></div>
       <div class="tiles" id="tiles"></div>
     </section>
     <section>
-      <div class="kicker"><span class="num">03</span> Findings at a glance <span class="src"><b>data:</b> each finding lists its own basis</span></div>
-      <div class="card" id="minis"></div>
+      <div class="depth">
+        <p>Every number above is backed by the detail tabs &mdash; menu margins item by item,
+        vendor spend and price creep, the week&rsquo;s rhythm, and the estimated P&amp;L.</p>
+        <div class="links" id="depth-links"></div>
+      </div>
     </section>
   </div>
 
@@ -350,7 +413,7 @@
     </section>
     <section id="weak-hours-sec" style="display:none">
       <div class="kicker"><span class="num">03</span> Hours that don't pay for themselves <span class="src"><b>data:</b> POS sales by hour vs operating cost</span></div>
-      <p class="note" id="weak-hours-note"></p>
+      <div class="card"><p class="note" id="weak-hours-note" style="margin:0"></p></div>
     </section>
   </div>
 
@@ -485,7 +548,8 @@ function render(d) {
   // R NULL serializes as {} — test for actual content, not truthiness
   const hasMenu = d.menu && d.menu.top_items;
   const hasWaste = d.waste && d.waste.top_items;
-  buildTabs([hasMenu ? null : 'menu'].filter(Boolean));
+  const hiddenPanes = [hasMenu ? null : 'menu'].filter(Boolean);
+  buildTabs(hiddenPanes);
 
   /* ── Overview ── */
   const t = d.topline;
@@ -512,14 +576,57 @@ function render(d) {
     </div>`;
   }).join('');
 
-  $('minis').innerHTML = d.findings.map((f, i) => `
-    <div class="mini" onclick="showPane('findings')">
-      <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
-      <span class="f-label">${esc(f.label)}</span>
-      <span class="conf ${f.confidence}">${f.confidence}</span>
-      <span class="f-range">${usdK(f.low)}–${usdK(f.high)} <span>/yr</span></span>
-      <span class="go">detail →</span>
+  /* Top three findings become the actions; the rest drop to the flagged tier.
+     The headline is the recommendation's first sentence — what to do — with the
+     finding label kept as an eyebrow so the dashboard, the PDF and the action
+     tracker all still name the same thing. */
+  const ACTION_COUNT = 3;
+  const actions = d.findings.slice(0, ACTION_COUNT);
+  const rest    = d.findings.slice(ACTION_COUNT);
+  const topHigh = Math.max(...d.findings.map(f => f.high));
+  const firstSentence = (str) => String(str).split(/\.\s+/)[0].replace(/\.$/, '');
+
+  $('actions').innerHTML = actions.map((f, i) => `
+    <div class="action">
+      <span class="a-num">${String(i + 1).padStart(2, '0')}</span>
+      <span class="a-eyebrow">${esc(f.label)}</span>
+      <span class="a-do">${esc(firstSentence(f.rec))}</span>
+      <span class="a-money">${usdK(f.low)}–${usdK(f.high)}<span>per year</span></span>
+      <p class="a-why">${esc(f.detail)}</p>
+      <div class="a-bar">
+        <i class="hi" style="width:${(f.high / topHigh * 100).toFixed(1)}%"></i>
+        <i class="lo" style="width:${(f.low / topHigh * 100).toFixed(1)}%"></i>
+      </div>
+      <div class="a-meta">
+        <span class="conf ${f.confidence}">${f.confidence} confidence</span>
+        <span class="a-basis">${esc(f.basis)}</span>
+      </div>
     </div>`).join('');
+
+  const flaggedRows = rest.map(f => `
+    <div class="flag-item">
+      <b>${esc(f.label)}</b>
+      <span class="amt">${usdK(f.low)}–${usdK(f.high)}/yr</span>
+      <p>${esc(f.rec)}</p>
+    </div>`);
+  if (d.weak_hours && d.weak_hours.note) {
+    flaggedRows.push(`
+    <div class="flag-item">
+      <b>Open hours that don't cover their cost</b>
+      <span class="amt">scheduling signal</span>
+      <p>${esc(d.weak_hours.note)}</p>
+    </div>`);
+  }
+  $('flagged').innerHTML = flaggedRows.join('');
+  $('flagged-sec').style.display = flaggedRows.length ? '' : 'none';
+
+  /* Depth links route into the existing detail tabs — same panes, same data. */
+  $('depth-links').innerHTML = TABS.filter(([k]) => !['overview', 'findings'].includes(k))
+    .filter(([k]) => !hiddenPanes.includes(k))
+    .map(([k, label]) => `<button type="button" data-goto="${k}">${label}</button>`).join('')
+    + `<button type="button" data-goto="findings">All findings</button>`;
+  document.querySelectorAll('#depth-links button').forEach(b =>
+    b.onclick = () => { showPane(b.dataset.goto); window.scrollTo(0, 0); });
 
   /* ── Findings ── */
   const maxHigh = Math.max(...d.findings.map(f => f.high));
