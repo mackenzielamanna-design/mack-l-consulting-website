@@ -154,7 +154,7 @@
     white-space: nowrap; text-align: right; }
   .action .a-money span { display: block; font-size: 9.5px; font-weight: 400;
     letter-spacing: .1em; text-transform: uppercase; color: var(--ink-mute); }
-  .action .a-why { grid-column: 2 / -1; margin-top: 7px; font-size: 14.5px;
+  .action .a-why { grid-column: 2 / -1; margin-top: 7px; font-size: 14px;
     color: var(--ink-soft); max-width: 62ch; }
   .action .a-bar { grid-column: 2 / -1; position: relative; height: 7px;
     background: var(--rule-soft); margin-top: 15px; }
@@ -175,14 +175,15 @@
   .flagged { border: 2px dashed var(--rule-soft); padding: 18px 20px;
     display: flex; flex-direction: column; gap: 14px; }
   .flag-item { display: grid; grid-template-columns: 1fr auto; gap: 3px 16px; align-items: baseline; }
-  .flag-item b { font-size: 14.5px; }
+  .flag-item b { font-size: 15px; }
   .flag-item .amt { font-family: var(--mono); font-size: 12.5px; color: var(--ink-mute); white-space: nowrap; }
-  .flag-item p { grid-column: 1 / -1; margin: 2px 0 0; font-size: 13.5px;
+  .flag-item p { grid-column: 1 / -1; margin: 2px 0 0; font-size: 13px;
     color: var(--ink-soft); max-width: 70ch; }
 
   /* Route into the detail tabs */
   .depth { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: baseline;
-    justify-content: space-between; }
+    justify-content: space-between; margin-top: 34px; padding-top: 20px;
+    border-top: 2px solid var(--rule); }
   .depth p { margin: 0; font-size: 14px; color: var(--ink-soft); max-width: 54ch; }
   .depth .links { display: flex; flex-wrap: wrap; gap: 10px; }
   .depth button, .depth a { font-family: var(--mono); font-size: 11px; font-weight: 700;
@@ -343,13 +344,11 @@
       <div class="kicker"><span class="num">04</span> Where you stand <span class="src"><b>data:</b> POS · payroll · vendor invoices · recipe costs</span></div>
       <div class="tiles" id="tiles"></div>
     </section>
-    <section>
-      <div class="depth">
-        <p>Every number above is backed by the detail tabs &mdash; menu margins item by item,
-        vendor spend and price creep, the week&rsquo;s rhythm, and the estimated P&amp;L.</p>
-        <div class="links" id="depth-links"></div>
-      </div>
-    </section>
+    <div class="depth">
+      <p>Every number above is backed by the detail tabs &mdash; menu margins item by item,
+      vendor spend and price creep, the week&rsquo;s rhythm, and the estimated P&amp;L.</p>
+      <div class="links" id="depth-links"></div>
+    </div>
   </div>
 
   <!-- ═══ FINDINGS ═══ -->
