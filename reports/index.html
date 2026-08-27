@@ -130,6 +130,16 @@
   .f-drivers { font-size: 12.5px; color: var(--ink-mute); margin-top: 8px; border-left: 3px solid var(--rule-soft); padding-left: 10px; }
 
   /* Overview compact findings */
+  /* Distance-to-target bar on each scorecard tile. Scaled to each metric's own
+     target so tiles compare: a 0.6pt miss on a 1% void target is a 60% overshoot
+     and reads as the widest bar, which plain text hides. */
+  .tile .gap { position: relative; height: 6px; margin-top: 10px; background: var(--rule-soft); }
+  .tile .gap .axis { position: absolute; left: 50%; top: -2px; bottom: -2px; width: 2px;
+    background: var(--ink-mute); }
+  .tile .gap .fill { position: absolute; top: 0; bottom: 0; }
+  .tile .gap .fill.over  { background: var(--ember); }
+  .tile .gap .fill.under { background: var(--moss); }
+
   /* Overview actions — the top findings, phrased as what to do */
   .actions { display: flex; flex-direction: column; gap: 14px; }
   .action { border: 2px solid var(--rule); background: var(--card);
@@ -567,10 +577,21 @@ function render(d) {
     const ceiling = m.key === 'prime';
     const flag = !has ? `<span class="flag na">tracked</span>` : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
     const tgt = !has ? 'no target' : ceiling ? `ceiling ${m.target}%` : `target ${m.target}%`;
+    // Deviation as a share of the metric's own target, capped so one wild miss
+    // can't flatten the rest. 60% out = a full half-bar.
+    let gap = '<i class="axis"></i>';
+    if (has && m.target > 0) {
+      const devPct = (m.value / m.target - 1) * 100;
+      const w = Math.min(Math.abs(devPct), 60) / 1.2;
+      gap += devPct >= 0
+        ? `<i class="fill over" style="left:50%; width:${w.toFixed(1)}%"></i>`
+        : `<i class="fill under" style="right:50%; width:${w.toFixed(1)}%"></i>`;
+    }
     return `<div class="tile ${cls}">
       <div class="k">${m.label}</div>
       <div class="v">${m.value}<small>%</small></div>
       <div class="flag-row">${flag}</div>
+      <div class="gap">${gap}</div>
       <div class="t">${tgt} · ${m.range}</div>
       <div class="t" style="opacity:.75">from ${esc(m.method)}</div>
     </div>`;
