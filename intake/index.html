@@ -66,7 +66,7 @@
   <div class="masthead">
     <h1><span>Operational diagnostic</span>Send your data</h1>
   </div>
-  <p class="lede">Drop in the exports from the data request — Toast sales summary, product mix,
+  <p class="lede">Drop in the exports from the data request: Toast sales summary, product mix,
   payroll, and vendor invoices. Anything you can't find, send what you have and note the gap below.
   Nothing here is public: uploads go straight to private storage only I can open.</p>
 
@@ -89,7 +89,7 @@
     <label>Files <span class="req">*</span></label>
     <div class="drop" id="drop" tabindex="0" role="button" aria-label="Choose files">
       <strong>Drop files here or click to choose</strong>
-      <p>xlsx · csv · pdf · zip — up to 25 files, 50 MB each</p>
+      <p>xlsx · csv · pdf · zip · up to 25 files, 50 MB each</p>
     </div>
     <input id="picker" type="file" multiple class="hide"
       accept=".csv,.xlsx,.xls,.pdf,.zip,.txt,.png,.jpg,.jpeg">
@@ -149,7 +149,7 @@ function render(){
 function add(list){
   for (const f of list) {
     if (files.length >= MAX_FILES) { fail("Up to " + MAX_FILES + " files at a time."); return; }
-    if (f.size > MAX_BYTES) { fail('"' + f.name + '" is over 50 MB — zip it or send it separately.'); continue; }
+    if (f.size > MAX_BYTES) { fail('"' + f.name + '" is over 50 MB. Zip it or send it separately.'); continue; }
     if (!files.some(x => x.name === f.name && x.size === f.size)) files.push(f);
   }
   render();
@@ -164,7 +164,7 @@ $("drop").addEventListener("drop", e => add(e.dataTransfer.files));
 
 $("form").addEventListener("submit", async e => {
   e.preventDefault();
-  if (!db) { fail("Upload isn't switched on yet — email your files to mackenzielamanna@gmail.com and I'll take it from there."); return; }
+  if (!db) { fail("Upload isn't switched on yet. Email your files to mackenzielamanna@gmail.com and I'll take it from there."); return; }
   if (!files.length) { fail("Add at least one file before sending."); return; }
 
   const meta = {
@@ -189,7 +189,7 @@ $("form").addEventListener("submit", async e => {
 
     $("form").classList.add("hide");
     $("doneText").textContent = files.length + " file" + (files.length > 1 ? "s" : "") +
-      " landed for " + meta.restaurant + ". Thanks — that's everything I need to start.";
+      " landed for " + meta.restaurant + ". Thanks, that's everything I need to start.";
     $("done").classList.remove("hide");
     window.scrollTo(0, 0);
   } catch (err) {
