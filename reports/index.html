@@ -104,9 +104,10 @@
   .tile .t { font-family: var(--mono); font-size: 11px; margin-top: 4px; color: var(--ink-mute); }
   .tile.bad .v { color: var(--ember); }
   .tile.good .v { color: var(--moss); }
+  .tile.warn .v { color: var(--amber); }
   .flag { display: inline-block; font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 1px 7px; border: 1.5px solid currentColor; }
   .flag-row { margin: 4px 0 2px; min-height: 18px; }
-  .bad .flag { color: var(--ember); } .good .flag { color: var(--moss); }
+  .bad .flag { color: var(--ember); } .good .flag { color: var(--moss); } .warn .flag { color: var(--amber); }
   .flag.na { color: var(--ink-mute); border-style: dashed; }
 
   /* ── Findings ── */
@@ -562,7 +563,10 @@ function render(d) {
 
   /* ── Overview ── */
   const t = d.topline;
-  $('opp-range').textContent = `${usd(t.opp_low)} – ${usd(t.opp_high)}`;
+  // Nearest $500, matching the exec summary — the range rests on stated
+  // assumptions, and dollar-exact would claim precision it doesn't have.
+  const r500 = (n) => Math.round(n / 500) * 500;
+  $('opp-range').textContent = `${usd(r500(t.opp_low))} – ${usd(r500(t.opp_high))}`;
   $('opp-side').innerHTML = [
     ['Annualized revenue', usd(t.annual_rev)],
     ['Average check', '$' + t.avg_check.toFixed(2)],
@@ -572,9 +576,15 @@ function render(d) {
   $('tiles').innerHTML = d.metrics.map(m => {
     const has = m.target !== null && m.target !== undefined;
     const over = has && m.value > m.target;
-    const cls = !has ? '' : over ? 'bad' : 'good';
     const ceiling = m.key === 'prime';
-    const flag = !has ? `<span class="flag na">tracked</span>` : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>` : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
+    // Paid labor under target with unpaid owner hours behind it is not good
+    // news — it's owner-subsidized. Show the all-in figure and colour it amber.
+    const ownerSubsidy = m.key === 'labor' && m.owner_hours_wk > 0 && m.all_in > m.value;
+    const cls = !has ? '' : over ? 'bad' : ownerSubsidy ? 'warn' : 'good';
+    const flag = !has ? `<span class="flag na">tracked</span>`
+      : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>`
+      : ownerSubsidy ? `<span class="flag">${m.all_in}% with owner pay</span>`
+      : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
     const tgt = !has ? 'no target' : ceiling ? `ceiling ${m.target}%` : `target ${m.target}%`;
     // Deviation as a share of the metric's own target, capped so one wild miss
     // can't flatten the rest. 60% out = a full half-bar.
