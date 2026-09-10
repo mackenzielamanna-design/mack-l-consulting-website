@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Mack in Black">
 <meta property="og:title" content="Operational Diagnostic: sample report">
-<meta property="og:description" content="A live sample of the client diagnostic: findings with dollar ranges and confidence levels, menu margins, vendor spend, and the real P&L.">
+<meta property="og:description" content="A live sample of the client diagnostic: findings with dollar ranges and the data behind each one, menu margins, vendor spend, and the real P&L.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -438,7 +438,7 @@
 
   <footer>
     <span>Every figure derives from one calculation engine. POS, payroll, and vendor data in; findings out.</span>
-    <span>Confidence: HIGH = source data · MEDIUM = assumption-driven · LOW = partial data</span>
+    <span>From your data = measured from source exports · Includes an assumption = a stated recovery assumption · Partial data = incomplete inputs</span>
   </footer>
   </div>
 </div>
@@ -628,7 +628,7 @@ function render(d) {
         <i class="lo" style="width:${(f.low / topHigh * 100).toFixed(1)}%"></i>
       </div>
       <div class="a-meta">
-        <span class="conf ${f.confidence}">${f.confidence} confidence</span>
+        <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
         <span class="a-basis">${esc(f.basis)}</span>
       </div>
     </div>`).join('');
@@ -665,7 +665,7 @@ function render(d) {
       <div class="f-head">
         <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
         <span class="f-label">${esc(f.label)}</span>
-        <span class="conf ${f.confidence}">${f.confidence}</span>
+        <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
         <span class="f-range">${usdK(f.low)}–${usdK(f.high)} <span>/yr</span></span>
       </div>
       <div class="f-bar">
