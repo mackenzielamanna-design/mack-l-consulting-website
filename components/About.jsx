@@ -28,7 +28,7 @@ function About() {
             </div>
             <div>
               <div className="m-k">Background</div>
-              <div className="m-v">5 years, manufacturing analytics</div>
+              <div className="m-v">Manufacturing analytics</div>
             </div>
             <div>
               <div className="m-k">Engagements</div>
@@ -38,10 +38,10 @@ function About() {
         </div>
 
         <div className="about-copy">
-          <h3>Five years finding where a manufacturer's money went. <em>Now restaurants.</em></h3>
+          <h3>Finding where a manufacturer's money went. <em>Now restaurants.</em></h3>
           <p>
-            I spent five years as a data scientist at a life-sciences manufacturer, where the
-            job was working out why production runs failed and what that cost. The method never
+            I was a data scientist at a life-sciences manufacturer, where the job was
+            working out why production runs failed and what that cost. The method never
             changed: pull the data out of systems that don't talk to each other, join it, and
             put a number on the problem. One investigation found about 600 production lots a
             year that could be pooled. Another showed that a statistical default the whole
