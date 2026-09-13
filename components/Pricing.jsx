@@ -1,8 +1,8 @@
 /* Pricing — flat engagement + live ROI */
 
 const REV_BANDS = [
-  { key: 's', name: '$500K — $1M',  sub: 'Small independents', avgRev: 750_000 },
-  { key: 'm', name: '$1M — $2M',    sub: 'Established operators', avgRev: 1_500_000 },
+  { key: 's', name: '$500K-$1M',  sub: 'Small independents', avgRev: 750_000 },
+  { key: 'm', name: '$1M-$2M',    sub: 'Established operators', avgRev: 1_500_000 },
   { key: 'l', name: '$2M +',        sub: 'Multi-unit / high-volume', avgRev: 2_500_000 },
 ];
 
@@ -20,9 +20,9 @@ function Pricing() {
     <section id="pricing">
       <div className="container">
         <div className="section-head">
-          <div className="section-kicker" data-num="04 —">Pricing</div>
+          <div className="section-kicker" data-num="04">Pricing</div>
           <h2>One price. <em>No surprises.</em></h2>
-          <p>A single six-month engagement — diagnostic, implementation, and monitoring included. The ROI below scales with your revenue; the fee doesn't.</p>
+          <p>A single six-month engagement: diagnostic, implementation, and monitoring included. The ROI below scales with your revenue; the fee doesn't.</p>
         </div>
 
         <div className="pricing-shell">
@@ -30,7 +30,7 @@ function Pricing() {
             <div className="pd-head">
               <div className="pd-head-left">
                 <h3>The engagement</h3>
-                <p>One flat price for the full six months — diagnostic, implementation, and monitoring. Limited to three active clients at a time, so every engagement gets real attention.</p>
+                <p>One flat price for the full six months: diagnostic, implementation, and monitoring. Limited to three active clients at a time, so every engagement gets real attention.</p>
               </div>
               <div className="pd-summary">
                 <div className="ps-k">{CP.fee.months}-month total</div>
@@ -46,22 +46,22 @@ function Pricing() {
                 <div className="pp-price">Included <span>no separate fee</span></div>
               </div>
               <div className="pd-phase">
-                <div className="pp-num">Months 02–03</div>
+                <div className="pp-num">Months 02-03</div>
                 <div className="pp-title">Implementation</div>
-                <div className="pp-desc">Recipe costing, vendor renegotiation support, menu repricing — each finding worked to a target.</div>
+                <div className="pp-desc">Recipe costing, vendor renegotiation support, menu repricing, each finding worked to a target.</div>
                 <div className="pp-price">Included <span>bi-weekly check-ins</span></div>
               </div>
               <div className="pd-phase">
-                <div className="pp-num">Months 04–06</div>
+                <div className="pp-num">Months 04-06</div>
                 <div className="pp-title">Monitoring</div>
-                <div className="pp-desc">Monthly drift detection on margin, vendor prices, and labor — caught the week it appears.</div>
+                <div className="pp-desc">Monthly drift detection on margin, vendor prices, and labor, caught the week it appears.</div>
                 <div className="pp-price">Included <span>monthly reports</span></div>
               </div>
             </div>
 
             <div className="pd-roi">
               <div className="pd-roi-head">
-                What the engagement returns — at
+                What the engagement returns at
                 <span className="pricing-bands">
                   {REV_BANDS.map(x => (
                     <button
@@ -102,7 +102,7 @@ function Pricing() {
               <div>
                 <strong>Just want the diagnostic?</strong>{' '}
                 <span style={{ color: 'var(--ink-mute)' }}>
-                  The same month-one report on its own — no contract, single location. Yours to keep either way.
+                  The same month-one report on its own. No contract, single location. Yours to keep either way.
                 </span>
               </div>
               <div style={{ fontFamily: 'var(--mono)', whiteSpace: 'nowrap' }}>
@@ -115,7 +115,7 @@ function Pricing() {
               color: 'var(--ink-mute)', letterSpacing: '0.03em',
               paddingTop: 16, borderTop: '1px dashed var(--rule)',
             }}>
-              {fmt$full(CP.fee.monthly)} / month · {CP.fee.months}-month minimum · no upfront diagnostic fee. Recovery shown as 2–6% of {fmt$full(b.avgRev)} revenue (industry benchmark range); your diagnostic puts an exact low–high figure on it.
+              {fmt$full(CP.fee.monthly)} / month, {CP.fee.months}-month minimum, no upfront diagnostic fee. Recovery shown as 2-6% of {fmt$full(b.avgRev)} revenue (industry benchmark range); your diagnostic puts an exact low-high figure on it.
             </div>
           </div>
         </div>

@@ -8,9 +8,9 @@ function FinalCTA() {
         <h2>Ready to see <em>your numbers?</em></h2>
         <p>Start with a two-minute Toast export. We build the rest together.</p>
         <a href={mailto} className="btn-primary" style={{ fontSize: 15, padding: '16px 30px' }}>
-          Email Mack <ArrowRight size={16} />
+          Start a diagnostic <ArrowRight size={16} />
         </a>
-        <div className="input-line">mackenzielamanna@gmail.com · no commitment · no pressure · just data</div>
+        <div className="input-line">mackenzielamanna@gmail.com. No commitment, no pressure, just data.</div>
       </div>
     </section>
   );
@@ -20,7 +20,7 @@ function Footer() {
   return (
     <footer>
       <div className="footer-inner">
-        <div>Mack in Black — getting restaurants back in the black</div>
+        <div>Mack in Black: getting restaurants back in the black</div>
         <div style={{ display: 'flex', gap: 18 }}>
           <a href="#sample">Sample report</a>
           <a href="#pricing">Pricing</a>

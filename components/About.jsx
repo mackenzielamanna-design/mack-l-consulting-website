@@ -28,7 +28,7 @@ function About() {
             </div>
             <div>
               <div className="m-k">Tools</div>
-              <div className="m-v">POS · R · invoices</div>
+              <div className="m-v">POS, R, invoices</div>
             </div>
             <div>
               <div className="m-k">Engagements</div>
@@ -45,7 +45,7 @@ function About() {
         <div className="about-copy">
           <h3>I'm an applied data scientist who <em>loves restaurants.</em></h3>
           <p>
-            Independent operators run on instinct — and that instinct is almost always right.
+            Independent operators run on instinct, and that instinct is almost always right.
             The problem isn't bad decisions. It's that the details the decisions depend on live
             in seven different places: a POS, a stack of invoices, a payroll portal, a notebook
             in the back office, and a few Excel tabs nobody has time to open.

@@ -10,33 +10,33 @@ const REPORT_PHASES = [
     tabSub: 'POS data',
     when: 'Week 1',
     title: 'POS data + owner conversation',
-    intro: 'What becomes visible with just a Toast export and a 30-minute conversation. Real ranges from day one — wide, because they are estimates until the data deepens.',
+    intro: 'What becomes visible with just a Toast export and a 30-minute conversation. Real ranges from day one, wide because they are estimates until the data deepens.',
     inputs: ['Toast Sales Summary', 'Payroll export', '30-min owner call'],
     range: { low: 43500, high: 87000 },
-    rangeNote: 'estimates — three channel & revenue-leak findings',
+    rangeNote: 'estimates: three channel and revenue-leak findings',
     findings: [
-      { low: 23200, high: 46400, conf: 'Medium', title: 'Third-party delivery commissions', desc: '24% of revenue through DoorDash / UberEats / GrubHub at ~25% fees. Shifting 20–40% of that volume to direct ordering recovers this — the range is the shift rate.' },
-      { low: 14500, high: 29000, conf: 'Medium', title: 'Discounting above benchmark', desc: 'Running at 2.4% of gross vs. the 2% target. 30–60% is typically recoverable without hurting traffic.' },
-      { low: 5800, high: 11600, conf: 'High', title: 'Void rate at 1.6% (vs. 1% target)', desc: 'Excess voids add up quickly at this revenue level. Usually a quick fix — often POS entry patterns.' },
+      { low: 23200, high: 46400, conf: 'Medium', title: 'Third-party delivery commissions', desc: '24% of revenue through DoorDash / UberEats / GrubHub at ~25% fees. Shifting 20-40% of that volume to direct ordering recovers this. The range is the shift rate.' },
+      { low: 14500, high: 29000, conf: 'Medium', title: 'Discounting above benchmark', desc: 'Running at 2.4% of gross vs. the 2% target. 30-60% is typically recoverable without hurting traffic.' },
+      { low: 5800, high: 11600, conf: 'High', title: 'Void rate at 1.6% (vs. 1% target)', desc: 'Excess voids add up quickly at this revenue level. Usually a quick fix, often POS entry patterns.' },
     ],
   },
   {
     key: '1b',
     tab: 'Phase 1b',
     tabSub: 'Recipe costs',
-    when: 'Weeks 2–3',
+    when: 'Weeks 2-3',
     title: 'Recipe costing sharpens the big one',
-    intro: 'With 6+ months of vendor invoices and a kitchen walkthrough, the food-cost gap resolves from guess to measured. The total range tightens to a real number — it does not balloon.',
+    intro: 'With 6+ months of vendor invoices and a kitchen walkthrough, the food-cost gap resolves from guess to measured. The total range tightens to a real number. It does not balloon.',
     inputs: ['6 mo vendor invoices', 'Recipe walkthrough', 'Menu mix from POS'],
     range: { low: 100500, high: 201500, str: CP.oppStr },
-    rangeNote: 'the diagnostic’s headline range — adds the food gap, nothing double-counted',
+    rangeNote: 'the diagnostic’s headline range: adds the food gap, nothing double-counted',
     findings: [
       {
         low: 57200, high: 114500, conf: 'High',
-        title: 'Blended food cost is 35.9% — 5.9 pts above target',
+        title: 'Blended food cost is 35.9%, 5.9 pts above target',
         desc: 'Recipe-weighted across the menu. On $1.9M, the low end assumes half the gap closes in year one; the high end is the full measured gap.',
         drivers: [
-          'Top sellers above 35% food cost — burgers, wings, salmon',
+          'Top sellers above 35% food cost: burgers, wings, salmon',
           'Vendor prices crept up on 24 line items (chicken +11%, cream +8%)',
           'Untracked waste and portion drift',
         ],
@@ -47,16 +47,16 @@ const REPORT_PHASES = [
     key: '2',
     tab: 'Phase 2',
     tabSub: 'The gap',
-    when: 'Months 2–3',
-    title: 'Theoretical vs. actual — locating the gap',
-    intro: 'Monthly inventory counts let us compare what food should have cost with what was actually spent. This does not add a new number — it shows exactly where the food-cost gap above is hiding, which is what makes it fixable.',
+    when: 'Months 2-3',
+    title: 'Theoretical vs. actual: locating the gap',
+    intro: 'Monthly inventory counts let us compare what food should have cost with what was actually spent. This does not add a new number. It shows exactly where the food-cost gap above is hiding, which is what makes it fixable.',
     inputs: ['Monthly inventory counts', 'Continued invoice tracking'],
     range: { low: 100500, high: 201500, str: CP.oppStr },
-    rangeNote: 'same range, now located and confirmed — confidence rises, the number does not',
+    rangeNote: 'same range, now located and confirmed. Confidence rises, the number does not',
     compare: { theoretical: 53200, actual: 57800, gap: 4600 },
     drivers: [
-      'Portion drift — a few high-volume items coming out heavier than spec',
-      'Untracked spoilage — produce and dairy waste above what the log reflects',
+      'Portion drift: a few high-volume items coming out heavier than spec',
+      'Untracked spoilage: produce and dairy waste above what the log reflects',
       'Comps and employee meals running untracked',
     ],
     capital: 22000,
@@ -67,7 +67,7 @@ const REPORT_PHASES = [
     tabSub: 'Monthly drift',
     when: 'Month 3+',
     title: 'Monitoring catches drift as it happens',
-    intro: 'Once the baseline is set, a monthly refresh catches new drift in the same week it appears — not six months later. Each catch is incremental, on top of the recovery already booked.',
+    intro: 'Once the baseline is set, a monthly refresh catches new drift in the same week it appears, not six months later. Each catch is incremental, on top of the recovery already booked.',
     inputs: ['Monthly POS refresh', 'Invoice feed', 'Inventory counts'],
     range: null,
     timeline: [
@@ -100,9 +100,9 @@ function SampleReport() {
     <section id="sample">
       <div className="container">
         <div className="section-head">
-          <div className="section-kicker" data-num="02 —">Sample diagnostic</div>
-          <h2>A walk-through, phase by phase — <em>The Copper Pot.</em></h2>
-          <p>A fictional $1.9M casual-dining restaurant built from industry benchmarks — structured exactly like a real engagement. Watch the opportunity range <em>tighten</em> as the data deepens, not inflate.</p>
+          <div className="section-kicker" data-num="02">Sample diagnostic</div>
+          <h2>A walk-through, phase by phase: <em>The Copper Pot.</em></h2>
+          <p>A fictional $1.9M casual-dining restaurant built from industry benchmarks, structured exactly like a real engagement. Watch the opportunity range <em>tighten</em> as the data deepens, not inflate.</p>
         </div>
 
         <div className="report-shell">
@@ -111,7 +111,7 @@ function SampleReport() {
               <span className="dot3"><i /><i /><i /></span>
               <span>mack-in-black / copper-pot / diagnostic.pdf</span>
             </div>
-            <div>48 menu items · $1.9M ARR · casual dining</div>
+            <div>48 menu items, $1.9M ARR, casual dining</div>
           </div>
 
           <div className="report-tabs" role="tablist">
@@ -161,12 +161,12 @@ function SampleReport() {
             {phase.compare && (
               <div className="gap-compare">
                 <div className="gc-col">
-                  <div className="k">Theoretical — what food should cost</div>
+                  <div className="k">Theoretical: what food should cost</div>
                   <div className="v">{fmt$full(phase.compare.theoretical)}<span style={{ fontSize: 13, color: 'var(--ink-mute)', fontFamily: 'var(--mono)' }}> / mo</span></div>
                 </div>
                 <div className="gc-op">vs.</div>
                 <div className="gc-col bad">
-                  <div className="k">Actual — what you spent</div>
+                  <div className="k">Actual: what you spent</div>
                   <div className="v">{fmt$full(phase.compare.actual)}<span style={{ fontSize: 13, color: 'var(--ink-mute)', fontFamily: 'var(--mono)' }}> / mo</span></div>
                 </div>
                 <div className="gc-op">=</div>
@@ -197,7 +197,7 @@ function SampleReport() {
                           borderLeft: '2px solid var(--rule)',
                         }}>
                           <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, letterSpacing: '0.06em', textTransform: 'uppercase', color: 'var(--ink-mute)', marginBottom: 6 }}>
-                            Drivers inside this number — not added on top
+                            Drivers inside this number, not added on top
                           </div>
                           {f.drivers.map((d, j) => (
                             <div key={j} style={{ fontSize: 13.5, color: 'var(--ink-mute)', marginBottom: 3 }}>· {d}</div>
@@ -226,7 +226,7 @@ function SampleReport() {
                     </div>
                     <div className="f-body">
                       <div className="f-title">Trapped working capital freed</div>
-                      <div className="f-desc">Separate from the annual range above — over-ordering on slow movers means cash sitting on shelves. Tightening pars turns it back into cash flow once.</div>
+                      <div className="f-desc">Separate from the annual range above. Over-ordering on slow movers means cash sitting on shelves. Tightening pars turns it back into cash flow once.</div>
                     </div>
                   </div>
                 )}
@@ -252,10 +252,10 @@ function SampleReport() {
 
           <div style={{ textAlign: 'center', margin: '26px 0 6px' }}>
             <a href="/reports/?client=TheCopperPot" target="_blank" rel="noopener" className="btn-ghost">
-              Open the live sample dashboard <ArrowRight />
+              See the live sample <ArrowRight />
             </a>
             <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: 'var(--ink-mute)', marginTop: 8, letterSpacing: '0.03em' }}>
-              The interactive version every client receives — same demo data as this walkthrough
+              The interactive version every client receives, same demo data as this walkthrough
             </div>
           </div>
 

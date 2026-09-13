@@ -19,14 +19,14 @@ function Hero() {
             <br />We help you pull it out.
           </h1>
           <p className="hero-lede">
-            Applied data science for independent restaurants. We find the 2–6% of revenue hiding
-            in your POS, invoices, and inventory — and put a dollar figure on every fix.
+            Applied data science for independent restaurants. We find the 2-6% of revenue hiding
+            in your POS, invoices, and inventory, and put a dollar figure on every fix.
           </p>
           <div className="hero-ctas">
             <a href="#contact" className="btn-primary">
-              Start with a Toast export <ArrowRight />
+              Start a diagnostic <ArrowRight />
             </a>
-            <a href="#sample" className="btn-ghost">See a sample report</a>
+            <a href="/reports/?client=TheCopperPot" target="_blank" rel="noopener" className="btn-ghost">See the live sample</a>
           </div>
           <div className="hero-meta">
             <span>Connecticut</span>
@@ -68,7 +68,7 @@ function Hero() {
 
           <div className="roi-field">
             <label className="roi-label">
-              Recoverable scenario — {rate}% {rate <= 2 ? '(conservative)' : rate <= 4 ? '(typical)' : '(strong)'}
+              Recoverable scenario: {rate}% {rate <= 2 ? '(conservative)' : rate <= 4 ? '(typical)' : '(strong)'}
             </label>
             <input
               className="roi-slider"
@@ -100,7 +100,7 @@ function Hero() {
           </div>
 
           <div className="roi-foot">
-            Benchmarks — National Restaurant Association, Restaurant365, Toast
+            Benchmarks: National Restaurant Association, Restaurant365, Toast
           </div>
         </div>
       </div>

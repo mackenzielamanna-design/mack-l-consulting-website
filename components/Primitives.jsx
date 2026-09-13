@@ -9,7 +9,7 @@ const fmt$ = (n, digits = 0) => {
 const fmt$full = (n) => '$' + Math.round(n).toLocaleString();
 
 // Range helper, e.g. "$57K–$114K"
-const fmt$range = (lo, hi) => fmt$(lo) + '–' + fmt$(hi);
+const fmt$range = (lo, hi) => fmt$(lo) + '-' + fmt$(hi);
 
 // ── Canonical Copper Pot ─────────────────────────────────────────
 // Single source of truth for every site section. These numbers MUST
@@ -20,7 +20,7 @@ const CP = {
   revenue: 1_933_428,
   oppLow: 100_500,
   oppHigh: 201_500,
-  oppStr: '$100K–$201K', // canonical display (matches diagnostic $100,500–$201,500)
+  oppStr: '$100K-$201K', // canonical display (matches diagnostic $100,500–$201,500)
   // P&L shape (matches the diagnostic's Estimated P&L)
   pnl: {
     food:      { pct: 35.9, amt: 694_500 },
