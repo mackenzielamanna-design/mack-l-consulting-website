@@ -15,23 +15,18 @@ function Hero() {
         <div>
           <div className="hero-eyebrow">Mack in Black</div>
           <h1>
-            The money is <em>in the data.</em>
-            <br />We help you pull it out.
+            The money is in the data.
+            <br /><em>We help you pull it out.</em>
           </h1>
           <p className="hero-lede">
-            Applied data science for independent restaurants. We find the 2-6% of revenue hiding
-            in your POS, invoices, and inventory, and put a dollar figure on every fix.
+            We find the revenue hiding in your POS, invoices, and inventory, and put a dollar
+            figure on every fix.
           </p>
           <div className="hero-ctas">
             <a href="#contact" className="btn-primary">
               Start a diagnostic <ArrowRight />
             </a>
             <a href="/reports/?client=TheCopperPot" target="_blank" rel="noopener" className="btn-ghost">See the live sample</a>
-          </div>
-          <div className="hero-meta">
-            <span>Connecticut</span>
-            <span>POS + invoice analysis</span>
-            <span>6-month engagements</span>
           </div>
         </div>
 

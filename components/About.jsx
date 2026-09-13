@@ -35,11 +35,6 @@ function About() {
               <div className="m-v">6 months, then monthly</div>
             </div>
           </div>
-          <div className="mb-seal" aria-label="Client capacity: 3 spots open">
-            <div className="ms-sm">Only</div>
-            <div className="ms-big">3</div>
-            <div className="ms-sm">spots open</div>
-          </div>
         </div>
 
         <div className="about-copy">

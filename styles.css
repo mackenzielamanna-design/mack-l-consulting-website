@@ -173,7 +173,6 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--mono); font-size: 12px;
   color: var(--ink-mute); letter-spacing: 0.02em;
 }
-.hero-meta span + span::before { content: "/ "; color: var(--rule); }
 
 /* ROI calculator card (hero right) */
 .roi-card {
@@ -1068,3 +1067,40 @@ footer {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation: none !important; }
   html { scroll-behavior: auto; }
 }
+
+/* ============================================================
+   A2: quiet ledger. Same paper, type, rules and numbering.
+   Black ink is the record; red ink is the money, once per screen.
+   Chosen Sep 2026 over the louder A and the dark B.
+============================================================ */
+html[data-aesthetic="ledger"] .hero h1 em { font-style: normal; color: var(--ink-mute); }
+html[data-aesthetic="ledger"] .section-head h2 em,
+html[data-aesthetic="ledger"] .rb-banner-left h3 em,
+html[data-aesthetic="ledger"] .mf-detail h3 em,
+html[data-aesthetic="ledger"] .process-col .pc-title em,
+html[data-aesthetic="ledger"] .about-copy h3 em,
+html[data-aesthetic="ledger"] .final-cta h2 em { font-style: normal; color: inherit; }
+
+/* Flat: rules, not floating cards */
+html[data-aesthetic="ledger"] .roi-card,
+html[data-aesthetic="ledger"] .report-shell,
+html[data-aesthetic="ledger"] .mf-chart,
+html[data-aesthetic="ledger"] .pricing-detail,
+html[data-aesthetic="ledger"] .about-signature,
+html[data-aesthetic="ledger"] .tier-btn.active { box-shadow: none; }
+html[data-aesthetic="ledger"] .btn-primary:hover,
+html[data-aesthetic="ledger"] .nav-cta:hover { transform: translateY(-1px); box-shadow: none; }
+
+/* Labels go quiet; the numbers keep the red */
+html[data-aesthetic="ledger"] .section-kicker::before,
+html[data-aesthetic="ledger"] .report-tab .tab-num,
+html[data-aesthetic="ledger"] .rb-banner-left .phase-label,
+html[data-aesthetic="ledger"] .rb-banner-right .running,
+html[data-aesthetic="ledger"] .mf-detail-kicker,
+html[data-aesthetic="ledger"] .pd-roi-head,
+html[data-aesthetic="ledger"] .process-col .pc-tag,
+html[data-aesthetic="ledger"] .roi-card-title,
+html[data-aesthetic="ledger"] .roi-result-big .k { color: var(--ink-mute); }
+html[data-aesthetic="ledger"] .roi-result-big .v { color: var(--ink); }
+html[data-aesthetic="ledger"] .gap-compare .gc-col.result .v,
+html[data-aesthetic="ledger"] .mf-detail .mf-stat.good .v { font-style: normal; }

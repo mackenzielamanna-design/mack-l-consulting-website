@@ -80,6 +80,8 @@ const REPORT_PHASES = [
 ];
 
 const CONF_COLOR = { High: '#4a7c59', Medium: '#b8862e', Low: 'var(--ink-mute)' };
+// Same words the client dashboard uses: the tier is about the data behind a finding.
+const CONF_LABEL = { High: 'From your data', Medium: 'Includes an assumption', Low: 'Partial data' };
 
 function ConfBadge({ level }) {
   return (
@@ -88,7 +90,7 @@ function ConfBadge({ level }) {
       textTransform: 'uppercase', padding: '2px 7px', borderRadius: 3,
       border: `1px solid ${CONF_COLOR[level]}`, color: CONF_COLOR[level],
       whiteSpace: 'nowrap', marginLeft: 8,
-    }}>{level} conf</span>
+    }}>{CONF_LABEL[level]}</span>
   );
 }
 
