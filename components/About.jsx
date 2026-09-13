@@ -16,7 +16,7 @@ function About() {
             <span className="as-monogram" style={{ display: 'none' }}>m</span>
           </div>
           <div className="as-name">Mackenzie Lamanna</div>
-          <div className="as-title">Applied Data Scientist · Operational Optimization</div>
+          <div className="as-title">Applied data scientist · M.S. Bioinformatics</div>
           <div className="as-meta">
             <div>
               <div className="m-k">Based in</div>
@@ -27,29 +27,32 @@ function About() {
               <div className="m-v">Independent restaurants</div>
             </div>
             <div>
-              <div className="m-k">Tools</div>
-              <div className="m-v">POS, R, invoices</div>
+              <div className="m-k">Background</div>
+              <div className="m-v">5 years, manufacturing analytics</div>
             </div>
             <div>
               <div className="m-k">Engagements</div>
-              <div className="m-v">6 months, then monthly</div>
+              <div className="m-v">Diagnostic, then monthly</div>
             </div>
           </div>
         </div>
 
         <div className="about-copy">
-          <h3>I'm an applied data scientist who <em>loves restaurants.</em></h3>
+          <h3>Five years finding where a manufacturer's money went. <em>Now restaurants.</em></h3>
           <p>
-            Independent operators run on instinct, and that instinct is almost always right.
-            The problem isn't bad decisions. It's that the details the decisions depend on live
-            in seven different places: a POS, a stack of invoices, a payroll portal, a notebook
-            in the back office, and a few Excel tabs nobody has time to open.
+            I spent five years as a data scientist at a life-sciences manufacturer, where the
+            job was working out why production runs failed and what that cost. The method never
+            changed: pull the data out of systems that don't talk to each other, join it, and
+            put a number on the problem. One investigation found about 600 production lots a
+            year that could be pooled. Another showed that a statistical default the whole
+            platform relied on was wrong for nearly every high-volume product.
           </p>
           <p>
-            I build the picture the chains take for granted: item-level margins, exact recipe
-            costs, vendor price tracking, labor against daypart demand. Every recommendation
-            comes with a dollar figure attached. No platform to buy. No retainer that outlives
-            its value.
+            A restaurant is the same shape. The POS, the invoices, and payroll each hold one
+            piece, and the margin lives in the joins between them. I build the reporting the
+            chains take for granted, item-level margins, real recipe costs, vendor price
+            tracking, labor against demand by hour, and I put a dollar range on every finding
+            with the data it came from.
           </p>
           <div className="about-pullquote">
             "The money is there. It's just hiding in the details. My job is to put a number on every one of them."
