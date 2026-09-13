@@ -1104,3 +1104,7 @@ html[data-aesthetic="ledger"] .roi-result-big .k { color: var(--ink-mute); }
 html[data-aesthetic="ledger"] .roi-result-big .v { color: var(--ink); }
 html[data-aesthetic="ledger"] .gap-compare .gc-col.result .v,
 html[data-aesthetic="ledger"] .mf-detail .mf-stat.good .v { font-style: normal; }
+
+/* Hero headline: two lines at desktop, as on the chosen A2 board (mixed case, 54px cap). */
+html[data-aesthetic="ledger"] .hero h1 { text-transform: none; font-size: clamp(38px, 3.5vw, 50px); letter-spacing: -0.03em; line-height: 1.02; }
+html[data-aesthetic="ledger"] .hero-inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }

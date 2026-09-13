@@ -335,7 +335,7 @@
         <div class="opp-main">
           <div class="lbl">Identified annual opportunity</div>
           <div class="big" id="opp-range"></div>
-          <div class="sub">Ranked, non-overlapping findings. Low end is the defensible near-term recovery; high end is the full gap. Nothing is double-counted.</div>
+          <div class="sub">Four findings, none counted twice. Low end is year one, high end is the full gap.</div>
         </div>
         <div class="opp-side" id="opp-side"></div>
       </div>
@@ -353,8 +353,6 @@
       <div class="tiles" id="tiles"></div>
     </section>
     <div class="depth">
-      <p>Every number above is backed by the detail tabs: menu margins item by item,
-      vendor spend and price creep, the week&rsquo;s rhythm, and the estimated P&amp;L.</p>
       <div class="links" id="depth-links"></div>
     </div>
   </div>
@@ -444,7 +442,6 @@
   </div>
 
   <footer>
-    <span>Every figure derives from one calculation engine. POS, payroll, and vendor data in; findings out.</span>
     <span>From your data = measured from source exports · Includes an assumption = a stated recovery assumption · Partial data = incomplete inputs</span>
   </footer>
   </div>
@@ -499,7 +496,11 @@ function showGate(enc) {
 }
 
 (async () => {
-  const enc = await fetch(`data/${client}.enc.json`)
+  // Encrypted payload wins whenever one exists: a plaintext file sitting next to
+  // it must never bypass the gate. The open demo has no encrypted copy, so skip
+  // the probe there rather than log a 404 on every visit.
+  const OPEN_DEMO = client === 'TheCopperPot';
+  const enc = OPEN_DEMO ? null : await fetch(`data/${client}.enc.json`)
     .then((r) => (r.ok ? r.json() : null)).catch(() => null);
 
   if (!enc) {
@@ -573,7 +574,7 @@ function render(d) {
   // Nearest $500, matching the exec summary — the range rests on stated
   // assumptions, and dollar-exact would claim precision it doesn't have.
   const r500 = (n) => Math.round(n / 500) * 500;
-  $('opp-range').textContent = `${usd(r500(t.opp_low))} – ${usd(r500(t.opp_high))}`;
+  $('opp-range').textContent = `${usd(r500(t.opp_low))} - ${usd(r500(t.opp_high))}`;
   $('opp-side').innerHTML = [
     ['Annualized revenue', usd(t.annual_rev)],
     ['Average check', '$' + t.avg_check.toFixed(2)],
@@ -608,8 +609,7 @@ function render(d) {
       <div class="v">${m.value}<small>%</small></div>
       <div class="flag-row">${flag}</div>
       <div class="gap">${gap}</div>
-      <div class="t">${tgt} · ${m.range}</div>
-      <div class="t" style="opacity:.75">from ${esc(m.method)}</div>
+      <div class="t">${tgt}</div>
     </div>`;
   }).join('');
 
@@ -622,28 +622,28 @@ function render(d) {
   const rest    = d.findings.slice(ACTION_COUNT);
   const topHigh = Math.max(...d.findings.map(f => f.high));
   const firstSentence = (str) => String(str).split(/\.\s+/)[0].replace(/\.$/, '');
+  const firstClause = (str) => firstSentence(str).split(/,\s+/)[0];
 
   $('actions').innerHTML = actions.map((f, i) => `
     <div class="action">
       <span class="a-num">${String(i + 1).padStart(2, '0')}</span>
       <span class="a-eyebrow">${esc(f.label)}</span>
-      <span class="a-do">${esc(firstSentence(f.rec))}</span>
-      <span class="a-money">${usdK(f.low)}–${usdK(f.high)}<span>per year</span></span>
-      <p class="a-why">${esc(f.detail)}</p>
+      <span class="a-do">${esc(firstClause(f.rec))}</span>
+      <span class="a-money">${usdK(f.low)}-${usdK(f.high)}<span>per year</span></span>
+      <p class="a-why">${esc(firstSentence(f.detail))}.</p>
       <div class="a-bar">
         <i class="hi" style="width:${(f.high / topHigh * 100).toFixed(1)}%"></i>
         <i class="lo" style="width:${(f.low / topHigh * 100).toFixed(1)}%"></i>
       </div>
       <div class="a-meta">
         <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
-        <span class="a-basis">${esc(f.basis)}</span>
       </div>
     </div>`).join('');
 
   const flaggedRows = rest.map(f => `
     <div class="flag-item">
       <b>${esc(f.label)}</b>
-      <span class="amt">${usdK(f.low)}–${usdK(f.high)}/yr</span>
+      <span class="amt">${usdK(f.low)}-${usdK(f.high)}/yr</span>
       <p>${esc(f.rec)}</p>
     </div>`);
   if (d.weak_hours && d.weak_hours.note) {
@@ -651,7 +651,7 @@ function render(d) {
     <div class="flag-item">
       <b>Open hours that don't cover their cost</b>
       <span class="amt">scheduling signal</span>
-      <p>${esc(d.weak_hours.note)}</p>
+      <p>${esc(firstSentence(d.weak_hours.note))}.</p>
     </div>`);
   }
   $('flagged').innerHTML = flaggedRows.join('');
@@ -673,7 +673,7 @@ function render(d) {
         <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
         <span class="f-label">${esc(f.label)}</span>
         <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
-        <span class="f-range">${usdK(f.low)}–${usdK(f.high)} <span>/yr</span></span>
+        <span class="f-range">${usdK(f.low)}-${usdK(f.high)} <span>/yr</span></span>
       </div>
       <div class="f-bar">
         <div class="hi" style="width:${(f.high / maxHigh * 100).toFixed(1)}%"></div>
