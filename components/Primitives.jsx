@@ -33,7 +33,7 @@ const CP = {
   },
   // The four non-overlapping findings, each a low–high range
   findings: {
-    food:      { low: 57_200, high: 114_500, conf: 'High',   pct: 35.9, target: 30 },
+    food:      { low: 57_236, high: 114_472, conf: 'High',   pct: 35.9, target: 30 },   // matches the rendered diagnostic
     delivery:  { low: 23_200, high: 46_400,  conf: 'Medium' },
     discounts: { low: 14_500, high: 29_000,  conf: 'Medium' },
     voids:     { low: 5_800,  high: 11_600,  conf: 'High' },

@@ -1107,4 +1107,22 @@ html[data-aesthetic="ledger"] .mf-detail .mf-stat.good .v { font-style: normal; 
 
 /* Hero headline: two lines at desktop, as on the chosen A2 board (mixed case, 54px cap). */
 html[data-aesthetic="ledger"] .hero h1 { text-transform: none; font-size: clamp(38px, 3.5vw, 50px); letter-spacing: -0.03em; line-height: 1.02; }
-html[data-aesthetic="ledger"] .hero-inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+@media (min-width: 961px) {
+  html[data-aesthetic="ledger"] .hero-inner { grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); }
+}
+
+/* ── Phone fixes (Sep 2026), after a screenshot pass at 375px ── */
+section, .hero { scroll-margin-top: 76px; }            /* sticky nav no longer covers anchored headings */
+@media (max-width: 640px) {
+  .nav-cta { white-space: nowrap; font-size: 11px; padding: 10px 12px; }
+  .hero h1 { font-size: clamp(34px, 10vw, 44px); }
+  .finding-cell .fc-num { font-size: 36px; white-space: nowrap; }
+  .rb-banner { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .rb-banner-right { text-align: left; align-items: flex-start; }
+  .rb-banner-right .running-val { font-size: 26px; }
+  .rb-banner-right > div:last-child { max-width: none !important; }
+  .report-body { padding: 24px 18px 28px; min-height: 0; }
+  .report-nav button { min-height: 44px; padding: 10px 0; }
+  .finding-item .f-dollar { white-space: nowrap; }
+  .roi-card-badge, .roi-foot, .phase-label, .rb-banner-right .running, .pp-num, .pc-tag { font-size: 11px; }
+}
