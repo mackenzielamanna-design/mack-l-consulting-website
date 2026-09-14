@@ -441,9 +441,6 @@
     </section>
   </div>
 
-  <footer>
-    <span>From your data = measured from source exports · Includes an assumption = a stated recovery assumption · Partial data = incomplete inputs</span>
-  </footer>
   </div>
 </div>
 
@@ -623,6 +620,8 @@ function render(d) {
   const topHigh = Math.max(...d.findings.map(f => f.high));
   const firstSentence = (str) => String(str).split(/\.\s+/)[0].replace(/\.$/, '');
   const firstClause = (str) => firstSentence(str).split(/,\s+/)[0];
+  // Name the assumption when there is one; "includes an assumption" on its own tells a client nothing.
+  const tierLabel = (f) => typeof f.assumption === 'string' ? 'Assumes ' + f.assumption : f.data_tier;
 
   $('actions').innerHTML = actions.map((f, i) => `
     <div class="action">
@@ -636,7 +635,7 @@ function render(d) {
         <i class="lo" style="width:${(f.low / topHigh * 100).toFixed(1)}%"></i>
       </div>
       <div class="a-meta">
-        <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
+        <span class="conf ${f.confidence}">${esc(tierLabel(f))}</span>
       </div>
     </div>`).join('');
 
@@ -670,9 +669,7 @@ function render(d) {
   $('findings').innerHTML = d.findings.map((f, i) => `
     <div class="finding">
       <div class="f-head">
-        <span class="f-num">${String(i + 1).padStart(2, '0')}</span>
         <span class="f-label">${esc(f.label)}</span>
-        <span class="conf ${f.confidence}">${esc(f.data_tier)}</span>
         <span class="f-range">${usdK(f.low)}-${usdK(f.high)} <span>/yr</span></span>
       </div>
       <div class="f-bar">
@@ -682,7 +679,7 @@ function render(d) {
       <div class="f-detail">${esc(f.detail)}</div>
       ${typeof f.drivers === 'string' ? `<div class="f-drivers">${esc(f.drivers)}</div>` : ''}
       <div class="f-meta"><b>Do this:</b> ${esc(f.rec)}</div>
-      <div class="f-meta"><b>Data:</b> ${esc(f.basis)}</div>
+      <div class="f-meta"><span class="conf ${f.confidence}">${esc(tierLabel(f))}</span></div>
     </div>`).join('');
 
   /* ── Hours that don't pay for themselves (scheduling signal, no dollar claim) ── */
