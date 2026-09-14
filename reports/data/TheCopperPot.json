@@ -3,7 +3,7 @@
     "name": "The Copper Pot",
     "window": "Apr 2025 – Mar 2026",
     "n_months": 11.5,
-    "generated": "September 13, 2026",
+    "generated": "September 14, 2026",
     "partial_last_month": true
   },
   "topline": {
@@ -69,7 +69,7 @@
   "findings": [
     {
       "label": "Food cost above target",
-      "detail": "Classic Burger and Copper Pot Burger are top sellers costing 40% and 42% to make, which puts them $10,778/yr above target between the two of them. That is where to start. The full gap is the whole menu: recipe-weighted food cost is 35.9% vs the 30% target (industry range 28-32%), and those 5.9 points on $1,933,000 of revenue are the high end. Low end assumes half the gap closes in year one.",
+      "detail": "Classic Burger and Copper Pot Burger are top sellers costing 40% and 42% to make: $10,778/yr above target between them. Start there. Across the whole menu, food cost runs 35.9% against a 30% target. Those 5.9 points on $1.93M of revenue are the high end; the low end assumes half the gap closes in year one.",
       "category": "Food cost",
       "confidence": "High",
       "data_tier": "From your data",
