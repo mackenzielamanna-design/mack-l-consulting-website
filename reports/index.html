@@ -622,6 +622,10 @@ function render(d) {
   const firstClause = (str) => firstSentence(str).split(/,\s+/)[0];
   // Name the assumption when there is one; "includes an assumption" on its own tells a client nothing.
   const tierLabel = (f) => typeof f.assumption === 'string' ? 'Assumes ' + f.assumption : f.data_tier;
+  // The chip already states the assumption; don't say it again in the sentence above it.
+  const withoutChipSentence = (f) => typeof f.assumption === 'string'
+    ? f.detail.split(/(?<=\.)\s+/).filter((t) => !/^Range assumes/.test(t)).join(' ')
+    : f.detail;
 
   $('actions').innerHTML = actions.map((f, i) => `
     <div class="action">
@@ -676,7 +680,7 @@ function render(d) {
         <div class="hi" style="width:${(f.high / maxHigh * 100).toFixed(1)}%"></div>
         <div class="lo" style="width:${(f.low / maxHigh * 100).toFixed(1)}%"></div>
       </div>
-      <div class="f-detail">${esc(f.detail)}</div>
+      <div class="f-detail">${esc(withoutChipSentence(f))}</div>
       ${typeof f.drivers === 'string' ? `<div class="f-drivers">${esc(f.drivers)}</div>` : ''}
       <div class="f-meta"><b>Do this:</b> ${esc(f.rec)}</div>
       <div class="f-meta"><span class="conf ${f.confidence}">${esc(tierLabel(f))}</span></div>
