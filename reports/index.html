@@ -590,7 +590,7 @@ function render(d) {
     const cls = !has ? '' : over ? 'bad' : ownerSubsidy ? 'warn' : 'good';
     const flag = !has ? `<span class="flag na">tracked</span>`
       : over ? `<span class="flag">+${(m.value - m.target).toFixed(1)} pts</span>`
-      : ownerSubsidy ? `<span class="flag">${m.all_in}% with owner pay</span>`
+      : ownerSubsidy ? `<span class="flag">${m.all_in}% all-in</span>`
       : `<span class="flag">${ceiling ? 'under ceiling' : 'on target'}</span>`;
     const tgt = !has ? 'no target' : ceiling ? `ceiling ${m.target}%` : `target ${m.target}%`;
     // Deviation as a share of the metric's own target, capped so one wild miss
