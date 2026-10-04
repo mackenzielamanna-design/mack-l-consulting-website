@@ -24,7 +24,7 @@ function About() {
             </div>
             <div>
               <div className="m-k">Focus</div>
-              <div className="m-v">Independent restaurants</div>
+              <div className="m-v">Food and beverage operations</div>
             </div>
             <div>
               <div className="m-k">Background</div>
