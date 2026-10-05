@@ -5,9 +5,6 @@ function Hero() {
   const [rate, setRate] = React.useState(4);
 
   const recoverable = Math.round(revenue * rate / 100);
-  const engagementCost = CP.fee.total; // flat $10,800 — 6 months at $1,800/mo
-  const net = recoverable - engagementCost;
-  const multiple = (recoverable / engagementCost).toFixed(1);
 
   return (
     <section className="hero">
@@ -45,19 +42,19 @@ function Hero() {
                 value={revenue.toLocaleString()}
                 onChange={(e) => {
                   const n = parseInt(e.target.value.replace(/[^\d]/g, ''), 10) || 0;
-                  setRevenue(Math.min(Math.max(n, 100000), 10000000));
+                  setRevenue(Math.min(Math.max(n, 100000), 50000000));
                 }}
               />
             </div>
             <input
               className="roi-slider"
               type="range"
-              min="500000" max="5000000" step="50000"
+              min="500000" max="10000000" step="50000"
               value={revenue}
               onChange={(e) => setRevenue(parseInt(e.target.value, 10))}
             />
             <div className="roi-slider-scale">
-              <span>$500K</span><span>$2.5M</span><span>$5M</span>
+              <span>$500K</span><span>$5M</span><span>$10M</span>
             </div>
           </div>
 
@@ -78,16 +75,6 @@ function Hero() {
           </div>
 
           <div className="roi-result">
-            <div className="roi-result-row">
-              <span className="k">6-month engagement</span>
-              <span className="v">{fmt$full(engagementCost)} total</span>
-            </div>
-            <div className="roi-result-row">
-              <span className="k">Net after fees · {multiple}× ROI</span>
-              <span className="v" style={{ color: 'var(--moss)' }}>
-                +{fmt$full(net)}
-              </span>
-            </div>
             <div className="roi-result-big">
               <span className="k">Recoverable / yr</span>
               <span className="v">{fmt$full(recoverable)}</span>

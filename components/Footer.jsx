@@ -23,7 +23,6 @@ function Footer() {
         <div>Mack in Black: operational diagnostics for food and beverage, built to fit your operation</div>
         <div style={{ display: 'flex', gap: 18 }}>
           <a href="#sample">Sample report</a>
-          <a href="#pricing">Pricing</a>
           <a href="#contact">Contact</a>
           <a href="/intake/">Send your data</a>
         </div>

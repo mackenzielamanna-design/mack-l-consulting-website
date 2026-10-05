@@ -11,7 +11,6 @@ function Nav() {
           <a href="#findings">Findings</a>
           <a href="#sample">Sample report</a>
           <a href="#money">Money flow</a>
-          <a href="#pricing">Pricing</a>
           <a href="#about">About</a>
         </div>
         <a href="#contact" className="nav-cta">Start a diagnostic</a>
@@ -49,7 +48,6 @@ function App() {
       <Findings />
       <SampleReport />
       <MoneyFlow />
-      <Pricing />
       <Process />
       <About />
       <FinalCTA />

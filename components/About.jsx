@@ -45,9 +45,8 @@ function About() {
             systems that don't talk to each other, join it, and put a number on the problem.
           </p>
           <p>
-            A food and beverage operation is the same shape, whether it's one restaurant or a
-            resort with six outlets. The POS, the invoices, and payroll each hold one piece,
-            and the margin lives in the joins between them. I build the reporting the
+            A food and beverage operation works the same way. The POS, the invoices, and
+            payroll each hold one piece, and the margin lives in the joins between them. I build the reporting the
             chains take for granted, item-level margins, real recipe costs, vendor price
             tracking, labor against demand by hour, and I put a dollar range on every finding
             with the data it came from.
