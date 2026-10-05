@@ -10,7 +10,7 @@ function Hero() {
     <section className="hero">
       <div className="container hero-inner">
         <div>
-          <div className="hero-eyebrow">Mack in Black</div>
+          <div className="hero-eyebrow">Operational diagnostics for food and beverage</div>
           <h1>
             The money is in the data.
             <br /><em>We help you pull it out.</em>
