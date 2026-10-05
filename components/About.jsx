@@ -16,7 +16,7 @@ function About() {
             <span className="as-monogram" style={{ display: 'none' }}>m</span>
           </div>
           <div className="as-name">Mackenzie Lamanna</div>
-          <div className="as-title">Applied data scientist · M.S. Bioinformatics</div>
+          <div className="as-title">Operations data and diagnostics</div>
           <div className="as-meta">
             <div>
               <div className="m-k">Based in</div>
@@ -38,18 +38,16 @@ function About() {
         </div>
 
         <div className="about-copy">
-          <h3>Finding where a manufacturer's money went. <em>Now restaurants.</em></h3>
+          <h3>Finding where a manufacturer's money went. <em>Now food and beverage.</em></h3>
           <p>
-            I was a data scientist at a life-sciences manufacturer, where the job was
-            working out why production runs failed and what that cost. The method never
-            changed: pull the data out of systems that don't talk to each other, join it, and
-            put a number on the problem. One investigation found about 600 production lots a
-            year that could be pooled. Another showed that a statistical default the whole
-            platform relied on was wrong for nearly every high-volume product.
+            I spent years inside a life-sciences manufacturer working out why production
+            runs failed and what that cost. The method never changed: pull the data out of
+            systems that don't talk to each other, join it, and put a number on the problem.
           </p>
           <p>
-            A restaurant is the same shape. The POS, the invoices, and payroll each hold one
-            piece, and the margin lives in the joins between them. I build the reporting the
+            A food and beverage operation is the same shape, whether it's one restaurant or a
+            resort with six outlets. The POS, the invoices, and payroll each hold one piece,
+            and the margin lives in the joins between them. I build the reporting the
             chains take for granted, item-level margins, real recipe costs, vendor price
             tracking, labor against demand by hour, and I put a dollar range on every finding
             with the data it came from.

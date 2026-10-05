@@ -51,7 +51,7 @@ function MoneyFlow() {
       <div className="container">
         <div className="section-head">
           <div className="section-kicker" data-num="03">Where the money goes</div>
-          <h2>Every dollar a restaurant earns <em>has a job.</em></h2>
+          <h2>Every dollar you earn <em>has a job.</em></h2>
           <p>On The Copper Pot's $1.9M of revenue, here is where each dollar lands, and which of those lines have slack. Click any line to see the story behind it.</p>
         </div>
 

@@ -12,8 +12,8 @@ function Findings() {
       <div className="container">
         <div className="section-head">
           <div className="section-kicker" data-num="01">What we typically find</div>
-          <h2>Every restaurant is different. The <em>patterns</em> are not.</h2>
-          <p>Across independent operators, these four numbers show up again and again. Individually small. Together, they define the gap between a good year and a great one.</p>
+          <h2>Every operation is different. The <em>patterns</em> are not.</h2>
+          <p>Across food and beverage operators, these four numbers show up again and again. Individually small. Together, they define the gap between a good year and a great one.</p>
         </div>
       </div>
       <div className="findings-row">

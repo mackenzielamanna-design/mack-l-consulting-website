@@ -10,7 +10,7 @@ const REPORT_PHASES = [
     tabSub: 'POS data',
     when: 'Week 1',
     title: 'POS data + owner conversation',
-    intro: 'What becomes visible with just a Toast export and a 30-minute conversation. Real ranges from day one, wide because they are estimates until the data deepens.',
+    intro: 'What becomes visible with just a POS export and a 30-minute conversation. Real ranges from day one, wide because they are estimates until the data deepens.',
     inputs: ['Toast Sales Summary', 'Payroll export', '30-min owner call'],
     range: { low: 43500, high: 87000 },
     rangeNote: 'estimates: three channel and revenue-leak findings',
