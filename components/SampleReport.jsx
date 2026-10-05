@@ -102,7 +102,7 @@ function SampleReport() {
     <section id="sample">
       <div className="container">
         <div className="section-head">
-          <div className="section-kicker" data-num="02">Sample diagnostic</div>
+          <div className="section-kicker" data-num="01">Sample diagnostic</div>
           <h2>A walk-through, phase by phase: <em>The Copper Pot.</em></h2>
           <p>A fictional $1.9M casual-dining restaurant built from industry benchmarks, structured exactly like a real engagement. Watch the opportunity range <em>tighten</em> as the data deepens, not inflate.</p>
         </div>

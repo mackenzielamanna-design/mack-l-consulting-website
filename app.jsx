@@ -8,9 +8,7 @@ function Nav() {
           mack <em>in</em> black<span className="dot">.</span>
         </a>
         <div className="nav-links">
-          <a href="#findings">Findings</a>
           <a href="#sample">Sample report</a>
-          <a href="#money">Money flow</a>
           <a href="#about">About</a>
         </div>
         <a href="#contact" className="nav-cta">Start a diagnostic</a>
@@ -45,9 +43,7 @@ function App() {
     <div id="top">
       <Nav />
       <Hero />
-      <Findings />
       <SampleReport />
-      <MoneyFlow />
       <Process />
       <About />
       <FinalCTA />

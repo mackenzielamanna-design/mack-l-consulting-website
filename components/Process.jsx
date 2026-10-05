@@ -11,7 +11,7 @@ function Process() {
     <section id="process">
       <div className="container">
         <div className="section-head">
-          <div className="section-kicker" data-num="04">How it works</div>
+          <div className="section-kicker" data-num="02">How it works</div>
           <h2>Four phases. <em>Each one pays for the next.</em></h2>
           <p>You never commit blind. Phase 1 delivers a report with dollar figures attached. If the numbers aren't there, we don't move forward.</p>
         </div>

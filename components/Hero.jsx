@@ -30,7 +30,6 @@ function Hero() {
         <div className="roi-card" aria-label="Live ROI estimator">
           <div className="roi-card-head">
             <div className="roi-card-title">Live estimator</div>
-            <div className="roi-card-badge">NO SIGNUP</div>
           </div>
 
           <div className="roi-field">
@@ -81,9 +80,6 @@ function Hero() {
             </div>
           </div>
 
-          <div className="roi-foot">
-            Benchmarks: National Restaurant Association, Restaurant365, Toast
-          </div>
         </div>
       </div>
     </section>
